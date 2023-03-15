@@ -59,6 +59,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
         stmt.setInt(1, t.getAuditoriumNum());
         stmt.setInt(2, t.getSeatsRowNum());
         stmt.setInt(3, t.getSeatsColumnNum());
+        stmt.setInt(4, t.getId());
         int row = stmt.executeUpdate();
         
     }

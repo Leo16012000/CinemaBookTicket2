@@ -3,7 +3,9 @@ package controllers;
 import dao.UserDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -81,7 +83,7 @@ public class LoginController {
     // Tạo sự kiện
     public void addEvent() {
         //Sự kiện login
-        view.getTxtPassword().addKeyListener(new java.awt.event.KeyAdapter() {
+        view.getTxtPassword().addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -95,17 +97,17 @@ public class LoginController {
                 login();
             }
         });
-        view.getLblForgotPassword().addMouseListener(new java.awt.event.MouseAdapter() {
+        view.getLblForgotPassword().addMouseListener(new MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 view.showMessage("Chưa hỗ trợ!");
             }
         });
-        view.getLblRegister().addMouseListener(new java.awt.event.MouseAdapter() {
+        view.getLblRegister().addMouseListener(new MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 view.showMessage("Chưa hỗ trợ!");
             }
         });
-        view.getLblAccessAsGuest().addMouseListener(new java.awt.event.MouseAdapter() {
+        view.getLblAccessAsGuest().addMouseListener(new MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 try {
 					loginAsGuest();

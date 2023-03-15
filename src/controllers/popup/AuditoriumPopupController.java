@@ -75,11 +75,9 @@ public class AuditoriumPopupController {
         if (number == null || rowsNum == null || columnsNum == null) {
             throw new Exception("Please complete all infomation!");
         }
-
-        auditorium.setTitle(title);
-        auditorium.setCountry(country);
-        auditorium.setDurationTime(durationTime);
-        auditorium.setPrice(price);
+        auditorium.setAuditoriumNum(number);
+        auditorium.setSeatsRowNum(rowsNum);
+        auditorium.setSeatsColumnNum(columnsNum);
         auditoriumDao.update(auditorium);
         return true;
     }

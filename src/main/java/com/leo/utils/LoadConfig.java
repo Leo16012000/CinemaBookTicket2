@@ -8,18 +8,22 @@ import java.util.Properties;
 public class LoadConfig {
 
   private static final String CONFIG_PATH = "src/main/resources/config.properties";
-  private static LoadConfig intanse;
+  private static LoadConfig instance;
   private Properties properties = new Properties();
 
   public LoadConfig() {
     readConfig();
   }
 
-  public static LoadConfig getIntanse() {
-    if (intanse == null) {
-      intanse = new LoadConfig();
+  public static LoadConfig getInstance() {
+    if (instance == null) {
+      synchronized (LoadConfig.class) {
+        if (instance == null) {
+          instance = new LoadConfig();
+        }
+      }
     }
-    return intanse;
+    return instance;
   }
 
   public String getProperty(String key) {
@@ -31,21 +35,10 @@ public class LoadConfig {
   }
 
   private void readConfig() {
-    InputStream inputStream = null;
-    try {
-      inputStream = new FileInputStream(CONFIG_PATH);
+    try (InputStream inputStream = new FileInputStream(CONFIG_PATH)) {
       properties.load(inputStream);
     } catch (IOException e) {
       e.printStackTrace();
-    } finally {
-      try {
-        if (inputStream != null) {
-          inputStream.close();
-        }
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
     }
   }
-
 }

@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class LoadConfig {
 
-  private static final String CONFIG_PATH = "classpath://resources/config.properties";
+  private static final String CONFIG_PATH = "src/main/resources/config.properties";
   private static LoadConfig intanse;
   private Properties properties = new Properties();
 
@@ -33,7 +33,7 @@ public class LoadConfig {
   private void readConfig() {
     InputStream inputStream = null;
     try {
-      inputStream = new FileInputStream("/resources/config.properties");
+      inputStream = new FileInputStream(CONFIG_PATH);
       properties.load(inputStream);
     } catch (IOException e) {
       e.printStackTrace();

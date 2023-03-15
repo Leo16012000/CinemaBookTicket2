@@ -39,11 +39,12 @@ public class AuditoriumDao extends Dao<Auditorium> {
         if (t == null) {
             throw new SQLException("Empty Auditorium");
         }
-        String query = "INSERT INTO `auditoriums` (`auditorium_num`, `seats_num`) VALUES (?, ?)";
+        String query = "INSERT INTO `auditoriums` (`auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?)";
 
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setInt(1, t.getAuditoriumNum());
-        stmt.setInt(2, t.getSeatsNum());
+        stmt.setInt(2, t.getSeatsRowNum());
+        stmt.setInt(3, t.getSeatsColumnNum());
         int row = stmt.executeUpdate();
     }
 
@@ -52,25 +53,26 @@ public class AuditoriumDao extends Dao<Auditorium> {
         if (t == null) {
             throw new SQLException("Rỗng");
         }
-        String query = "UPDATE `auditoriums` SET `auditorium_num` = ?, `seats_num` = ? WHERE `id` = ?";
+        String query = "UPDATE `auditoriums` SET `auditorium_num` = ?, `seats_row_num` = ?, `seats_column_num` = ? WHERE `id` = ?";
 
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setInt(1, t.getAuditoriumNum());
-        stmt.setInt(2, t.getSeatsNum());
+        stmt.setInt(2, t.getSeatsRowNum());
+        stmt.setInt(3, t.getSeatsColumnNum());
         int row = stmt.executeUpdate();
         
     }
 
     @Override
     public void delete(Auditorium t) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Auditoriums` WHERE `id` = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM `auditoriums` WHERE `id` = ?");
         stmt.setInt(1, t.getId());
         stmt.executeUpdate();
     }
 
     @Override
     public void deleteById(int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM `Movies` WHERE `id` = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM `auditoriums` WHERE `id` = ?");
         stmt.setInt(1, id);
         stmt.executeUpdate();
     }
@@ -78,7 +80,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
     public ArrayList<Auditorium> searchByKey(String key, String word) throws SQLException {
         ArrayList<Auditorium> auditoriums = new ArrayList<>();
         Statement statement = conn.createStatement();
-        String query = "SELECT * FROM `Auditoriums` WHERE " + key + " LIKE '%" + word + "%';";
+        String query = "SELECT * FROM `auditoriums` WHERE " + key + " LIKE '%" + word + "%';";
         ResultSet rs = statement.executeQuery(query);
         while (rs.next()) {
             Auditorium auditorium = Auditorium.getFromResultSet(rs);

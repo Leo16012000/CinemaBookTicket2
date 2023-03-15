@@ -36,6 +36,19 @@ public class UserDao extends Dao<User> {
         }
         return null;
     }
+     
+    public User logIn (String username, String password) throws SQLException {
+    	System.out.println(username + " " + password);
+        Statement statement = conn.createStatement();
+        String query = "SELECT * FROM `users` WHERE username = '" + username + "' AND password = '" + password + "'";
+    	System.out.println(query);
+        ResultSet rs = statement.executeQuery(query);
+        if (rs.next()) {
+            User user = User.getFromResultSet(rs);
+            return user;
+        }
+        return null;
+    }
     
     public User getByUsername(String username) throws SQLException {
         Statement statement = conn.createStatement();

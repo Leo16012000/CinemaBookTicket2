@@ -24,7 +24,7 @@ public class SessionManager {
 
     public static void create(User user) throws SQLException {
         if (user == null) {
-            throw new SQLException("Nguoi dung khong hop le!");
+            throw new SQLException("Invalid user!");
         }
         Session ss = new Session();
         ss.setUser(user);
@@ -38,7 +38,7 @@ public class SessionManager {
 
     public static void update() throws SQLException {
         if (session == null) {
-            throw new SQLException("Ban chua dang nhap!");
+            throw new SQLException("You need to log in!");
         }
         session.setMessage("logout");
         session.setEndTime(new Timestamp(System.currentTimeMillis()));

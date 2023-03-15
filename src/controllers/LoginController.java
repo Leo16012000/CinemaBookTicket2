@@ -48,21 +48,15 @@ public class LoginController {
         try {
             User user = userDao.getByUsername(username);
             if (user == null) {
-                view.showError("Không tồn tại tài khoản!");
+                view.showError("Account is not existed!");
                 return;
             }
-            if (!user.checkPassword(password)) {
-                view.showError("Mật khẩu sai");
-                return;
-            }
+           if (!user.checkPassword(password)) {
+               view.showError("Wrong password");
+               return;
+           }
             SessionManager.create(user);//Khởi tạo session
             switch (user.getPermission()) {
-//                case MANAGER:
-//                    //Admin controller
-//                    AdminDashboardController controller = new AdminDashboardController(new AdminDashboardView());
-//                    controller.getView().setPanel(new HomeView());
-//                    view.dispose();// Tắt form đăng nhập
-//                    break;
                 case USER:
                     UserHomeController controller = new UserHomeController();
 //                    controller.getView().setPanel(new MainPanel());
@@ -74,7 +68,7 @@ public class LoginController {
                     view.dispose();// Tắt form đăng nhập                    
                     break;
                 default:
-                    view.showError("Vui lòng liên hệ admin để biết thêm chi tiết");
+                    view.showError("Unexpected error");
                     SessionManager.update();
                     view.dispose();
                     break;

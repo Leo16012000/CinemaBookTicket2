@@ -1,6 +1,17 @@
 package views;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -98,58 +109,58 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        panelLeft = new javax.swing.JPanel();
-        panelHeader = new javax.swing.JPanel();
-        lbName = new javax.swing.JLabel();
-        btnLogout = new javax.swing.JButton();
-        panelSidebar = new javax.swing.JPanel();
-        panelLayout = new javax.swing.JPanel();
+        panelLeft = new JPanel();
+        panelHeader = new JPanel();
+        lbName = new JLabel();
+        btnLogout = new JButton();
+        panelSidebar = new JPanel();
+        panelLayout = new JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Admin Page");
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setCursor(new java.awt.Cursor(Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        panelLeft.setPreferredSize(new java.awt.Dimension(200, 680));
-        panelLeft.setLayout(new java.awt.BorderLayout());
+        panelLeft.setPreferredSize(new Dimension(200, 680));
+        panelLeft.setLayout(new BorderLayout());
 
-        panelHeader.setBackground(new java.awt.Color(34, 153, 84));
-        panelHeader.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
-        panelHeader.setForeground(new java.awt.Color(255, 255, 255));
-        panelHeader.setPreferredSize(new java.awt.Dimension(200, 50));
-        panelHeader.setLayout(new java.awt.GridBagLayout());
+        panelHeader.setBackground(new Color(34, 153, 84));
+        panelHeader.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
+        panelHeader.setForeground(new Color(255, 255, 255));
+        panelHeader.setPreferredSize(new Dimension(200, 50));
+        panelHeader.setLayout(new GridBagLayout());
 
-        lbName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbName.setForeground(new java.awt.Color(255, 255, 255));
+        lbName.setFont(new Font("Tahoma", 1, 14)); // NOI18N
+        lbName.setForeground(new Color(255, 255, 255));
         lbName.setText("Admin");
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.1;
         panelHeader.add(lbName, gridBagConstraints);
 
         btnLogout.setText("Exit");
-        btnLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLogout.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnLogout.setFocusable(false);
         btnLogout.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.1;
         panelHeader.add(btnLogout, gridBagConstraints);
 
-        panelLeft.add(panelHeader, java.awt.BorderLayout.PAGE_START);
+        panelLeft.add(panelHeader, BorderLayout.PAGE_START);
 
-        panelSidebar.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
-        panelLeft.add(panelSidebar, java.awt.BorderLayout.CENTER);
+        panelSidebar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        panelLeft.add(panelSidebar, BorderLayout.CENTER);
 
-        getContentPane().add(panelLeft, java.awt.BorderLayout.LINE_START);
+        getContentPane().add(panelLeft, BorderLayout.LINE_START);
 
-        panelLayout.setMaximumSize(new java.awt.Dimension(1000, 680));
-        panelLayout.setMinimumSize(new java.awt.Dimension(1000, 680));
-        panelLayout.setPreferredSize(new java.awt.Dimension(1008, 680));
-        panelLayout.setLayout(new java.awt.CardLayout());
-        getContentPane().add(panelLayout, java.awt.BorderLayout.CENTER);
+        panelLayout.setMaximumSize(new Dimension(1000, 680));
+        panelLayout.setMinimumSize(new Dimension(1000, 680));
+        panelLayout.setPreferredSize(new Dimension(1008, 680));
+        panelLayout.setLayout(new CardLayout());
+        getContentPane().add(panelLayout, BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -158,15 +169,11 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogout;
-    private javax.swing.JLabel lbName;
-    private javax.swing.JPanel panelHeader;
-	private javax.swing.JPanel panelLayout;
-    private javax.swing.JPanel panelLeft;
-    private javax.swing.JPanel panelSidebar;
+    private JButton btnLogout;
+    private JLabel lbName;
+    private JPanel panelHeader;
+	private JPanel panelLayout;
+    private JPanel panelLeft;
+    private JPanel panelSidebar;
     // End of variables declaration//GEN-END:variables
-
-//    public JPanel getpanelSidebar() {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
 }

@@ -74,8 +74,8 @@ public class User extends Model{
 	public Object[] toRowTable() {
 		// TODO Auto-generated method stub
 	       return new Object[]{
-	               id, name, username, password,
-	               permission.getName()
+	               id, name, username,
+	               permission.getName(), createdAt
 	           };
 	}
 }

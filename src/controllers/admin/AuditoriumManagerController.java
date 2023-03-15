@@ -3,14 +3,14 @@ package controllers.admin;
 import javax.swing.JOptionPane;
 
 import controllers.ManagerController;
-import controllers.popup.MoviePopupController;
+import controllers.popup.AuditoriumPopupController;
 import controllers.popup.UserPopupController;
-import dao.MovieDao;
+import dao.AuditoriumDao;
 import dao.UserDao;
-import models.Movie;
+import models.Auditorium;
 import models.User;
 import utils.UserPermission;
-import views.popup.MoviePopupView;
+import views.popup.AuditoriumPopupView;
 import views.popup.UserPopupView;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
@@ -19,19 +19,19 @@ import static javax.swing.JOptionPane.YES_OPTION;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MovieManagerController extends ManagerController{
-	private MovieDao movieDao;
-	private MoviePopupController popupController;
+public class AuditoriumManagerController extends ManagerController{
+	private AuditoriumDao auditoriumDao;
+	private AuditoriumPopupController popupController;
 	
-	public MovieManagerController() {
+	public AuditoriumManagerController() {
 		super();
-		movieDao = new MovieDao();
-		popupController = new MoviePopupController();
+		auditoriumDao = new AuditoriumDao();
+		popupController = new AuditoriumPopupController();
 	}
 	
 	  @Override
 	    public void actionAdd() {
-	        popupController.add(new MoviePopupView(), this::updateData, view::showError);
+	        popupController.add(new AuditoriumPopupView(), this::updateData, view::showError);
 	    }
 
 	    @Override
@@ -41,11 +41,11 @@ public class MovieManagerController extends ManagerController{
 	            if (selectedId < 0) {
 	                throw new Exception("Chooose the one to edit");
 	            }
-	            Movie movie = movieDao.get(selectedId);
-	            if (movie == null) {
-	                throw new Exception("Invalid movie selected");
+	            Auditorium auditorium = auditoriumDao.get(selectedId);
+	            if (auditorium == null) {
+	                throw new Exception("Invalid auditorium selected");
 	            }
-	            popupController.edit(new MoviePopupView(), movie, this::updateData, view::showError);
+	            popupController.edit(new AuditoriumPopupView(), auditorium, this::updateData, view::showError);
 
 	        } catch (Exception e) {
 	            view.showError(e);
@@ -56,11 +56,11 @@ public class MovieManagerController extends ManagerController{
 	    public void actionDelete() {
 	        int selectedIds[] = view.getSelectedIds();
 	        try {
-	            if (JOptionPane.showConfirmDialog(null, "Delete multiple records?", "Delete movie", ERROR_MESSAGE) != YES_OPTION) {
+	            if (JOptionPane.showConfirmDialog(null, "Delete multiple records?", "Delete auditorium", ERROR_MESSAGE) != YES_OPTION) {
 	                return;
 	            }
 	            for (int i = 0; i < selectedIds.length; i++) {
-	                movieDao.deleteById(selectedIds[i]);
+	                auditoriumDao.deleteById(selectedIds[i]);
 	                updateData();
 	            }
 	        } catch (Exception e) {
@@ -71,10 +71,9 @@ public class MovieManagerController extends ManagerController{
 	    @Override
 	    public void updateData() {
 	        try {
-	            ArrayList<Movie> movies = movieDao.getAll();
-	            ArrayList<Movie> movies2 = MovieDao.getInstance().getAll();
-	            System.out.println(movies);
-	            view.setTableData(movies);
+	            ArrayList<Auditorium> auditoriums = auditoriumDao.getAll();
+	            System.out.println(auditoriums);
+	            view.setTableData(auditoriums);
 	        } catch (Exception e) {
 	            view.showError(e);
 	        }
@@ -83,8 +82,8 @@ public class MovieManagerController extends ManagerController{
 	    @Override
 	    public void actionSearch() {
 	        try {
-	            ArrayList<Movie> movies = movieDao.searchByKey(view.getCboSearchField().getSelectedItem().toString(), String.valueOf(view.getTxtSearch().getText()));
-	            view.setTableData(movies);
+	            ArrayList<Auditorium> auditoriums = auditoriumDao.searchByKey(view.getCboSearchField().getSelectedItem().toString(), String.valueOf(view.getTxtSearch().getText()));
+	            view.setTableData(auditoriums);
 	        } catch (Exception e) {
 	            view.showError(e);
 	        }

@@ -64,6 +64,6 @@ public class Movie extends Model{
 	@Override
 	public Object[] toRowTable() {
 		// TODO Auto-generated method stub
-		return new Object[] {id, title, country, durationTime, price};
+		return new Object[] {id, title, country, durationTime, price, createdAt};
 	}
 }

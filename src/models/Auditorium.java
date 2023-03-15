@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class Auditorium {
+public class Auditorium extends Model{
 	private int id, auditoriumNum, seatsRowNum, seatsColumnNum;
 	private Timestamp createdAt; 
 	public static Auditorium getFromResultSet(ResultSet rs) throws SQLException {
@@ -13,6 +13,7 @@ public class Auditorium {
         o.setAuditoriumNum(rs.getInt("auditorium_num"));
         o.setSeatsRowNum(rs.getInt("seats_row_num"));
         o.setSeatsColumnNum(rs.getInt("seats_column_num"));
+        o.setCreatedAt(rs.getTimestamp("created_at"));
         return o;
     }
 	public int getId() {
@@ -44,5 +45,15 @@ public class Auditorium {
 	}
 	public void setSeatsColumnNum(int seatsColumnNum) {
 		this.seatsColumnNum = seatsColumnNum;
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return auditoriumNum + " " + seatsRowNum + " " + seatsColumnNum + " " + createdAt;
+	}
+	@Override
+	public Object[] toRowTable() {
+		// TODO Auto-generated method stub
+		return new Object[] {id,auditoriumNum, seatsRowNum, seatsColumnNum, createdAt};
 	}
 }

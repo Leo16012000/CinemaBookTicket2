@@ -19,6 +19,7 @@ public class MovieManagerView extends ManagerPaneView<User>{
 		tableModel.addColumn("Country");
 		tableModel.addColumn("Duration time");
 		tableModel.addColumn("Ticket price");
+		tableModel.addColumn("Created at");
         this.getCboSearchField().setModel(new DefaultComboBoxModel(list));
 	}
 }

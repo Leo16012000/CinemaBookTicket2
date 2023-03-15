@@ -16,6 +16,9 @@ public class UserManagerView extends ManagerPaneView<User>{
 	public void setTableModel() {
 		tableModel.addColumn("ID");
 		tableModel.addColumn("Full name");
+		tableModel.addColumn("Username");
+		tableModel.addColumn("Permission");
+		tableModel.addColumn("Created at");
         this.getCboSearchField().setModel(new DefaultComboBoxModel(list));
 	}
 }

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import controllers.admin.AuditoriumManagerController;
 import controllers.admin.MovieManagerController;
 import controllers.admin.UserManagerController;
 import main.SessionManager;
@@ -13,6 +14,7 @@ import models.User;
 import views.AdminDashboardFrame;
 import views.LoginView;
 import views.HeaderPanel;
+import views.admin.AuditoriumManagerView;
 import views.admin.ManagerPaneView;
 import views.admin.MenuItem;
 import views.admin.MovieManagerView;
@@ -22,11 +24,12 @@ public class AdminDashboardController{
 	private AdminDashboardFrame view;
 	private ManagerController userManagerController;
 	private ManagerController movieManagerController;
+	private ManagerController auditoriumManagerController;
 //	movieManagerController = new MovieManagerController();
 	
 	private JPanel headerPanel;
 	
-    private ManagerPaneView userManagerView, movieManagerView; // View
+    private ManagerPaneView userManagerView, movieManagerView, auditoriumManagerView; // View
 //            movieManagerView = new MovieManagerView();
     private JPanel[] cards;
     private SidebarController sidebarController = new SidebarController();
@@ -35,13 +38,15 @@ public class AdminDashboardController{
     	
     	userManagerView = new UserManagerView();
     	movieManagerView = new MovieManagerView();
+    	auditoriumManagerView = new AuditoriumManagerView();
     	
     	userManagerController = new UserManagerController();
     	movieManagerController = new MovieManagerController();
+    	auditoriumManagerController = new AuditoriumManagerController();
     	
     	headerPanel = view.getPanelHeader();
         sidebarController.setPanelSidebar(view.getPanelSidebar());
-    	cards = new JPanel[]{movieManagerView, userManagerView};
+    	cards = new JPanel[]{movieManagerView, userManagerView, auditoriumManagerView};
     	view.setVisible(true);
     	initMenu();
     	addEvent();
@@ -65,8 +70,10 @@ public class AdminDashboardController{
     private void initMenu() {
         MenuItem menuUser = new MenuItem("USER", "User Management");
         MenuItem menuMovie = new MenuItem("MOVIE", "Movie Management");
+        MenuItem menuAuditorium = new MenuItem("AUDITORIUM", "Auditorium Management");
         sidebarController.addMenu(menuUser);
         sidebarController.addMenu(menuMovie);
+        sidebarController.addMenu(menuAuditorium);
         sidebarController.addMenuEvent(this::onMenuChange);
     }
     
@@ -103,6 +110,11 @@ public class AdminDashboardController{
                 view.setPanel(movieManagerView);
                 movieManagerController.setView(movieManagerView);
                 movieManagerController.updateData();
+                break;
+            case "AUDITORIUM":
+                view.setPanel(auditoriumManagerView);
+                auditoriumManagerController.setView(auditoriumManagerView);
+                auditoriumManagerController.updateData();
                 break;
         }
     }

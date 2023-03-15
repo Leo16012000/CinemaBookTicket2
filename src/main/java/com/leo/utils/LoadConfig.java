@@ -33,7 +33,7 @@ public class LoadConfig {
   private void readConfig() {
     InputStream inputStream = null;
     try {
-      inputStream = new FileInputStream("/home/ttl/Documents/CinemaBookTicket2/src/main/resources/config.properties");
+      inputStream = new FileInputStream("/resources/config.properties");
       properties.load(inputStream);
     } catch (IOException e) {
       e.printStackTrace();

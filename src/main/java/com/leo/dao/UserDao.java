@@ -1,21 +1,18 @@
 package com.leo.dao;
 
 import com.leo.models.User;
+import com.leo.utils.PrepareStatements;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class UserDao extends Dao<User> {
-
   @Override
   public ArrayList<User> getAll() throws SQLException {
     ArrayList<User> users = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `users`";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = conn.prepareStatement("SELECT * FROM `users`").executeQuery();
     while (rs.next()) {
       User user = User.getFromResultSet(rs);
       users.add(user);
@@ -25,9 +22,8 @@ public class UserDao extends Dao<User> {
 
   @Override
   public User get(int id) throws SQLException {
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `users` WHERE id = " + id;
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("SELECT * FROM `users` WHERE id = ?"), id).executeQuery();
     if (rs.next()) {
       User user = User.getFromResultSet(rs);
       return user;
@@ -37,10 +33,10 @@ public class UserDao extends Dao<User> {
 
   public User logIn(String username, String password) throws SQLException {
     System.out.println(username + " " + password);
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `users` WHERE username = '" + username + "' AND password = '" + password + "'";
-    System.out.println(query);
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements
+        .setPreparedStatementParams(
+            conn.prepareStatement("SELECT * FROM `users` WHERE username = ? AND password = ?"), username, password)
+        .executeQuery();
     if (rs.next()) {
       User user = User.getFromResultSet(rs);
       return user;
@@ -49,9 +45,8 @@ public class UserDao extends Dao<User> {
   }
 
   public User getByUsername(String username) throws SQLException {
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `users` WHERE username = '" + username + "'";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("SELECT * FROM `users` WHERE username = ?"), username).executeQuery();
     if (rs.next()) {
       User user = User.getFromResultSet(rs);
       return user;
@@ -64,14 +59,9 @@ public class UserDao extends Dao<User> {
     if (t == null) {
       throw new SQLException("Empty User");
     }
-    String query = "INSERT INTO users (`name`, `username`, `password`, permission) VALUES (?, ?, ?, ?)";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setNString(1, t.getName());
-    stmt.setNString(2, t.getUsername());
-    stmt.setNString(3, t.getPassword());
-    stmt.setNString(4, t.getPermission().getCode());
-    int row = stmt.executeUpdate();
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("INSERT INTO users (`name`, `username`, `password`, permission) VALUES (?, ?, ?, ?)"),
+        t.getName(), t.getUsername(), t.getPassword(), t.getPermission().getCode()).executeUpdate();
   }
 
   @Override
@@ -79,15 +69,10 @@ public class UserDao extends Dao<User> {
     if (t == null) {
       throw new SQLException("User rỗng");
     }
-    String query = "UPDATE users SET `name` = ?, `username` = ?, `password` = ?, permission = ? WHERE `id` = ?";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setNString(1, t.getName());
-    stmt.setNString(2, t.getUsername());
-    stmt.setNString(3, t.getPassword());
-    stmt.setNString(4, t.getPermission().getCode());
-    stmt.setInt(5, t.getId());
-    int row = stmt.executeUpdate();
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement(
+            "UPDATE users SET `name` = ?, `username` = ?, `password` = ?, permission = ? WHERE `id` = ?"),
+        t.getName(), t.getUsername(), t.getPassword(), t.getPermission().getCode(), t.getId()).executeUpdate();
   }
 
   @Override
@@ -107,9 +92,9 @@ public class UserDao extends Dao<User> {
 
   public ArrayList<User> searchByKey(String key, String word) throws SQLException {
     ArrayList<User> users = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM users WHERE " + key + " LIKE '%" + word + "%';";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements
+        .setPreparedStatementParams(conn.prepareStatement("SELECT * FROM users WHERE ? LIKE '%?%'"), key, word)
+        .executeQuery();
     while (rs.next()) {
       User user = User.getFromResultSet(rs);
       users.add(user);

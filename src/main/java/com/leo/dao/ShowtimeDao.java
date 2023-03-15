@@ -1,11 +1,10 @@
 package com.leo.dao;
 
 import com.leo.models.Showtime;
+import com.leo.utils.PrepareStatements;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ShowtimeDao extends Dao<Showtime> {
@@ -14,9 +13,7 @@ public class ShowtimeDao extends Dao<Showtime> {
   @Override
   public ArrayList<Showtime> getAll() throws SQLException {
     ArrayList<Showtime> showtimes = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `showtimes`";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = conn.prepareStatement("SELECT * FROM `showtimes`").executeQuery();
     while (rs.next()) {
       Showtime seat = Showtime.getFromResultSet(rs);
       showtimes.add(seat);
@@ -26,9 +23,8 @@ public class ShowtimeDao extends Dao<Showtime> {
 
   @Override
   public Showtime get(int id) throws SQLException {
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `showtimes` WHERE id = " + id;
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements
+        .setPreparedStatementParams(conn.prepareStatement("SELECT * FROM `showtimes` WHERE id = ?"), id).executeQuery();
     if (rs.next()) {
       Showtime seat = Showtime.getFromResultSet(rs);
       return seat;
@@ -41,13 +37,9 @@ public class ShowtimeDao extends Dao<Showtime> {
     if (t == null) {
       throw new SQLException("Empty Showtime");
     }
-    String query = "INSERT INTO `showtimes` (`start_time`, `end_time`, `movie_id`) VALUES (?, ?, ?)";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setTimestamp(1, t.getStartTime());
-    stmt.setTimestamp(2, t.getEndTime());
-    stmt.setInt(2, t.getMovieId());
-    int row = stmt.executeUpdate();
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("INSERT INTO `showtimes` (`start_time`, `end_time`, `movie_id`) VALUES (?, ?, ?)"),
+        t.getStartTime(), t.getEndTime(), t.getMovieId()).executeUpdate();
   }
 
   @Override
@@ -55,36 +47,27 @@ public class ShowtimeDao extends Dao<Showtime> {
     if (t == null) {
       throw new SQLException("Showtime rỗng");
     }
-    String query = "UPDATE `showtimes` SET `start_time` = ?, `end_time` = ?, `movie_id` = ? WHERE `id` = ?";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setTimestamp(1, t.getStartTime());
-    stmt.setTimestamp(2, t.getEndTime());
-    stmt.setInt(2, t.getMovieId());
-    int row = stmt.executeUpdate();
-
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("UPDATE `showtimes` SET `start_time` = ?, `end_time` = ?, `movie_id` = ? WHERE `id` = ?"),
+        t.getStartTime(), t.getEndTime(), t.getMovieId()).executeUpdate();
   }
 
   @Override
   public void delete(Showtime t) throws SQLException {
-    PreparedStatement stmt = conn.prepareStatement("DELETE FROM `showtimes` WHERE `id` = ?");
-    stmt.setInt(1, t.getId());
-    stmt.executeUpdate();
-
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("DELETE FROM `showtimes` WHERE `id` = ?"), t.getId()).executeUpdate();
   }
 
   @Override
   public void deleteById(int id) throws SQLException {
-    PreparedStatement stmt = conn.prepareStatement("DELETE FROM `showtimes` WHERE `id` = ?");
-    stmt.setInt(1, id);
-    stmt.executeUpdate();
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("DELETE FROM `showtimes` WHERE `id` = ?"), id).executeUpdate();
   }
 
   public ArrayList<Showtime> searchByKey(String key, String word) throws SQLException {
     ArrayList<Showtime> showtimes = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `showtimes` WHERE " + key + " LIKE '%" + word + "%';";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("SELECT * FROM `showtimes` WHERE ? LIKE '%?%'"), key, word).executeQuery();
     while (rs.next()) {
       Showtime seat = Showtime.getFromResultSet(rs);
       showtimes.add(seat);
@@ -94,7 +77,11 @@ public class ShowtimeDao extends Dao<Showtime> {
 
   public static ShowtimeDao getInstance() {
     if (instance == null) {
-      instance = new ShowtimeDao();
+      synchronized (ShowtimeDao.class) {
+        if (instance == null) {
+          instance = new ShowtimeDao();
+        }
+      }
     }
     return instance;
   }

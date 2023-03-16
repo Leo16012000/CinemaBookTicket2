@@ -1,11 +1,11 @@
 package com.leo.dao;
 
 import com.leo.models.Movie;
+import com.leo.utils.PrepareStatements;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class MovieDao extends Dao<Movie> {
@@ -14,9 +14,7 @@ public class MovieDao extends Dao<Movie> {
   @Override
   public ArrayList<Movie> getAll() throws SQLException {
     ArrayList<Movie> Movies = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `movies`";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = conn.prepareStatement("SELECT * FROM `movies`").executeQuery();
     while (rs.next()) {
       Movie movie = Movie.getFromResultSet(rs);
       Movies.add(movie);
@@ -26,9 +24,8 @@ public class MovieDao extends Dao<Movie> {
 
   @Override
   public Movie get(int id) throws SQLException {
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `movies` WHERE id = " + id;
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("SELECT * FROM `movies` WHERE id = ?"), id).executeQuery();
     if (rs.next()) {
       Movie movie = Movie.getFromResultSet(rs);
       return movie;
@@ -41,14 +38,10 @@ public class MovieDao extends Dao<Movie> {
     if (t == null) {
       throw new SQLException("Empty Movie");
     }
-    String query = "INSERT INTO `movies` (`price`, `duration_time`, `title`, `country`) VALUES (?, ?, ?, ?)";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setInt(1, t.getPrice());
-    stmt.setInt(2, t.getDurationTime());
-    stmt.setNString(3, t.getTitle());
-    stmt.setNString(4, t.getCountry());
-    int row = stmt.executeUpdate();
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement(
+            "INSERT INTO `movies` (`price`, `duration_time`, `title`, `country`) VALUES (?, ?, ?, ?)"),
+        t.getPrice(), t.getDurationTime(), t.getTitle(), t.getCountry()).executeUpdate();
   }
 
   @Override
@@ -56,16 +49,10 @@ public class MovieDao extends Dao<Movie> {
     if (t == null) {
       throw new SQLException("Movie rỗng");
     }
-    String query = "UPDATE `movies` SET `price` = ?, `duration_time` = ?, `title` = ?, `country` = ? WHERE `id` = ?";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setInt(1, t.getPrice());
-    stmt.setInt(2, t.getDurationTime());
-    stmt.setNString(3, t.getTitle());
-    stmt.setNString(4, t.getCountry());
-    stmt.setInt(5, t.getId());
-    int row = stmt.executeUpdate();
-
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement(
+            "UPDATE `movies` SET `price` = ?, `duration_time` = ?, `title` = ?, `country` = ? WHERE `id` = ?"),
+        t.getPrice(), t.getDurationTime(), t.getTitle(), t.getCountry(), t.getId()).executeUpdate();
   }
 
   @Override
@@ -73,21 +60,19 @@ public class MovieDao extends Dao<Movie> {
     PreparedStatement stmt = conn.prepareStatement("DELETE FROM `movies` WHERE `id` = ?");
     stmt.setInt(1, t.getId());
     stmt.executeUpdate();
-
   }
 
   @Override
   public void deleteById(int id) throws SQLException {
-    PreparedStatement stmt = conn.prepareStatement("DELETE FROM `movies` WHERE `id` = ?");
-    stmt.setInt(1, id);
-    stmt.executeUpdate();
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("DELETE FROM `movies` WHERE `id` = ?"), id).executeUpdate();
   }
 
   public ArrayList<Movie> searchByKey(String key, String word) throws SQLException {
     ArrayList<Movie> movies = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `movies` WHERE " + key + " LIKE '%" + word + "%';";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("SELECT * FROM `movies` WHERE ? LIKE '%?%'"),
+        key, word).executeQuery();
     while (rs.next()) {
       Movie movie = Movie.getFromResultSet(rs);
       movies.add(movie);
@@ -97,7 +82,11 @@ public class MovieDao extends Dao<Movie> {
 
   public static MovieDao getInstance() {
     if (instance == null) {
-      return new MovieDao();
+      synchronized (MovieDao.class) {
+        if (instance == null) {
+          instance = new MovieDao();
+        }
+      }
     }
     return instance;
   }

@@ -1,11 +1,11 @@
 package com.leo.dao;
 
 import com.leo.models.Auditorium;
+import com.leo.utils.PrepareStatements;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class AuditoriumDao extends Dao<Auditorium> {
@@ -14,9 +14,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
   @Override
   public ArrayList<Auditorium> getAll() throws SQLException {
     ArrayList<Auditorium> auditoriums = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `auditoriums`";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = conn.prepareStatement("SELECT * FROM `auditoriums`").executeQuery();
     while (rs.next()) {
       Auditorium auditorium = Auditorium.getFromResultSet(rs);
       auditoriums.add(auditorium);
@@ -26,9 +24,9 @@ public class AuditoriumDao extends Dao<Auditorium> {
 
   @Override
   public Auditorium get(int id) throws SQLException {
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `auditoriums` WHERE id = " + id;
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("SELECT * FROM `auditoriums` WHERE id = ?"),
+        id).executeQuery();
     if (rs.next()) {
       Auditorium auditorium = Auditorium.getFromResultSet(rs);
       return auditorium;
@@ -41,13 +39,12 @@ public class AuditoriumDao extends Dao<Auditorium> {
     if (t == null) {
       throw new SQLException("Empty Auditorium");
     }
-    String query = "INSERT INTO `auditoriums` (`auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?)";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setInt(1, t.getAuditoriumNum());
-    stmt.setInt(2, t.getSeatsRowNum());
-    stmt.setInt(3, t.getSeatsColumnNum());
-    int row = stmt.executeUpdate();
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement(
+            "INSERT INTO `auditoriums` (`auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?)"),
+        t.getAuditoriumNum(),
+        t.getSeatsRowNum(),
+        t.getSeatsColumnNum()).executeUpdate();
   }
 
   @Override
@@ -55,14 +52,14 @@ public class AuditoriumDao extends Dao<Auditorium> {
     if (t == null) {
       throw new SQLException("Rỗng");
     }
-    String query = "UPDATE `auditoriums` SET `auditorium_num` = ?, `seats_row_num` = ?, `seats_column_num` = ? WHERE `id` = ?";
 
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setInt(1, t.getAuditoriumNum());
-    stmt.setInt(2, t.getSeatsRowNum());
-    stmt.setInt(3, t.getSeatsColumnNum());
-    int row = stmt.executeUpdate();
-
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement(
+            "UPDATE `auditoriums` SET `auditorium_num` = ?, `seats_row_num` = ?, `seats_column_num` = ? WHERE `id` = ?"),
+        t.getAuditoriumNum(),
+        t.getSeatsRowNum(),
+        t.getSeatsColumnNum(),
+        t.getId()).executeUpdate();
   }
 
   @Override
@@ -81,9 +78,9 @@ public class AuditoriumDao extends Dao<Auditorium> {
 
   public ArrayList<Auditorium> searchByKey(String key, String word) throws SQLException {
     ArrayList<Auditorium> auditoriums = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `auditoriums` WHERE " + key + " LIKE '%" + word + "%';";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements
+        .setPreparedStatementParams(conn.prepareStatement("SELECT * FROM `auditoriums` WHERE ? LIKE '%?%'"), key, word)
+        .executeQuery();
     while (rs.next()) {
       Auditorium auditorium = Auditorium.getFromResultSet(rs);
       auditoriums.add(auditorium);
@@ -93,9 +90,12 @@ public class AuditoriumDao extends Dao<Auditorium> {
 
   public static AuditoriumDao getInstance() {
     if (instance == null) {
-      instance = new AuditoriumDao();
+      synchronized (AuditoriumDao.class) {
+        if (instance == null) {
+          instance = new AuditoriumDao();
+        }
+      }
     }
     return instance;
   }
-
 }

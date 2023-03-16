@@ -18,5 +18,4 @@ public abstract class Dao<T> {
   public abstract void delete(T t) throws SQLException;
 
   public abstract void deleteById(int id) throws SQLException;
-
 }

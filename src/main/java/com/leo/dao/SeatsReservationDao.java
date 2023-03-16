@@ -1,11 +1,11 @@
 package com.leo.dao;
 
 import com.leo.models.SeatsReservation;
+import com.leo.utils.PrepareStatements;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class SeatsReservationDao extends Dao<SeatsReservation> {
@@ -13,9 +13,7 @@ public class SeatsReservationDao extends Dao<SeatsReservation> {
   @Override
   public ArrayList<SeatsReservation> getAll() throws SQLException {
     ArrayList<SeatsReservation> seatsReservations = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `seats_reservation`";
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = conn.prepareStatement("SELECT * FROM `seats_reservation`").executeQuery();
     while (rs.next()) {
       SeatsReservation seatsReservation = SeatsReservation.getFromResultSet(rs);
       seatsReservations.add(seatsReservation);
@@ -25,9 +23,8 @@ public class SeatsReservationDao extends Dao<SeatsReservation> {
 
   @Override
   public SeatsReservation get(int id) throws SQLException {
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `seats_reservation` WHERE id = " + id;
-    ResultSet rs = statement.executeQuery(query);
+    ResultSet rs = PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("SELECT * FROM `seats_reservation` WHERE id = ?"), id).executeQuery();
     if (rs.next()) {
       SeatsReservation seatsReservation = SeatsReservation.getFromResultSet(rs);
       return seatsReservation;
@@ -40,12 +37,9 @@ public class SeatsReservationDao extends Dao<SeatsReservation> {
     if (t == null) {
       throw new SQLException("Empty SeatsReservation");
     }
-    String query = "INSERT INTO `seats_reservation` (`seat_id`, `reservation_id`) VALUES (?, ?)";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setInt(1, t.getSeatId());
-    stmt.setInt(2, t.getReservationId());
-    int row = stmt.executeUpdate();
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("INSERT INTO `seats_reservation` (`seat_id`, `reservation_id`) VALUES (?, ?)"),
+        t.getSeatId(), t.getReservationId()).executeUpdate();
   }
 
   @Override
@@ -53,13 +47,9 @@ public class SeatsReservationDao extends Dao<SeatsReservation> {
     if (t == null) {
       throw new SQLException("SeatsReservation rỗng");
     }
-    String query = "UPDATE `seats_reservation` SET `seat_id` = ?, `reservation_id` = ? WHERE `id` = ?";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setInt(1, t.getSeatId());
-    stmt.setInt(2, t.getReservationId());
-    int row = stmt.executeUpdate();
-
+    PrepareStatements.setPreparedStatementParams(
+        conn.prepareStatement("UPDATE `seats_reservation` SET `seat_id` = ?, `reservation_id` = ? WHERE `id` = ?"),
+        t.getSeatId(), t.getReservationId()).executeUpdate();
   }
 
   @Override

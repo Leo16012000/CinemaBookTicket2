@@ -6,9 +6,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+// TODO: Use connection pooling
 public class Database {
 
-  private static final LoadConfig cfg = LoadConfig.getIntanse();
+  private static final LoadConfig cfg = LoadConfig.getInstance();
   private static Database instance = null;
   private Connection conn = null;
 
@@ -43,7 +44,11 @@ public class Database {
 
   public static Database getInstance() {
     if (instance == null) {
-      instance = new Database();
+      synchronized (Database.class) {
+        if (instance == null) {
+          instance = new Database();
+        }
+      }
     }
     return instance;
   }

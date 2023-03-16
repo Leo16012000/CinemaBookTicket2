@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class AdminDahsboardFramebuffer extends JFrame {
 
@@ -160,7 +161,7 @@ public class AdminDahsboardFramebuffer extends JFrame {
   }
 
   public void displayShowtimePanel(String movieName, int movieId) throws SQLException {
-    ArrayList<Showtime> showtimes = ShowtimeDao.getInstance().searchByKey("movie_id", Integer.toString(movieId));
+    List<Showtime> showtimes = ShowtimeDao.getInstance().searchByKey("movie_id", Integer.toString(movieId));
     showtimePanel = new ShowtimePanel(showtimes);
     showtimePanel.setBounds(114, 32, 553, 471);
     // contentPane.remove(moviePanel);

@@ -71,7 +71,7 @@ public class Movie extends Model {
   @Override
   public String toString() {
     // TODO Auto-generated method stub
-    return title + " " + country + " " + durationTime + " " + price;
+    return title;
   }
 
   @Override

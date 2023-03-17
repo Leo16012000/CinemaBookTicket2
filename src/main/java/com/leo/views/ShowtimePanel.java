@@ -2,7 +2,7 @@ package com.leo.views;
 
 import com.leo.models.Showtime;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -19,7 +19,7 @@ public class ShowtimePanel extends JPanel {
   /**
    * Create the panel.
    */
-  public ShowtimePanel(ArrayList<Showtime> showtimes) {
+  public ShowtimePanel(List<Showtime> showtimes) {
     model = new DefaultTableModel();
     // Add columns to the table
     model.addColumn("Id");

@@ -11,6 +11,7 @@ import com.leo.views.popup.ShowtimePopupView;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
@@ -68,7 +69,7 @@ public class ShowtimeManagerController extends ManagerController {
   @Override
   public void updateData() {
     try {
-      ArrayList<Showtime> showtimes = showtimeDao.getAll();
+      List<Showtime> showtimes = showtimeDao.getAll();
       System.out.println(showtimes);
       view.setTableData(showtimes);
     } catch (Exception e) {
@@ -79,7 +80,7 @@ public class ShowtimeManagerController extends ManagerController {
   @Override
   public void actionSearch() {
     try {
-      ArrayList<Showtime> showtimes = showtimeDao.searchByKey(
+      List<Showtime> showtimes = showtimeDao.searchByKey(
           view.getCboSearchField().getSelectedItem().toString(), String.valueOf(view.getTxtSearch().getText()));
       view.setTableData(showtimes);
     } catch (Exception e) {

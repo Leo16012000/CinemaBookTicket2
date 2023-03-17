@@ -1,101 +1,107 @@
 package com.leo.dao;
 
 import com.leo.models.Showtime;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import com.leo.utils.PrepareStatements;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ShowtimeDao extends Dao<Showtime> {
   public static ShowtimeDao instance = null;
 
   @Override
-  public ArrayList<Showtime> getAll() throws SQLException {
-    ArrayList<Showtime> showtimes = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `showtimes`";
-    ResultSet rs = statement.executeQuery(query);
-    while (rs.next()) {
-      Showtime seat = Showtime.getFromResultSet(rs);
-      showtimes.add(seat);
-    }
-    return showtimes;
+  public List<Showtime> getAll() throws SQLException {
+    return transactionManager
+        .getTransaction()
+        .queryList(
+            conn -> conn.prepareStatement("SELECT * FROM `showtimes`").executeQuery(),
+            Showtime::getFromResultSet);
   }
 
   @Override
   public Showtime get(int id) throws SQLException {
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `showtimes` WHERE id = " + id;
-    ResultSet rs = statement.executeQuery(query);
-    if (rs.next()) {
-      Showtime seat = Showtime.getFromResultSet(rs);
-      return seat;
-    }
-    return null;
+    return transactionManager
+        .getTransaction()
+        .query(
+            conn -> PrepareStatements.setPreparedStatementParams(
+                conn.prepareStatement("SELECT * FROM `showtimes` WHERE id = ?"), id)
+                .executeQuery(),
+            Showtime::getFromResultSet);
   }
 
   @Override
   public void save(Showtime t) throws SQLException {
-    if (t == null) {
-      throw new SQLException("Empty Showtime");
-    }
-    String query = "INSERT INTO `showtimes` (`start_time`, `end_time`, `movie_id`) VALUES (?, ?, ?)";
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              if (t == null) {
+                throw new SQLException("Empty Showtime");
+              }
+              System.out.println("Update :" + t);
+              PrepareStatements.setPreparedStatementParams(
+                  conn.prepareStatement(
+                      "INSERT INTO `showtimes` (`start_time`, `end_time`, `movie_id`, auditorium_id) VALUES (?, ?, ?, ?)"),
+                  t.getStartTime(),
+                  t.getEndTime(),
+                  t.getMovieId(), t.getAuditoriumId())
+                  .executeUpdate();
+            });
 
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setTimestamp(1, t.getStartTime());
-    stmt.setTimestamp(2, t.getEndTime());
-    stmt.setInt(2, t.getMovieId());
-    int row = stmt.executeUpdate();
   }
 
   @Override
   public void update(Showtime t) throws SQLException {
-    if (t == null) {
-      throw new SQLException("Showtime rỗng");
-    }
-    String query = "UPDATE `showtimes` SET `start_time` = ?, `end_time` = ?, `movie_id` = ? WHERE `id` = ?";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setTimestamp(1, t.getStartTime());
-    stmt.setTimestamp(2, t.getEndTime());
-    stmt.setInt(2, t.getMovieId());
-    int row = stmt.executeUpdate();
-
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              if (t == null) {
+                throw new SQLException("Showtime rỗng");
+              }
+              PrepareStatements.setPreparedStatementParams(
+                  conn.prepareStatement(
+                      "UPDATE `showtimes` SET `start_time` = ?, `end_time` = ?, `movie_id` = ? WHERE `id` = ?"),
+                  t.getStartTime(),
+                  t.getEndTime(),
+                  t.getMovieId())
+                  .executeUpdate();
+            });
   }
 
   @Override
   public void delete(Showtime t) throws SQLException {
-    PreparedStatement stmt = conn.prepareStatement("DELETE FROM `showtimes` WHERE `id` = ?");
-    stmt.setInt(1, t.getId());
-    stmt.executeUpdate();
-
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> deleteById(t.getId()));
   }
 
   @Override
   public void deleteById(int id) throws SQLException {
-    PreparedStatement stmt = conn.prepareStatement("DELETE FROM `showtimes` WHERE `id` = ?");
-    stmt.setInt(1, id);
-    stmt.executeUpdate();
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> PrepareStatements.setPreparedStatementParams(
+                conn.prepareStatement("DELETE FROM `showtimes` WHERE `id` = ?"), id).executeUpdate());
   }
 
-  public ArrayList<Showtime> searchByKey(String key, String word) throws SQLException {
-    ArrayList<Showtime> showtimes = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `showtimes` inner join movies on showtimes.movie_id = movies.id inner join auditoriums on showtimes.auditorium_id = auditoriums.id WHERE " + key + " LIKE '%" + word + "%'";
-    System.out.println(query);
-    ResultSet rs = statement.executeQuery(query);
-    while (rs.next()) {
-      Showtime seat = Showtime.getFromResultSet(rs);
-      showtimes.add(seat);
-    }
-    return showtimes;
+  public List<Showtime> searchByKey(String key, String word) throws SQLException {
+    return transactionManager
+        .getTransaction()
+        .queryList(
+            conn -> PrepareStatements.setPreparedStatementParams(
+                conn.prepareStatement("SELECT * FROM `showtimes` inner join movies on showtimes.movie_id = movies.id inner join auditoriums on showtimes.auditorium_id = auditoriums.id WHERE ? LIKE '%?%'"), key, word)
+                .executeQuery(),
+            Showtime::getFromResultSet);
   }
 
   public static ShowtimeDao getInstance() {
     if (instance == null) {
-      instance = new ShowtimeDao();
+      synchronized (ShowtimeDao.class) {
+        if (instance == null) {
+          instance = new ShowtimeDao();
+        }
+      }
     }
     return instance;
   }

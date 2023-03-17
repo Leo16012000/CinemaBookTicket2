@@ -7,7 +7,7 @@ import com.leo.models.Movie;
 import com.leo.views.popup.MoviePopupView;
 
 public class MoviePopupController {
-  MovieDao movieDao = new MovieDao();
+  MovieDao movieDao = MovieDao.getInstance();
   JFrame previousView;
 
   public void add(MoviePopupView view, SuccessCallback sc, ErrorCallback ec) {

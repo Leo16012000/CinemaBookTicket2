@@ -23,12 +23,14 @@ public class ComboJumbo extends JFrame{
         add(label, BorderLayout.NORTH);
 
         Customer customers[] = new Customer[6];
-        customers[0] = new Customer("Frank", 1);
-        customers[1] = new Customer("Sue", 6);
-        customers[2] = new Customer("Joe", 2);
-        customers[3] = new Customer("Fenton", 3);
-        customers[4] = new Customer("Bess", 4);
-        customers[5] = new Customer("Nancy", 5);
+//        customers[0] = new Customer("Frank", 1, 0);
+//        customers[1] = new Customer("Sue", 6, 0);
+//        customers[2] = new Customer("Joe", 2, 0);
+//        customers[3] = new Customer("Fenton", 3, 0);
+//        customers[4] = new Customer("Bess", 4, 0);
+//        customers[5] = new Customer("Nancy", 5, 0);
+        customers[0] = new Customer(1, "test", "Frank");
+        customers[1] = new Customer( 6, "test2", "Sue");
 
         combo = new JComboBox(customers);
         combo.addItemListener(new ItemListener(){
@@ -50,16 +52,25 @@ public class ComboJumbo extends JFrame{
 
 
     class Customer{
-        private String name;
+        private String name, randomNum;
         private int id;
 
-        public Customer(String name, int id){
+        public String getRandomNum() {
+            return randomNum;
+        }
+
+        public void setRandomNum(String randomNum) {
+            this.randomNum = randomNum;
+        }
+
+        public Customer(int id, String randomNum, String name){
             this.name = name;
             this.id = id;
+            this.randomNum = randomNum;
         }
 
         public String toString(){
-            return getName();
+            return getRandomNum();
         }
 
         public String getName() {

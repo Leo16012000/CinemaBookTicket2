@@ -61,7 +61,7 @@ public class Auditorium extends Model {
   @Override
   public String toString() {
     // TODO Auto-generated method stub
-    return auditoriumNum + " " + seatsRowNum + " " + seatsColumnNum + " " + createdAt;
+    return Integer.toString(auditoriumNum);
   }
 
   @Override

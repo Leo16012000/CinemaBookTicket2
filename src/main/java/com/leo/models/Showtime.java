@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 public class Showtime extends Model{
   private int id, movieId, auditoriumId;
   private Timestamp startTime, endTime, createdAt;
+
+
   private Movie movie;
 
   public void setAuditorium(Auditorium auditorium) {
@@ -77,7 +79,7 @@ public class Showtime extends Model{
 
   @Override
   public String toString() {
-    return id + " " + startTime + " " + endTime + " " + movieId + " " + auditoriumId;
+    return id + " " + startTime + " " + endTime + " movidId:" + movieId + " auditoriumId:" + auditoriumId;
   }
 
   @Override

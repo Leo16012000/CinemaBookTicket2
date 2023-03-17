@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import com.leo.models.Showtime;
+import java.util.List;
 
 public class MainFrame extends JFrame {
 
@@ -155,7 +156,7 @@ public class MainFrame extends JFrame {
   }
 
   public void displayShowtimePanel(String movieName, int movieId) throws SQLException {
-    ArrayList<Showtime> showtimes = ShowtimeDao.getInstance().searchByKey("movie_id", Integer.toString(movieId));
+    List<Showtime> showtimes = ShowtimeDao.getInstance().searchByKey("movie_id", Integer.toString(movieId));
     showtimePanel = new ShowtimePanel(showtimes);
     showtimePanel.setBounds(114, 32, 553, 471);
     // contentPane.remove(moviePanel);

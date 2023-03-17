@@ -1,11 +1,15 @@
 package com.leo.views.popup;
 
+import com.demo.ComboJumbo;
 import com.leo.components.TimePicker;
+import com.leo.models.Auditorium;
 import com.leo.utils.ErrorPopup;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Date;
 
 public class ShowtimePopupView extends JFrame implements PopupView {
@@ -13,7 +17,6 @@ public class ShowtimePopupView extends JFrame implements PopupView {
   private JLabel jLabel1, jLabel2,jLabel3,jLabel4,jLabel5;
   private JPanel jPanel1, jPanel2, jPanel3;
   private JLabel lbTitle;
-
   private JSpinner startTimeSpinner, endTimeSpinner;
   private JDateChooser jDate;
 
@@ -54,7 +57,7 @@ public class ShowtimePopupView extends JFrame implements PopupView {
     endTimeSpinner = new TimePicker().getTimeSpinner();
 
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    setMinimumSize(new Dimension(350, 400));
+    setMinimumSize(new Dimension(650, 400));
     setResizable(false);
 
     jPanel2.setPreferredSize(new Dimension(350, 50));
@@ -180,6 +183,14 @@ public class ShowtimePopupView extends JFrame implements PopupView {
     getContentPane().add(jPanel3, BorderLayout.PAGE_END);
 
     pack();
+
+    cboAuditoriumNumber.addItemListener(new ItemListener(){
+      public void itemStateChanged(ItemEvent e) {
+        Auditorium c = (Auditorium) e.getItem();
+        System.out.println("You selected auditorium id: " + c.getId());
+      }
+
+    });
   }
 
   public void showError(String message) {
@@ -203,5 +214,28 @@ public class ShowtimePopupView extends JFrame implements PopupView {
   }
   public JLabel getLbTitle() {
     return lbTitle;
+  }
+  public JSpinner getStartTimeSpinner() {
+    return startTimeSpinner;
+  }
+
+  public void setStartTimeSpinner(JSpinner startTimeSpinner) {
+    this.startTimeSpinner = startTimeSpinner;
+  }
+
+  public JSpinner getEndTimeSpinner() {
+    return endTimeSpinner;
+  }
+
+  public void setEndTimeSpinner(JSpinner endTimeSpinner) {
+    this.endTimeSpinner = endTimeSpinner;
+  }
+
+  public JDateChooser getjDate() {
+    return jDate;
+  }
+
+  public void setjDate(JDateChooser jDate) {
+    this.jDate = jDate;
   }
 }

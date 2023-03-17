@@ -1,101 +1,130 @@
 package com.leo.dao;
 
 import com.leo.models.Auditorium;
-
+import com.leo.utils.PrepareStatements;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.List;
 
 public class AuditoriumDao extends Dao<Auditorium> {
   public static AuditoriumDao instance = null;
 
   @Override
-  public ArrayList<Auditorium> getAll() throws SQLException {
-    ArrayList<Auditorium> auditoriums = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `auditoriums`";
-    ResultSet rs = statement.executeQuery(query);
-    while (rs.next()) {
-      Auditorium auditorium = Auditorium.getFromResultSet(rs);
-      auditoriums.add(auditorium);
-    }
-    return auditoriums;
+  public List<Auditorium> getAll() throws SQLException {
+    return transactionManager
+        .getTransaction()
+        .queryList(
+            conn -> conn.prepareStatement("SELECT * FROM `auditoriums`").executeQuery(),
+            Auditorium::getFromResultSet);
   }
 
   @Override
   public Auditorium get(int id) throws SQLException {
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `auditoriums` WHERE id = " + id;
-    ResultSet rs = statement.executeQuery(query);
-    if (rs.next()) {
-      Auditorium auditorium = Auditorium.getFromResultSet(rs);
-      return auditorium;
-    }
-    return null;
+    return transactionManager
+        .getTransaction()
+        .query(
+            conn -> PrepareStatements.setPreparedStatementParams(
+                conn.prepareStatement("SELECT * FROM `auditoriums` WHERE id = ?"), id)
+                .executeQuery(),
+            Auditorium::getFromResultSet);
+  }
+
+  public void saveTest(Auditorium t) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              if (t == null) {
+                throw new SQLException("Empty Auditorium");
+              }
+              PrepareStatements.setPreparedStatementParams(
+                  conn.prepareStatement(
+                      "INSERT INTO `auditoriums` (`id`, `auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?, ?)"),
+                  t.getId(),
+                  t.getAuditoriumNum(),
+                  t.getSeatsRowNum(),
+                  t.getSeatsColumnNum())
+                  .executeUpdate();
+            });
   }
 
   @Override
   public void save(Auditorium t) throws SQLException {
-    if (t == null) {
-      throw new SQLException("Empty Auditorium");
-    }
-    String query = "INSERT INTO `auditoriums` (`auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?)";
-
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setInt(1, t.getAuditoriumNum());
-    stmt.setInt(2, t.getSeatsRowNum());
-    stmt.setInt(3, t.getSeatsColumnNum());
-    int row = stmt.executeUpdate();
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              if (t == null) {
+                throw new SQLException("Empty Auditorium");
+              }
+              PrepareStatements.setPreparedStatementParams(
+                  conn.prepareStatement(
+                      "INSERT INTO `auditoriums` (`auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?)"),
+                  t.getAuditoriumNum(),
+                  t.getSeatsRowNum(),
+                  t.getSeatsColumnNum())
+                  .executeUpdate();
+            });
   }
 
   @Override
   public void update(Auditorium t) throws SQLException {
-    if (t == null) {
-      throw new SQLException("Rỗng");
-    }
-    String query = "UPDATE `auditoriums` SET `auditorium_num` = ?, `seats_row_num` = ?, `seats_column_num` = ? WHERE `id` = ?";
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              if (t == null) {
+                throw new SQLException("Rỗng");
+              }
 
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setInt(1, t.getAuditoriumNum());
-    stmt.setInt(2, t.getSeatsRowNum());
-    stmt.setInt(3, t.getSeatsColumnNum());
-    int row = stmt.executeUpdate();
-
+              PrepareStatements.setPreparedStatementParams(
+                  conn.prepareStatement(
+                      "UPDATE `auditoriums` SET `auditorium_num` = ?, `seats_row_num` = ?, `seats_column_num` = ? WHERE `id` = ?"),
+                  t.getAuditoriumNum(),
+                  t.getSeatsRowNum(),
+                  t.getSeatsColumnNum(),
+                  t.getId())
+                  .executeUpdate();
+            });
   }
 
   @Override
   public void delete(Auditorium t) throws SQLException {
-    PreparedStatement stmt = conn.prepareStatement("DELETE FROM `auditoriums` WHERE `id` = ?");
-    stmt.setInt(1, t.getId());
-    stmt.executeUpdate();
+    transactionManager.getTransaction().run(conn -> deleteById(t.getId()));
   }
 
   @Override
   public void deleteById(int id) throws SQLException {
-    PreparedStatement stmt = conn.prepareStatement("DELETE FROM `auditoriums` WHERE `id` = ?");
-    stmt.setInt(1, id);
-    stmt.executeUpdate();
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              PreparedStatement stmt = conn.prepareStatement("DELETE FROM `auditoriums` WHERE `id` = ?");
+              stmt.setInt(1, id);
+              stmt.executeUpdate();
+            });
   }
 
-  public ArrayList<Auditorium> searchByKey(String key, String word) throws SQLException {
-    ArrayList<Auditorium> auditoriums = new ArrayList<>();
-    Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `auditoriums` WHERE " + key + " LIKE '%" + word + "%';";
-    ResultSet rs = statement.executeQuery(query);
-    while (rs.next()) {
-      Auditorium auditorium = Auditorium.getFromResultSet(rs);
-      auditoriums.add(auditorium);
-    }
-    return auditoriums;
+  public List<Auditorium> searchByKey(String key, String word) throws SQLException {
+    return transactionManager
+        .getTransaction()
+        .queryList(
+            conn -> PrepareStatements.setPreparedStatementParams(
+                conn.prepareStatement("SELECT * FROM `auditoriums` WHERE ? LIKE '%?%'"),
+                key,
+                word)
+                .executeQuery(),
+            Auditorium::getFromResultSet);
   }
 
   public static AuditoriumDao getInstance() {
     if (instance == null) {
-      instance = new AuditoriumDao();
+      synchronized (AuditoriumDao.class) {
+        if (instance == null) {
+          instance = new AuditoriumDao();
+        }
+      }
     }
     return instance;
   }
-
 }

@@ -12,10 +12,10 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class UserManagerController extends ManagerController {
-  UserDao userDao = new UserDao();
+  UserDao userDao = UserDao.getInstance();
   UserPopupController popupController = new UserPopupController();
 
   public UserManagerController() {
@@ -70,7 +70,7 @@ public class UserManagerController extends ManagerController {
   @Override
   public void updateData() {
     try {
-      ArrayList<User> users = userDao.getAll();
+      List<User> users = userDao.getAll();
       System.out.println(users);
       view.setTableData(users);
     } catch (Exception e) {
@@ -81,7 +81,7 @@ public class UserManagerController extends ManagerController {
   @Override
   public void actionSearch() {
     try {
-      ArrayList<User> users = userDao.searchByKey(view.getCboSearchField().getSelectedItem().toString(),
+      List<User> users = userDao.searchByKey(view.getCboSearchField().getSelectedItem().toString(),
           String.valueOf(view.getTxtSearch().getText()));
       view.setTableData(users);
     } catch (Exception e) {

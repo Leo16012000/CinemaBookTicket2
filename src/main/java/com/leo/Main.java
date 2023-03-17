@@ -3,7 +3,7 @@ package com.leo;
 import com.leo.controllers.LoginController;
 import com.leo.views.LoginView;
 
-public class Customer {
+public class Main {
   public static void main(String[] args) {
     try {
       javax.swing.UIManager.setLookAndFeel("com.formdev.flatlaf.FlatIntelliJLaf");

@@ -83,7 +83,8 @@ public class ShowtimeDao extends Dao<Showtime> {
   public ArrayList<Showtime> searchByKey(String key, String word) throws SQLException {
     ArrayList<Showtime> showtimes = new ArrayList<>();
     Statement statement = conn.createStatement();
-    String query = "SELECT * FROM `showtimes` WHERE " + key + " LIKE '%" + word + "%';";
+    String query = "SELECT * FROM `showtimes` inner join movies on showtimes.movie_id = movies.id inner join auditoriums on showtimes.auditorium_id = auditoriums.id WHERE " + key + " LIKE '%" + word + "%'";
+    System.out.println(query);
     ResultSet rs = statement.executeQuery(query);
     while (rs.next()) {
       Showtime seat = Showtime.getFromResultSet(rs);

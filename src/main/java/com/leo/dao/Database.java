@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-// TODO: Use connection pooling
 public class Database {
 
   private static final LoadConfig cfg = LoadConfig.getInstance();
@@ -52,5 +51,4 @@ public class Database {
     }
     return instance;
   }
-
 }

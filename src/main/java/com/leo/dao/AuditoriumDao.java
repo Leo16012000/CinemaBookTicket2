@@ -41,7 +41,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
                   conn.prepareStatement(
                       "INSERT INTO `auditoriums` (`id`, `auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?, ?)"),
                   t.getId(),
-                      t.getAuditoriumNum(),
+                  t.getAuditoriumNum(),
                   t.getSeatsRowNum(),
                   t.getSeatsColumnNum())
                   .executeUpdate();
@@ -98,7 +98,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
     transactionManager
         .getTransaction()
         .run(
-            conn ->  {
+            conn -> {
               PreparedStatement stmt = conn.prepareStatement("DELETE FROM `auditoriums` WHERE `id` = ?");
               stmt.setInt(1, id);
               stmt.executeUpdate();

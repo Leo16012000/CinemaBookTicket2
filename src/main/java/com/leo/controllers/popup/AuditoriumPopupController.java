@@ -7,7 +7,7 @@ import com.leo.models.Auditorium;
 import com.leo.views.popup.AuditoriumPopupView;
 
 public class AuditoriumPopupController {
-  AuditoriumDao auditoriumDao = new AuditoriumDao();
+  AuditoriumDao auditoriumDao = AuditoriumDao.getInstance();
   JFrame previousView;
 
   public void add(AuditoriumPopupView view, SuccessCallback sc, ErrorCallback ec) {

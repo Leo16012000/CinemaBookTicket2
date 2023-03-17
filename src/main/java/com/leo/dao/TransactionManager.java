@@ -1,7 +1,6 @@
 package com.leo.dao;
 
 import com.leo.utils.LoadConfig;
-import com.sun.javafx.binding.StringFormatter;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
@@ -21,9 +20,8 @@ public class TransactionManager {
         user = cfg.getProperty("database.username"),
         password = cfg.getProperty("database.password"),
         name = cfg.getProperty("database.name");
-    String url = String.format(
-        "jdbc:%s://%s:%s/%s?%s",
-        cfg.getProperty("database.jdbc"), host, port, name, connectProperty);
+    String url = "jdbc:" + cfg.getProperty("database.jdbc") + "://" + host + ":" + port + "/" + name + "?"
+        + connectProperty;
     hikariCfg.setJdbcUrl(url);
     hikariCfg.setUsername(user);
     hikariCfg.setPassword(password);
@@ -59,7 +57,7 @@ public class TransactionManager {
     return INSTANCE;
   }
 
-  public static interface SqlFunction<T, K> {
+  public static interface TxFunction<T, K> {
     K apply(T arg) throws Exception;
   }
 

@@ -12,11 +12,10 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserManagerController extends ManagerController {
-  UserDao userDao = new UserDao();
+  UserDao userDao = UserDao.getInstance();
   UserPopupController popupController = new UserPopupController();
 
   public UserManagerController() {

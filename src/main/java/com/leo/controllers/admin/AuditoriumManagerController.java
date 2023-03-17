@@ -11,7 +11,6 @@ import com.leo.views.popup.AuditoriumPopupView;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AuditoriumManagerController extends ManagerController {
@@ -20,7 +19,7 @@ public class AuditoriumManagerController extends ManagerController {
 
   public AuditoriumManagerController() {
     super();
-    auditoriumDao = new AuditoriumDao();
+    auditoriumDao = AuditoriumDao.getInstance();
     popupController = new AuditoriumPopupController();
   }
 

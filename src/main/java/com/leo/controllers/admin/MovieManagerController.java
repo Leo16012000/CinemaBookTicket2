@@ -11,7 +11,6 @@ import com.leo.views.popup.MoviePopupView;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MovieManagerController extends ManagerController {
@@ -20,7 +19,7 @@ public class MovieManagerController extends ManagerController {
 
   public MovieManagerController() {
     super();
-    movieDao = new MovieDao();
+    movieDao = MovieDao.getInstance();
     popupController = new MoviePopupController();
   }
 

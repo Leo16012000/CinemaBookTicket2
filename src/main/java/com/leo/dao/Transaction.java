@@ -60,8 +60,7 @@ public class Transaction implements AutoCloseable {
   public <T> T query(TxFunction<Connection, ResultSet> query, TxFunction<ResultSet, T> mapper)
       throws SQLException {
     start();
-    try {
-      ResultSet rs = query.apply(con);
+    try (ResultSet rs = query.apply(con)) {
       T ret = null;
       if (rs.next()) {
         ret = mapper.apply(rs);
@@ -81,8 +80,7 @@ public class Transaction implements AutoCloseable {
       TxFunction<Connection, ResultSet> query, TxFunction<ResultSet, T> mapper)
       throws SQLException {
     start();
-    try {
-      ResultSet rs = query.apply(con);
+    try (ResultSet rs = query.apply(con)) {
       List<T> rets = new ArrayList<>();
       while (rs.next()) {
         rets.add(mapper.apply(rs));

@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 public class SessionManager {
 
   public static Session session;
-  static SessionDao sessionDao = new SessionDao();
+  static SessionDao sessionDao = SessionDao.getInstance();
 
   public SessionManager() {
   }

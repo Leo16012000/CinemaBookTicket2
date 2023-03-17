@@ -8,7 +8,7 @@ import com.leo.utils.UserPermission;
 import com.leo.views.popup.UserPopupView;
 
 public class UserPopupController {
-  UserDao userDao = new UserDao();
+  UserDao userDao = UserDao.getInstance();
   JFrame previousView;
 
   public void add(UserPopupView view, SuccessCallback sc, ErrorCallback ec) {

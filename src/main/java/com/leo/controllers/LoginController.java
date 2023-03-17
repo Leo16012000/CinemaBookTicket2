@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class LoginController {
 
   private LoginView view;
-  UserDao userDao = new UserDao();
+  UserDao userDao = UserDao.getInstance();
 
   public LoginController(LoginView view) {
     this.view = view;

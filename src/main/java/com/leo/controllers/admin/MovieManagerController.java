@@ -12,6 +12,7 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieManagerController extends ManagerController {
   private MovieDao movieDao;
@@ -66,8 +67,8 @@ public class MovieManagerController extends ManagerController {
   @Override
   public void updateData() {
     try {
-      ArrayList<Movie> movies = movieDao.getAll();
-      ArrayList<Movie> movies2 = MovieDao.getInstance().getAll();
+      List<Movie> movies = movieDao.getAll();
+      List<Movie> movies2 = MovieDao.getInstance().getAll();
       System.out.println(movies);
       view.setTableData(movies);
     } catch (Exception e) {
@@ -78,7 +79,7 @@ public class MovieManagerController extends ManagerController {
   @Override
   public void actionSearch() {
     try {
-      ArrayList<Movie> movies = movieDao.searchByKey(view.getCboSearchField().getSelectedItem().toString(),
+      List<Movie> movies = movieDao.searchByKey(view.getCboSearchField().getSelectedItem().toString(),
           String.valueOf(view.getTxtSearch().getText()));
       view.setTableData(movies);
     } catch (Exception e) {

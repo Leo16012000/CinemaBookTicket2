@@ -12,6 +12,7 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AuditoriumManagerController extends ManagerController {
   private AuditoriumDao auditoriumDao;
@@ -66,7 +67,7 @@ public class AuditoriumManagerController extends ManagerController {
   @Override
   public void updateData() {
     try {
-      ArrayList<Auditorium> auditoriums = auditoriumDao.getAll();
+      List<Auditorium> auditoriums = auditoriumDao.getAll();
       System.out.println(auditoriums);
       view.setTableData(auditoriums);
     } catch (Exception e) {
@@ -77,7 +78,7 @@ public class AuditoriumManagerController extends ManagerController {
   @Override
   public void actionSearch() {
     try {
-      ArrayList<Auditorium> auditoriums = auditoriumDao.searchByKey(
+      List<Auditorium> auditoriums = auditoriumDao.searchByKey(
           view.getCboSearchField().getSelectedItem().toString(), String.valueOf(view.getTxtSearch().getText()));
       view.setTableData(auditoriums);
     } catch (Exception e) {

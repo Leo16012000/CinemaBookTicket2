@@ -3,11 +3,21 @@ package com.leo.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Dao<T> {
-  Connection conn = Database.getInstance().getConnection();
 
-  public abstract ArrayList<T> getAll() throws SQLException;
+  protected TransactionManager transactionManager;
+
+  protected Dao(TransactionManager transactionManager) {
+    this.transactionManager = transactionManager;
+  }
+
+  protected Dao() {
+    this(TransactionManager.getInstance());
+  }
+
+  public abstract List<T> getAll() throws SQLException;
 
   public abstract T get(int id) throws SQLException;
 

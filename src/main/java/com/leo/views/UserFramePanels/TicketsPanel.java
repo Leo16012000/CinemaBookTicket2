@@ -14,17 +14,18 @@ import java.util.Map;
 import com.leo.dao.SeatDao;
 import com.leo.dao.AuditoriumDao;
 import com.leo.dao.ShowtimeDao;
+import java.util.List;
 
 public class TicketsPanel extends JPanel {
   public JButton back, save;
-  private ArrayList<Seat> seats;
+  private List<Seat> seats;
   private Showtime showtime;
   private Auditorium auditorium;
   private Movie movie;
   private JLabel film_title, session_title, screen;
   private Map<JButton, Seat> ticketsBtns = new LinkedHashMap<JButton, Seat>();
-  private ArrayList<Integer> selected = new ArrayList<Integer>();
-  private ArrayList<Integer> isSold = new ArrayList<Integer>();
+  private List<Integer> selected = new ArrayList<Integer>();
+  private List<Integer> isSold = new ArrayList<Integer>();
 
   public TicketsPanel(int auditoriumId, int showtimeId) throws SQLException {
     this.seats = SeatDao.getInstance().getByAuditoriumIdAndShowtimeId(auditoriumId, showtimeId);
@@ -125,7 +126,7 @@ public class TicketsPanel extends JPanel {
     film_title.setText(movie.getTitle() + " (" + movie.getDurationTime() + " toi thieu)");
   }
 
-  public ArrayList<Integer> getSelected() {
+  public List<Integer> getSelected() {
     return selected;
   }
 }

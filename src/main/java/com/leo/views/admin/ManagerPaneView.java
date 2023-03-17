@@ -3,6 +3,7 @@ package com.leo.views.admin;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -22,7 +23,7 @@ import com.leo.utils.ErrorPopup;
 public abstract class ManagerPaneView<T extends Model> extends JPanel {
 
   DefaultTableModel tableModel = new DefaultTableModel();
-  ArrayList<T> tableData = new ArrayList<>();
+  List<T> tableData = new ArrayList<>();
 
   public ManagerPaneView() {
     initComponents();
@@ -90,11 +91,11 @@ public abstract class ManagerPaneView<T extends Model> extends JPanel {
     return btnSync;
   }
 
-  public ArrayList<T> getTableData() {
+  public List<T> getTableData() {
     return tableData;
   }
 
-  public void setTableData(ArrayList<T> tableData) {
+  public void setTableData(List<T> tableData) {
     this.tableData = tableData;
     renderTable();
   }

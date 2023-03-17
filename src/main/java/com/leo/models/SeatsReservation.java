@@ -4,6 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class SeatsReservation {
   private int id, seatId, reservationId;
   private Timestamp createdAt;
@@ -15,37 +20,5 @@ public class SeatsReservation {
     o.setReservationId(rs.getInt("reservationId"));
     o.setCreatedAt(rs.getTimestamp("createdAt"));
     return o;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public int getSeatId() {
-    return seatId;
-  }
-
-  public void setSeatId(int seatId) {
-    this.seatId = seatId;
-  }
-
-  public int getReservationId() {
-    return reservationId;
-  }
-
-  public void setReservationId(int reservationId) {
-    this.reservationId = reservationId;
-  }
-
-  public Timestamp getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Timestamp createdAt) {
-    this.createdAt = createdAt;
   }
 }

@@ -4,6 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Auditorium extends Model {
   private int id, auditoriumNum, seatsRowNum, seatsColumnNum;
   private Timestamp createdAt;
@@ -18,49 +23,8 @@ public class Auditorium extends Model {
     return o;
   }
 
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public int getAuditoriumNum() {
-    return auditoriumNum;
-  }
-
-  public void setAuditoriumNum(int auditoriumNum) {
-    this.auditoriumNum = auditoriumNum;
-  }
-
-  public Timestamp getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Timestamp createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public int getSeatsRowNum() {
-    return seatsRowNum;
-  }
-
-  public void setSeatsRowNum(int seatsRowNum) {
-    this.seatsRowNum = seatsRowNum;
-  }
-
-  public int getSeatsColumnNum() {
-    return seatsColumnNum;
-  }
-
-  public void setSeatsColumnNum(int seatsColumnNum) {
-    this.seatsColumnNum = seatsColumnNum;
-  }
-
   @Override
   public String toString() {
-    // TODO Auto-generated method stub
     return auditoriumNum + " " + seatsRowNum + " " + seatsColumnNum + " " + createdAt;
   }
 

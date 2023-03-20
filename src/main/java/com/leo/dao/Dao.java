@@ -17,13 +17,13 @@ public abstract class Dao<T> {
 
   public abstract List<T> getAll() throws SQLException;
 
-  public abstract T get(int id) throws SQLException;
+  public abstract T get(Integer id) throws SQLException;
 
-  public abstract void save(T t) throws SQLException;
+  public abstract Integer save(T t) throws SQLException;
 
   public abstract void update(T t) throws SQLException;
 
   public abstract void delete(T t) throws SQLException;
 
-  public abstract void deleteById(int id) throws SQLException;
+  public abstract void deleteById(Integer id) throws SQLException;
 }

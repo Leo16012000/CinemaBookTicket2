@@ -2,7 +2,10 @@ package com.leo.dao;
 
 import com.leo.models.Seat;
 import com.leo.utils.PrepareStatements;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class SeatDao extends Dao<Seat> {
@@ -18,7 +21,7 @@ public class SeatDao extends Dao<Seat> {
   }
 
   @Override
-  public Seat get(int id) throws SQLException {
+  public Seat get(Integer id) throws SQLException {
     return transactionManager
         .getTransaction()
         .query(
@@ -29,22 +32,24 @@ public class SeatDao extends Dao<Seat> {
   }
 
   @Override
-  public void save(Seat t) throws SQLException {
-    transactionManager
+  public Integer save(Seat t) throws SQLException {
+    return transactionManager
         .getTransaction()
-        .run(
+        .query(
             conn -> {
               if (t == null) {
                 throw new SQLException("Empty Seat");
               }
-              PrepareStatements.setPreparedStatementParams(
+              PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `seats` (`auditorium_id`, `seat_num`, `seat_row`) VALUES (?, ?, ?)"),
+                      "INSERT INTO `seats` (`auditorium_id`, `seat_num`, `seat_row`) VALUES (?, ?, ?)",
+                      Statement.RETURN_GENERATED_KEYS),
                   t.getAuditoriumId(),
                   t.getSeatColumn(),
-                  t.getSeatRow())
-                  .executeUpdate();
-            });
+                  t.getSeatRow());
+              stmt.executeUpdate();
+              return stmt.getGeneratedKeys();
+            }, rs -> rs.getInt(1));
   }
 
   @Override
@@ -72,7 +77,7 @@ public class SeatDao extends Dao<Seat> {
   }
 
   @Override
-  public void deleteById(int id) throws SQLException {
+  public void deleteById(Integer id) throws SQLException {
     transactionManager
         .getTransaction()
         .run(

@@ -4,6 +4,7 @@ import com.leo.models.User;
 import com.leo.utils.PrepareStatements;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class UserDao extends Dao<User> {
@@ -19,7 +20,7 @@ public class UserDao extends Dao<User> {
   }
 
   @Override
-  public User get(int id) throws SQLException {
+  public User get(Integer id) throws SQLException {
     return transactionManager
         .getTransaction()
         .query(
@@ -40,23 +41,25 @@ public class UserDao extends Dao<User> {
   }
 
   @Override
-  public void save(User t) throws SQLException {
-    transactionManager
+  public Integer save(User t) throws SQLException {
+    return transactionManager
         .getTransaction()
-        .run(
+        .query(
             conn -> {
               if (t == null) {
                 throw new SQLException("Empty User");
               }
-              PrepareStatements.setPreparedStatementParams(
+              PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO users (`name`, `username`, `password`, permission) VALUES (?, ?, ?, ?)"),
+                      "INSERT INTO users (`name`, `username`, `password`, permission) VALUES (?, ?, ?, ?)",
+                      Statement.RETURN_GENERATED_KEYS),
                   t.getName(),
                   t.getUsername(),
                   t.getPassword(),
-                  t.getPermission().getCode())
-                  .executeUpdate();
-            });
+                  t.getPermission().getCode());
+              stmt.executeUpdate();
+              return stmt.getGeneratedKeys();
+            }, rs -> rs.getInt(1));
   }
 
   @Override
@@ -90,7 +93,7 @@ public class UserDao extends Dao<User> {
   }
 
   @Override
-  public void deleteById(int id) throws SQLException {
+  public void deleteById(Integer id) throws SQLException {
     transactionManager
         .getTransaction()
         .run(

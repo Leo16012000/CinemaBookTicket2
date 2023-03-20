@@ -2,7 +2,10 @@ package com.leo.dao;
 
 import com.leo.models.Reservation;
 import com.leo.utils.PrepareStatements;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class ReservationDao extends Dao<Reservation> {
@@ -16,7 +19,7 @@ public class ReservationDao extends Dao<Reservation> {
   }
 
   @Override
-  public Reservation get(int id) throws SQLException {
+  public Reservation get(Integer id) throws SQLException {
     return transactionManager
         .getTransaction()
         .query(
@@ -27,21 +30,23 @@ public class ReservationDao extends Dao<Reservation> {
   }
 
   @Override
-  public void save(Reservation t) throws SQLException {
-    transactionManager
+  public Integer save(Reservation t) throws SQLException {
+    return transactionManager
         .getTransaction()
-        .run(
+        .query(
             conn -> {
               if (t == null) {
                 throw new SQLException("Empty Reservation");
               }
-              PrepareStatements.setPreparedStatementParams(
+              PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `reservations` (`userId`, `showtime_id`) VALUES (?, ?)"),
+                      "INSERT INTO `reservations` (`userId`, `showtime_id`) VALUES (?, ?)",
+                      Statement.RETURN_GENERATED_KEYS),
                   t.getUserId(),
-                  t.getShowtimeId())
-                  .executeUpdate();
-            });
+                  t.getShowtimeId());
+              stmt.executeUpdate();
+              return stmt.getGeneratedKeys();
+            }, rs -> rs.getInt(1));
   }
 
   @Override
@@ -69,7 +74,7 @@ public class ReservationDao extends Dao<Reservation> {
   }
 
   @Override
-  public void deleteById(int id) throws SQLException {
+  public void deleteById(Integer id) throws SQLException {
     transactionManager
         .getTransaction()
         .run(

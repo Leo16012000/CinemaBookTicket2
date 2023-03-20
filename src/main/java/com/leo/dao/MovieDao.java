@@ -2,7 +2,10 @@ package com.leo.dao;
 
 import com.leo.models.Movie;
 import com.leo.utils.PrepareStatements;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class MovieDao extends Dao<Movie> {
@@ -18,7 +21,7 @@ public class MovieDao extends Dao<Movie> {
   }
 
   @Override
-  public Movie get(int id) throws SQLException {
+  public Movie get(Integer id) throws SQLException {
     return transactionManager
         .getTransaction()
         .query(
@@ -29,23 +32,25 @@ public class MovieDao extends Dao<Movie> {
   }
 
   @Override
-  public void save(Movie t) throws SQLException {
-    transactionManager
+  public Integer save(Movie t) throws SQLException {
+    return transactionManager
         .getTransaction()
-        .run(
+        .query(
             conn -> {
               if (t == null) {
                 throw new SQLException("Empty Movie");
               }
-              PrepareStatements.setPreparedStatementParams(
+              PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `movies` (`price`, `duration_time`, `title`, `country`) VALUES (?, ?, ?, ?)"),
+                      "INSERT INTO `movies` (`price`, `duration_time`, `title`, `country`) VALUES (?, ?, ?, ?)",
+                      Statement.RETURN_GENERATED_KEYS),
                   t.getPrice(),
                   t.getDurationTime(),
                   t.getTitle(),
-                  t.getCountry())
-                  .executeUpdate();
-            });
+                  t.getCountry());
+              stmt.executeUpdate();
+              return stmt.getGeneratedKeys();
+            }, rs -> rs.getInt(1));
   }
 
   @Override
@@ -75,7 +80,7 @@ public class MovieDao extends Dao<Movie> {
   }
 
   @Override
-  public void deleteById(int id) throws SQLException {
+  public void deleteById(Integer id) throws SQLException {
     transactionManager
         .getTransaction()
         .run(

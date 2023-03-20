@@ -4,6 +4,7 @@ import com.leo.models.Auditorium;
 import com.leo.utils.PrepareStatements;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class AuditoriumDao extends Dao<Auditorium> {
@@ -19,7 +20,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
   }
 
   @Override
-  public Auditorium get(int id) throws SQLException {
+  public Auditorium get(Integer id) throws SQLException {
     return transactionManager
         .getTransaction()
         .query(
@@ -28,43 +29,25 @@ public class AuditoriumDao extends Dao<Auditorium> {
                 .executeQuery(),
             Auditorium::getFromResultSet);
   }
-
-  public void saveTest(Auditorium t) throws SQLException {
-    transactionManager
-        .getTransaction()
-        .run(
-            conn -> {
-              if (t == null) {
-                throw new SQLException("Empty Auditorium");
-              }
-              PrepareStatements.setPreparedStatementParams(
-                  conn.prepareStatement(
-                      "INSERT INTO `auditoriums` (`id`, `auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?, ?)"),
-                  t.getId(),
-                  t.getAuditoriumNum(),
-                  t.getSeatsRowNum(),
-                  t.getSeatsColumnNum())
-                  .executeUpdate();
-            });
-  }
-
   @Override
-  public void save(Auditorium t) throws SQLException {
-    transactionManager
+  public Integer save(Auditorium t) throws SQLException {
+    return transactionManager
         .getTransaction()
-        .run(
+        .query(
             conn -> {
               if (t == null) {
                 throw new SQLException("Empty Auditorium");
               }
-              PrepareStatements.setPreparedStatementParams(
+              PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `auditoriums` (`auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?)"),
+                      "INSERT INTO `auditoriums` (`auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?)",
+                      Statement.RETURN_GENERATED_KEYS),
                   t.getAuditoriumNum(),
                   t.getSeatsRowNum(),
-                  t.getSeatsColumnNum())
-                  .executeUpdate();
-            });
+                  t.getSeatsColumnNum());
+              stmt.executeUpdate();
+              return stmt.getGeneratedKeys();
+            }, rs->rs.getInt(1));
   }
 
   @Override
@@ -94,7 +77,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
   }
 
   @Override
-  public void deleteById(int id) throws SQLException {
+  public void deleteById(Integer id) throws SQLException {
     transactionManager
         .getTransaction()
         .run(

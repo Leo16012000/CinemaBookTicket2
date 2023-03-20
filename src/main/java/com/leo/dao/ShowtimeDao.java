@@ -2,7 +2,10 @@ package com.leo.dao;
 
 import com.leo.models.Showtime;
 import com.leo.utils.PrepareStatements;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class ShowtimeDao extends Dao<Showtime> {
@@ -18,7 +21,7 @@ public class ShowtimeDao extends Dao<Showtime> {
   }
 
   @Override
-  public Showtime get(int id) throws SQLException {
+  public Showtime get(Integer id) throws SQLException {
     return transactionManager
         .getTransaction()
         .query(
@@ -29,24 +32,24 @@ public class ShowtimeDao extends Dao<Showtime> {
   }
 
   @Override
-  public void save(Showtime t) throws SQLException {
-    transactionManager
+  public Integer save(Showtime t) throws SQLException {
+    return transactionManager
         .getTransaction()
-        .run(
+        .query(
             conn -> {
               if (t == null) {
                 throw new SQLException("Empty Showtime");
               }
-              System.out.println("Update :" + t);
-              PrepareStatements.setPreparedStatementParams(
+              PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `showtimes` (`start_time`, `end_time`, `movie_id`, auditorium_id) VALUES (?, ?, ?, ?)"),
+                      "INSERT INTO `showtimes` (`start_time`, `end_time`, `movie_id`, `auditorium_id`) VALUES (?, ?, ?, ?)",
+                      Statement.RETURN_GENERATED_KEYS),
                   t.getStartTime(),
                   t.getEndTime(),
-                  t.getMovieId(), t.getAuditoriumId())
-                  .executeUpdate();
-            });
-
+                  t.getMovieId(), t.getAuditoriumId());
+              stmt.executeUpdate();
+              return stmt.getGeneratedKeys();
+            }, rs -> rs.getInt(1));
   }
 
   @Override
@@ -78,7 +81,7 @@ public class ShowtimeDao extends Dao<Showtime> {
   }
 
   @Override
-  public void deleteById(int id) throws SQLException {
+  public void deleteById(Integer id) throws SQLException {
     transactionManager
         .getTransaction()
         .run(

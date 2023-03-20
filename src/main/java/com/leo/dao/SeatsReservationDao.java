@@ -4,9 +4,10 @@ import com.leo.models.SeatsReservation;
 import com.leo.utils.PrepareStatements;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
-public class SeatsReservationDao extends Dao<SeatsReservation> {
+public class SeatsReservationDao extends Dao<Integer, SeatsReservation> {
 
   @Override
   public List<SeatsReservation> getAll() throws SQLException {
@@ -18,7 +19,7 @@ public class SeatsReservationDao extends Dao<SeatsReservation> {
   }
 
   @Override
-  public SeatsReservation get(int id) throws SQLException {
+  public SeatsReservation get(Integer id) throws SQLException {
     return transactionManager
         .getTransaction()
         .query(
@@ -29,19 +30,23 @@ public class SeatsReservationDao extends Dao<SeatsReservation> {
   }
 
   @Override
-  public void save(SeatsReservation t) throws SQLException {
-    transactionManager
+  public Integer save(SeatsReservation t) throws SQLException {
+    return transactionManager
         .getTransaction()
-        .run(
-                    conn -> { if (t == null) {
+        .query(
+            conn -> {
+              if (t == null) {
                 throw new SQLException("Empty SeatsReservation");
               }
-              PrepareStatements.setPreparedStatementParams(
+              PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `seats_reservation` (`seat_id`, `reservation_id`) VALUES (?, ?)"),
+                      "INSERT INTO `seats_reservation` (`seat_id`, `reservation_id`) VALUES (?, ?)",
+                      Statement.RETURN_GENERATED_KEYS),
                   t.getSeatId(),
-                  t.getReservationId())
-                              .executeUpdate();});
+                  t.getReservationId());
+              stmt.executeUpdate();
+              return stmt.getGeneratedKeys();
+            }, rs -> rs.getInt(0));
 
   }
 
@@ -50,7 +55,8 @@ public class SeatsReservationDao extends Dao<SeatsReservation> {
     transactionManager
         .getTransaction()
         .run(
-                    conn -> { if (t == null) {
+            conn -> {
+              if (t == null) {
                 throw new SQLException("SeatsReservation rỗng");
               }
               PrepareStatements.setPreparedStatementParams(
@@ -58,7 +64,8 @@ public class SeatsReservationDao extends Dao<SeatsReservation> {
                       "UPDATE `seats_reservation` SET `seat_id` = ?, `reservation_id` = ? WHERE `id` = ?"),
                   t.getSeatId(),
                   t.getReservationId())
-                              .executeUpdate();});
+                  .executeUpdate();
+            });
 
   }
 
@@ -71,13 +78,15 @@ public class SeatsReservationDao extends Dao<SeatsReservation> {
   }
 
   @Override
-  public void deleteById(int id) throws SQLException {
+  public void deleteById(Integer id) throws SQLException {
     transactionManager
         .getTransaction()
         .run(
-                    conn -> {  PreparedStatement stmt = conn.prepareStatement("DELETE FROM `seats_reservation` WHERE `id` = ?");
+            conn -> {
+              PreparedStatement stmt = conn.prepareStatement("DELETE FROM `seats_reservation` WHERE `id` = ?");
               stmt.setInt(1, id);
-                      stmt.executeUpdate();});
+              stmt.executeUpdate();
+            });
   }
 
   public List<SeatsReservation> searchByKey(String key, String word) throws SQLException {

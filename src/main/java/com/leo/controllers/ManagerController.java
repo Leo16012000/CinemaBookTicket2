@@ -7,6 +7,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 /**
  *
@@ -33,7 +34,7 @@ public abstract class ManagerController {
     }
   }
 
-  public abstract void actionAdd();
+  public abstract void actionAdd() throws SQLException;
 
   public abstract void actionSearch();
 
@@ -69,7 +70,13 @@ public abstract class ManagerController {
       }
     });
     // Sự kiện bấm nút thêm
-    view.getBtnAdd().addActionListener(evt -> actionAdd());
+    view.getBtnAdd().addActionListener(evt -> {
+      try {
+        actionAdd();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    });
     // Sự kiện bấm nút sửa
     view.getBtnEdit().addActionListener(evt -> actionEdit());
     // Sự kiện bấm nút xóa

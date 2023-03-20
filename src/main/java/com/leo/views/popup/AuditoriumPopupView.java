@@ -16,14 +16,9 @@ public class AuditoriumPopupView extends JFrame implements PopupView {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private JButton btnCancel;
   private JButton btnOK;
-  private JComboBox<String> cboPermission;
   private JLabel jLabel1;
   private JLabel jLabel2;
   private JLabel jLabel3;
-  private JLabel jLabel4;
-  private JLabel jLabel5;
-  private JLabel jLabel6;
-  private JLabel jLabel7;
   private JPanel jPanel1;
   private JPanel jPanel2;
   private JPanel jPanel3;
@@ -44,16 +39,12 @@ public class AuditoriumPopupView extends JFrame implements PopupView {
     jLabel1 = new JLabel();
     jLabel2 = new JLabel();
     jLabel3 = new JLabel();
-    jLabel4 = new JLabel();
-    jLabel5 = new JLabel();
-    jLabel6 = new JLabel();
-    jPanel2 = new JPanel();
     jPanel1 = new JPanel();
+    jPanel2 = new JPanel();
     lbTitle = new JLabel();
     txtNumber = new JTextField();
     txtRowsNum = new JTextField();
     txtColumnsNum = new JTextField();
-    cboPermission = new JComboBox<>();
     jPanel3 = new javax.swing.JPanel();
     btnOK = new JButton();
     btnCancel = new JButton();
@@ -154,24 +145,12 @@ public class AuditoriumPopupView extends JFrame implements PopupView {
     return txtNumber;
   }
 
-  public void setTxtNumber(JTextField txtNumber) {
-    this.txtNumber = txtNumber;
-  }
-
   public JTextField getTxtRowsNum() {
     return txtRowsNum;
   }
 
-  public void setTxtRowsNum(JTextField txtRowsNum) {
-    this.txtRowsNum = txtRowsNum;
-  }
-
   public JTextField getTxtColumnsNum() {
     return txtColumnsNum;
-  }
-
-  public void setTxtColumnsNum(JTextField txtColumnsNum) {
-    this.txtColumnsNum = txtColumnsNum;
   }
 
   public void showError(String message) {
@@ -192,10 +171,6 @@ public class AuditoriumPopupView extends JFrame implements PopupView {
 
   public JButton getBtnCancel() {
     return btnCancel;
-  }
-
-  public JComboBox<String> getCboPermission() {
-    return cboPermission;
   }
 
   public JLabel getLbTitle() {

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class MovieDao extends Dao<Integer, Movie> {
+public class MovieDao extends Dao<Movie> {
   private static MovieDao instance;
 
   @Override
@@ -50,7 +50,7 @@ public class MovieDao extends Dao<Integer, Movie> {
                   t.getCountry());
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
-            }, rs -> rs.getInt(0));
+            }, rs -> rs.getInt(1));
   }
 
   @Override

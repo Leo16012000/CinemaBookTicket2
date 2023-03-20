@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class ShowtimeDao extends Dao<Integer, Showtime> {
+public class ShowtimeDao extends Dao<Showtime> {
   public static ShowtimeDao instance = null;
 
   @Override
@@ -42,15 +42,14 @@ public class ShowtimeDao extends Dao<Integer, Showtime> {
               }
               PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `showtimes` (`start_time`, `end_time`, `movie_id`) VALUES (?, ?, ?)",
+                      "INSERT INTO `showtimes` (`start_time`, `end_time`, `movie_id`, `auditorium_id`) VALUES (?, ?, ?, ?)",
                       Statement.RETURN_GENERATED_KEYS),
                   t.getStartTime(),
                   t.getEndTime(),
-                  t.getMovieId());
+                  t.getMovieId(), t.getAuditoriumId());
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
-            }, rs -> rs.getInt(0));
-
+            }, rs -> rs.getInt(1));
   }
 
   @Override
@@ -64,10 +63,11 @@ public class ShowtimeDao extends Dao<Integer, Showtime> {
               }
               PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "UPDATE `showtimes` SET `start_time` = ?, `end_time` = ?, `movie_id` = ? WHERE `id` = ?"),
+                      "UPDATE `showtimes` SET `start_time` = ?, `end_time` = ?, `movie_id` = ?, auditorium_id = ? WHERE `id` = ?"),
                   t.getStartTime(),
                   t.getEndTime(),
-                  t.getMovieId())
+                  t.getMovieId(),
+                  t.getAuditoriumId(), t.getId())
                   .executeUpdate();
             });
   }
@@ -94,7 +94,7 @@ public class ShowtimeDao extends Dao<Integer, Showtime> {
         .getTransaction()
         .queryList(
             conn -> PrepareStatements.setPreparedStatementParams(
-                conn.prepareStatement("SELECT * FROM `showtimes` WHERE ? LIKE '%?%'"), key, word)
+                conn.prepareStatement("SELECT * FROM `showtimes` inner join movies on showtimes.movie_id = movies.id inner join auditoriums on showtimes.auditorium_id = auditoriums.id WHERE ? LIKE '%?%'"), key, word)
                 .executeQuery(),
             Showtime::getFromResultSet);
   }

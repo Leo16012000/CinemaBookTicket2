@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class SeatDao extends Dao<Integer, Seat> {
+public class SeatDao extends Dao<Seat> {
   private static SeatDao instance = null;
 
   @Override
@@ -49,7 +49,7 @@ public class SeatDao extends Dao<Integer, Seat> {
                   t.getSeatRow());
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
-            }, rs -> rs.getInt(0));
+            }, rs -> rs.getInt(1));
   }
 
   @Override

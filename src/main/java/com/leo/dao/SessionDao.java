@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class SessionDao extends Dao<Integer, Session> {
+public class SessionDao extends Dao<Session> {
   private static SessionDao instance;
 
   @Override
@@ -33,10 +33,10 @@ public class SessionDao extends Dao<Integer, Session> {
             Session::getFromResultSet);
   }
 
-  public List<Session> getSession(int id) throws SQLException {
+  public Session getSession(int id) throws SQLException {
     return transactionManager
         .getTransaction()
-        .queryList(
+        .query(
             conn -> PrepareStatements.setPreparedStatementParams(
                 conn.prepareStatement(
                     "SELECT * FROM `session` WHERE `user_id` = ? ORDER BY `session`.`start_time` DESC"),
@@ -51,11 +51,11 @@ public class SessionDao extends Dao<Integer, Session> {
         .query(
             conn -> {
               if (t == null) {
-                throw new SQLException("Shipment rỗng");
+                throw new SQLException("Empty session");
               }
               PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `session` (`user_id`, `start_time`, `end_time` , `message`) VALUES (?, ?, ?, ?)",
+                      "INSERT INTO `session` (`user_id`, `start_time`, `end_time` , `message`) VALUES (?, ?, ?, ?);",
                       Statement.RETURN_GENERATED_KEYS),
                   t.getUserId(),
                   t.getStartTime(),
@@ -63,7 +63,7 @@ public class SessionDao extends Dao<Integer, Session> {
                   t.getMessage());
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
-            }, rs -> rs.getInt(0));
+            }, rs -> rs.getInt(1));
 
   }
 

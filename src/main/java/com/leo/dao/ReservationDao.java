@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class ReservationDao extends Dao<Integer, Reservation> {
+public class ReservationDao extends Dao<Reservation> {
   @Override
   public List<Reservation> getAll() throws SQLException {
     return transactionManager
@@ -46,7 +46,7 @@ public class ReservationDao extends Dao<Integer, Reservation> {
                   t.getShowtimeId());
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
-            }, rs -> rs.getInt(0));
+            }, rs -> rs.getInt(1));
   }
 
   @Override

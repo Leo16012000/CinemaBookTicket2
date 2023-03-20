@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class UserDao extends Dao<User> {
+public class UserDao extends Dao<Integer, User> {
   private static UserDao instance;
 
   @Override

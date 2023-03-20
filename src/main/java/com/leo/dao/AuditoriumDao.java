@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class AuditoriumDao extends Dao<Auditorium> {
+public class AuditoriumDao extends Dao<Integer, Auditorium> {
   public static AuditoriumDao instance = null;
 
   @Override
@@ -29,6 +29,26 @@ public class AuditoriumDao extends Dao<Auditorium> {
                 .executeQuery(),
             Auditorium::getFromResultSet);
   }
+
+  public void saveTest(Auditorium t) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              if (t == null) {
+                throw new SQLException("Empty Auditorium");
+              }
+              PrepareStatements.setPreparedStatementParams(
+                  conn.prepareStatement(
+                      "INSERT INTO `auditoriums` (`id`, `auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?, ?)"),
+                  t.getId(),
+                  t.getAuditoriumNum(),
+                  t.getSeatsRowNum(),
+                  t.getSeatsColumnNum())
+                  .executeUpdate();
+            });
+  }
+
   @Override
   public Integer save(Auditorium t) throws SQLException {
     return transactionManager
@@ -47,7 +67,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
                   t.getSeatsColumnNum());
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
-            }, rs->rs.getInt(1));
+            }, rs -> rs.getInt(1));
   }
 
   @Override

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class MovieDao extends Dao<Movie> {
+public class MovieDao extends Dao<Integer, Movie> {
   private static MovieDao instance;
 
   @Override

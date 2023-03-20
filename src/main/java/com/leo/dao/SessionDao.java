@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class SessionDao extends Dao<Session> {
+public class SessionDao extends Dao<Integer, Session> {
   private static SessionDao instance;
 
   @Override
@@ -33,10 +33,10 @@ public class SessionDao extends Dao<Session> {
             Session::getFromResultSet);
   }
 
-  public Session getSession(int id) throws SQLException {
+  public List<Session> getSession(int id) throws SQLException {
     return transactionManager
         .getTransaction()
-        .query(
+        .queryList(
             conn -> PrepareStatements.setPreparedStatementParams(
                 conn.prepareStatement(
                     "SELECT * FROM `session` WHERE `user_id` = ? ORDER BY `session`.`start_time` DESC"),
@@ -51,11 +51,11 @@ public class SessionDao extends Dao<Session> {
         .query(
             conn -> {
               if (t == null) {
-                throw new SQLException("Empty session");
+                throw new SQLException("Shipment rỗng");
               }
               PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `session` (`user_id`, `start_time`, `end_time` , `message`) VALUES (?, ?, ?, ?);",
+                      "INSERT INTO `session` (`user_id`, `start_time`, `end_time` , `message`) VALUES (?, ?, ?, ?)",
                       Statement.RETURN_GENERATED_KEYS),
                   t.getUserId(),
                   t.getStartTime(),

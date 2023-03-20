@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class SeatDao extends Dao<Seat> {
+public class SeatDao extends Dao<Integer, Seat> {
   private static SeatDao instance = null;
 
   @Override

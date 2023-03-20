@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class ReservationDao extends Dao<Reservation> {
+public class ReservationDao extends Dao<Integer, Reservation> {
   @Override
   public List<Reservation> getAll() throws SQLException {
     return transactionManager

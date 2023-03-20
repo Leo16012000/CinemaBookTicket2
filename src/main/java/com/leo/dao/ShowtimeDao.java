@@ -60,10 +60,11 @@ public class ShowtimeDao extends Dao<Showtime> {
               }
               PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "UPDATE `showtimes` SET `start_time` = ?, `end_time` = ?, `movie_id` = ? WHERE `id` = ?"),
+                      "UPDATE `showtimes` SET `start_time` = ?, `end_time` = ?, `movie_id` = ?, auditorium_id = ? WHERE `id` = ?"),
                   t.getStartTime(),
                   t.getEndTime(),
-                  t.getMovieId())
+                  t.getMovieId(),
+                  t.getAuditoriumId(), t.getId())
                   .executeUpdate();
             });
   }

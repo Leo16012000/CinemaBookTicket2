@@ -16,6 +16,7 @@ public class ShowtimeManagerView extends ManagerPaneView<Showtime> {
 
   @Override
   public void setTableModel() {
+    tableModel.addColumn("ID");
     tableModel.addColumn("Start time");
     tableModel.addColumn("End time");
     tableModel.addColumn("Auditorium number");

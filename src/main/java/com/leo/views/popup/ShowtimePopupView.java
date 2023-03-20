@@ -99,7 +99,7 @@ public class ShowtimePopupView extends JFrame implements PopupView {
     gridBagConstraints.anchor = GridBagConstraints.WEST;
     gridBagConstraints.insets = new Insets(5, 5, 5, 5);
     jPanel1.add(jLabel3, gridBagConstraints);
-    jLabel4.setText("Auditorium");
+    jLabel4.setText("Auditorium number");
     gridBagConstraints = new GridBagConstraints();
     gridBagConstraints.gridx = 2;
     gridBagConstraints.gridy = 3;

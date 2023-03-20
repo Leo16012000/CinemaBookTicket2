@@ -15,7 +15,7 @@ public class AuditoriumManagerView extends ManagerPaneView<Auditorium> {
 
   @Override
   public void setTableModel() {
-    tableModel.addColumn("id");
+    tableModel.addColumn("ID");
     tableModel.addColumn("Number");
     tableModel.addColumn("Number of rows");
     tableModel.addColumn("Number of columns");

@@ -11,12 +11,7 @@ public class Showtime extends Model{
   private int id, movieId, auditoriumId;
   private Timestamp startTime, endTime, createdAt;
 
-
   private Movie movie;
-
-  public void setAuditorium(Auditorium auditorium) {
-    this.auditorium = auditorium;
-  }
 
   private Auditorium auditorium;
 
@@ -31,6 +26,12 @@ public class Showtime extends Model{
     s.setMovie(MovieDao.getInstance().get(s.getMovieId()));
     s.setAuditorium(AuditoriumDao.getInstance().get(s.getAuditoriumId()));
     return s;
+  }
+  public Auditorium getAuditorium() {
+    return auditorium;
+  }
+  public void setAuditorium(Auditorium auditorium) {
+    this.auditorium = auditorium;
   }
 
   public int getId() {
@@ -84,7 +85,7 @@ public class Showtime extends Model{
 
   @Override
   public Object[] toRowTable() {
-    return new Object[]{startTime, endTime, auditorium.getAuditoriumNum(), movie.getTitle()};
+    return new Object[]{id, startTime, endTime, auditorium.getAuditoriumNum(), movie.getTitle()};
   }
 
   public void setAuditoriumId(int auditoriumId) {

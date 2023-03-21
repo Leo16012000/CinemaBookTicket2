@@ -94,7 +94,9 @@ public class ShowtimeDao extends Dao<Showtime> {
         .getTransaction()
         .queryList(
             conn -> PrepareStatements.setPreparedStatementParams(
-                conn.prepareStatement("SELECT * FROM `showtimes` inner join movies on showtimes.movie_id = movies.id inner join auditoriums on showtimes.auditorium_id = auditoriums.id WHERE ? LIKE '%?%'"), key, word)
+                conn.prepareStatement(
+                    "SELECT * FROM `showtimes` inner join movies on showtimes.movie_id = movies.id inner join auditoriums on showtimes.auditorium_id = auditoriums.id WHERE ? LIKE '%?%'"),
+                key, word)
                 .executeQuery(),
             Showtime::getFromResultSet);
   }

@@ -3,33 +3,41 @@ package com.leo.controllers.admin;
 import javax.swing.JOptionPane;
 
 import com.leo.controllers.ManagerController;
-import com.leo.controllers.popup.MoviePopupController;
 import com.leo.dao.MovieDao;
 import com.leo.models.Movie;
+import com.leo.views.admin.MovieManagerView;
 import com.leo.views.popup.MoviePopupView;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MovieManagerController extends ManagerController {
+public class MovieManagerController extends ManagerController<Movie, MovieManagerView> {
   private MovieDao movieDao;
-  private MoviePopupController popupController;
+  private MoviePopupView popup;
 
-  public MovieManagerController() {
-    super();
-    movieDao = MovieDao.getInstance();
-    popupController = new MoviePopupController();
+  public MovieManagerController(MovieManagerView view) {
+    super(view);
+    this.movieDao = MovieDao.getInstance();
   }
 
   @Override
   public void actionAdd() {
-    popupController.add(new MoviePopupView(), this::updateData, view::showError);
+    if (popup != null && popup.isVisible()) {
+      return;
+    }
+    this.popup = new MoviePopupView();
+    popup.registerErrorHandler(view::showError);
+    popup.show();
   }
 
   @Override
   public void actionEdit() {
+    if (popup != null && popup.isVisible()) {
+      return;
+    }
     try {
       int selectedId = view.getSelectedId();
       if (selectedId < 0) {
@@ -39,8 +47,9 @@ public class MovieManagerController extends ManagerController {
       if (movie == null) {
         throw new Exception("Invalid movie selected");
       }
-      popupController.edit(new MoviePopupView(), movie, this::updateData, view::showError);
-
+      this.popup = new MoviePopupView();
+      popup.registerErrorHandler(view::showError);
+      popup.show();
     } catch (Exception e) {
       view.showError(e);
     }
@@ -56,33 +65,30 @@ public class MovieManagerController extends ManagerController {
       }
       for (int i = 0; i < selectedIds.length; i++) {
         movieDao.deleteById(selectedIds[i]);
-        updateData();
       }
+      view.refresh();
     } catch (Exception e) {
       view.showError(e);
     }
   }
 
   @Override
-  public void updateData() {
+  public List<Movie> getAllData() {
     try {
-      List<Movie> movies = movieDao.getAll();
-      List<Movie> movies2 = MovieDao.getInstance().getAll();
-      System.out.println(movies);
-      view.setTableData(movies);
+      return movieDao.getAll();
     } catch (Exception e) {
       view.showError(e);
+      return new ArrayList<>();
     }
   }
 
   @Override
-  public void actionSearch() {
+  public List<Movie> search(String key, String word) {
     try {
-      List<Movie> movies = movieDao.searchByKey(view.getCboSearchField().getSelectedItem().toString(),
-          String.valueOf(view.getTxtSearch().getText()));
-      view.setTableData(movies);
+      return movieDao.searchByKey(key, word);
     } catch (Exception e) {
       view.showError(e);
+      return new ArrayList<>();
     }
   }
 }

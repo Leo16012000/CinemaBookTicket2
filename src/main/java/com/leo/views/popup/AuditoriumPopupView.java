@@ -1,19 +1,21 @@
 package com.leo.views.popup;
 
 import java.awt.GridBagConstraints;
+import java.sql.SQLException;
+import java.util.Optional;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.leo.controllers.popup.AuditoriumPopupController;
+import com.leo.models.Auditorium;
+import com.leo.utils.DocumentBinder;
 import com.leo.utils.ErrorPopup;
 
-public class AuditoriumPopupView extends JFrame implements PopupView {
-  // Variables declaration - do not modify//GEN-BEGIN:variables
+public class AuditoriumPopupView extends AbstractCrudPopupView<Auditorium, AuditoriumPopupController> {
   private JButton btnCancel;
   private JButton btnOK;
   private JLabel jLabel1;
@@ -27,10 +29,12 @@ public class AuditoriumPopupView extends JFrame implements PopupView {
   private JTextField txtRowsNum;
   private JTextField txtColumnsNum;
 
-  // End of variables declaration//GEN-END:variables
   public AuditoriumPopupView() {
-    initComponents();
-    setLocationRelativeTo(null);
+    super();
+  }
+
+  public AuditoriumPopupView(Auditorium auditorium) {
+    super(auditorium);
   }
 
   @SuppressWarnings("unchecked")
@@ -175,5 +179,45 @@ public class AuditoriumPopupView extends JFrame implements PopupView {
 
   public JLabel getLbTitle() {
     return lbTitle;
+  }
+
+  @Override
+  public void bindModel(Auditorium model) {
+    this.model = Optional.ofNullable(model).orElse(new Auditorium());
+  }
+
+  @Override
+  public void refresh() {
+    txtNumber.setText(String.valueOf(model.getAuditoriumNum()));
+    txtRowsNum.setText(String.valueOf(model.getSeatsRowNum()));
+    txtColumnsNum.setText(String.valueOf(model.getSeatsColumnNum()));
+  }
+
+  @Override
+  public void init() {
+    this.editingModel = new Auditorium();
+    this.controller = new AuditoriumPopupController();
+    initComponents();
+    txtNumber.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setAuditoriumNum, Integer::valueOf));
+    txtRowsNum.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setSeatsRowNum, Integer::valueOf));
+    txtColumnsNum.getDocument()
+        .addDocumentListener(DocumentBinder.bind(editingModel::setSeatsColumnNum, Integer::valueOf));
+  }
+
+  @Override
+  public void confirm() throws SQLException {
+    super.confirm(editingModel -> {
+      if (!isUpdating) {
+        return controller.addAuditorium(editingModel);
+      } else {
+        return controller.editAuditorium(editingModel);
+      }
+    }, auditorium -> {
+      if (!isUpdating) {
+        showMessage("Added auditorium successfully!");
+      } else {
+        showMessage("Updated auditorium successfully!");
+      }
+    }, this::showError);
   }
 }

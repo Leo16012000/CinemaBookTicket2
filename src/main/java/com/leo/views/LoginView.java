@@ -1,11 +1,21 @@
 package com.leo.views;
 
+import com.leo.controllers.LoginController;
+import com.leo.models.Login;
+import com.leo.utils.DocumentBinder;
 import com.leo.utils.ErrorPopup;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
-public class LoginView extends javax.swing.JFrame {
-  // Variables declaration - do not modify//GEN-BEGIN:variables
+public class LoginView extends JFrame implements IView {
   private JButton btnLogin;
   private JLabel jLabel1;
   private JLabel jLabel2;
@@ -18,12 +28,16 @@ public class LoginView extends javax.swing.JFrame {
   private JLabel lblRegister, lblAccessAsGuest;
   private JPasswordField txtPassword;
   private JTextField txtUsername;
+  private LoginController controller;
+  private Login model;
 
-  // End of variables declaration//GEN-END:variables
   public LoginView() {
     initComponents();
     setLocationRelativeTo(null);
     getRootPane().setDefaultButton(btnLogin);
+    this.controller = new LoginController(this);
+    this.model = new Login();
+    addEvent();
   }
 
   public void showError(String message) {
@@ -63,8 +77,6 @@ public class LoginView extends javax.swing.JFrame {
   }
 
   @SuppressWarnings("unchecked")
-  // <editor-fold defaultstate="collapsed" desc="Generated
-  // Code">//GEN-BEGIN:initComponents
   private void initComponents() {
     java.awt.GridBagConstraints gridBagConstraints;
 
@@ -202,10 +214,66 @@ public class LoginView extends javax.swing.JFrame {
     getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
     pack();
-  }// </editor-fold>//GEN-END:initComponents
+  }
 
   private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtPasswordKeyPressed
     // TODO add your handling code here:
   }// GEN-LAST:event_txtPasswordKeyPressed
 
+  public Login getModel() {
+    return model;
+  }
+
+  @Override
+  public void refresh() {
+    txtUsername.setText(model.getUsername());
+    txtPassword.setText(model.getPassword());
+  }
+
+  // Tạo sự kiện
+  public void addEvent() {
+    // Sự kiện login
+    txtPassword.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+          btnLogin.doClick();
+        }
+      }
+    });
+    btnLogin.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent evt) {
+        controller.login();
+      }
+    });
+    lblForgotPassword.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent evt) {
+        showMessage("Chưa hỗ trợ!");
+      }
+    });
+    lblRegister.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent evt) {
+        showMessage("Chưa hỗ trợ!");
+      }
+    });
+    lblAccessAsGuest.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent evt) {
+        try {
+          controller.loginAsGuest();
+        } catch (SQLException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
+    });
+
+    txtPassword.getDocument().addDocumentListener(DocumentBinder.bind(model::setPassword));
+    txtUsername.getDocument().addDocumentListener(DocumentBinder.bind(model::setUsername));
+  }
+
+  @Override
+  public void init() {
+    /** noop */
+  }
 }

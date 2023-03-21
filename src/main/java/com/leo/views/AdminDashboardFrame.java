@@ -1,7 +1,15 @@
 package com.leo.views;
 
+import com.leo.controllers.LoginController;
+import com.leo.controllers.SidebarController;
+import com.leo.models.User;
 import com.leo.utils.ErrorPopup;
+import com.leo.utils.SessionManager;
+import com.leo.views.admin.AuditoriumManagerView;
 import com.leo.views.admin.MenuItem;
+import com.leo.views.admin.MovieManagerView;
+import com.leo.views.admin.ShowtimeManagerView;
+import com.leo.views.admin.UserManagerView;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -12,10 +20,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,15 +34,40 @@ import javax.swing.JPanel;
 /**
  * @author Dang Tuan Anh
  */
-public class AdminDashboardFrame extends javax.swing.JFrame {
+public class AdminDashboardFrame extends JFrame {
+  private JPanel[] cards;
+  private List<MenuItem> menuItems = new ArrayList<>();
+  private JButton btnLogout;
+  private JLabel lbName;
+  private JPanel panelHeader;
+  private JPanel panelLayout;
+  private JPanel panelLeft;
+  private JPanel panelSidebar;
 
-  JPanel[] cards;
-  ArrayList<MenuItem> menuItems = new ArrayList<>();
+  private UserManagerView userManagerView;
+  private MovieManagerView movieManagerView;
+  private AuditoriumManagerView auditoriumManagerView;
+  private ShowtimeManagerView showtimeManagerView; // View
+
+  private SidebarController sidebarController;
 
   public AdminDashboardFrame() {
     initComponents();
     setLocationRelativeTo(null);
     btnLogout.putClientProperty("JButton.buttonType", "roundRect");
+    this.sidebarController = new SidebarController(panelSidebar);
+    this.userManagerView = new UserManagerView();
+    this.movieManagerView = new MovieManagerView();
+    this.auditoriumManagerView = new AuditoriumManagerView();
+    this.showtimeManagerView = new ShowtimeManagerView();
+    User session = SessionManager.getSession().getUser();
+    if (session != null) {
+      lbName.setText(session.getName());
+    }
+    initMenu();
+    setCards(new JPanel[] { movieManagerView, userManagerView, auditoriumManagerView });
+    setPanel(panelHeader);
+    addEvent();
   }
 
   public void showError(String message) {
@@ -60,7 +96,7 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
       MenuItem item = menu[i];
       menuItems.add(item);
       panelSidebar.add(item);
-      ArrayList<MenuItem> subMenus = item.getSubMenu();
+      List<MenuItem> subMenus = item.getSubMenu();
       for (MenuItem subMenu : subMenus) {
         addMenu(subMenu);
         subMenu.setVisible(false);
@@ -68,7 +104,7 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
     }
   }
 
-  public ArrayList<MenuItem> getMenuItems() {
+  public List<MenuItem> getMenuItems() {
     return menuItems;
   }
 
@@ -106,8 +142,6 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
   }
 
   @SuppressWarnings("unchecked")
-  // <editor-fold defaultstate="collapsed" desc="Generated
-  // Code">//GEN-BEGIN:initComponents
   private void initComponents() {
     java.awt.GridBagConstraints gridBagConstraints;
 
@@ -165,18 +199,57 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
     getContentPane().add(panelLayout, BorderLayout.CENTER);
 
     pack();
-  }// </editor-fold>//GEN-END:initComponents
+  }
 
-  /**
-   * @param args
-   *          the command line arguments
-   */
-  // Variables declaration - do not modify//GEN-BEGIN:variables
-  private JButton btnLogout;
-  private JLabel lbName;
-  private JPanel panelHeader;
-  private JPanel panelLayout;
-  private JPanel panelLeft;
-  private JPanel panelSidebar;
-  // End of variables declaration//GEN-END:variables
+  private void initMenu() {
+    MenuItem menuUser = new MenuItem("USER", "User Management");
+    MenuItem menuMovie = new MenuItem("MOVIE", "Movie Management");
+    MenuItem menuAuditorium = new MenuItem("AUDITORIUM", "Auditorium Management");
+    MenuItem menuShowtime = new MenuItem("SHOWTIME", "Showtime Management");
+    sidebarController.addMenu(menuUser);
+    sidebarController.addMenu(menuMovie);
+    sidebarController.addMenu(menuAuditorium);
+    sidebarController.addMenu(menuShowtime);
+    sidebarController.addMenuEvent(mbe -> onMenuChange(mbe));
+  }
+
+  // Tạo sự kiện
+  private void addEvent() {
+    btnLogout.addActionListener(evt -> {
+      System.out.println("logout click");
+      int confirm = JOptionPane.showConfirmDialog(this, "Do you want to log out?");
+      if (confirm != JOptionPane.YES_OPTION) {
+        return;
+      }
+      try {
+        SessionManager.logout();// Log out
+      } catch (SQLException ex) {
+        showError(ex);
+      }
+      dispose();
+      new LoginController(new LoginView());
+    });
+  }
+
+  private void onMenuChange(MenuItem item) {
+    System.out.println("menu change" + item.getId());
+    switch (item.getId()) {
+      case "USER":
+        userManagerView.refresh();
+        setPanel(userManagerView);
+        break;
+      case "MOVIE":
+        movieManagerView.refresh();
+        setPanel(movieManagerView);
+        break;
+      case "AUDITORIUM":
+        auditoriumManagerView.refresh();
+        setPanel(auditoriumManagerView);
+        break;
+      case "SHOWTIME":
+        showtimeManagerView.refresh();
+        setPanel(showtimeManagerView);
+        break;
+    }
+  }
 }

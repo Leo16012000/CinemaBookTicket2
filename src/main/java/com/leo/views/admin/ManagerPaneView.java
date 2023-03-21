@@ -1,18 +1,33 @@
 package com.leo.views.admin;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
 import com.leo.models.Model;
 import com.leo.utils.ErrorPopup;
 
@@ -40,7 +55,59 @@ public abstract class ManagerPaneView<T extends Model> extends JPanel {
     btnDelete.putClientProperty("JButton.buttonType", "roundRect");
     btnEdit.putClientProperty("JButton.buttonType", "roundRect");
     btnSync.putClientProperty("JButton.buttonType", "roundRect");
+    addEvent();
   }
+
+  private void addEvent() {
+    // Hiển thị place holder
+    getTxtSearch().addFocusListener(new FocusAdapter() {
+      public void focusGained(FocusEvent evt) {
+        if (getTxtSearch().getText().equals("Search")) {
+          getTxtSearch().setText("");
+          getTxtSearch().setForeground(Color.BLACK);
+        }
+      }
+
+      public void focusLost(FocusEvent evt) {
+        if (getTxtSearch().getText().equals("") || getTxtSearch().getText().equals("Search")) {
+          getTxtSearch().setText("Search");
+          getTxtSearch().setForeground(new Color(153, 153, 153));
+        }
+      }
+    });
+    getTxtSearch().addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+          actionSearch();
+        }
+      }
+    });
+    // Sự kiện bấm nút thêm
+    getBtnAdd().addActionListener(evt -> {
+      try {
+        actionAdd();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    });
+    // Sự kiện bấm nút sửa
+    getBtnEdit().addActionListener(evt -> actionEdit());
+    // Sự kiện bấm nút xóa
+    getBtnDelete().addActionListener(evt -> actionDelete());
+    // Sự kiện bấm nút cập nhật
+    getBtnSync().addActionListener(evt -> updateData());
+  }
+
+  public abstract void actionAdd() throws SQLException;
+
+  public abstract void actionSearch();
+
+  public abstract void actionDelete();
+
+  public abstract void actionEdit();
+
+  public abstract void updateData();
 
   public JComboBox<String> getCboSearchField() {
     return cboSearchField;
@@ -106,7 +173,6 @@ public abstract class ManagerPaneView<T extends Model> extends JPanel {
 
   // Lấy id các hàng đc chọn
   public int[] getSelectedIds() {
-
     int selectedRows[] = tblData.getSelectedRows();
     int selectedIds[] = new int[selectedRows.length];
     for (int i = 0; i < selectedRows.length; i++) {
@@ -151,28 +217,28 @@ public abstract class ManagerPaneView<T extends Model> extends JPanel {
   // <editor-fold defaultstate="collapsed" desc="Generated
   // Code">//GEN-BEGIN:initComponents
   private void initComponents() {
-    java.awt.GridBagConstraints gridBagConstraints;
+    GridBagConstraints gridBagConstraints;
 
-    jScrollPane1 = new javax.swing.JScrollPane();
-    tblData = new javax.swing.JTable();
-    jPanel1 = new javax.swing.JPanel();
-    btnDelete = new javax.swing.JButton();
-    btnSync = new javax.swing.JButton();
-    btnEdit = new javax.swing.JButton();
-    btnAdd = new javax.swing.JButton();
-    jPanel2 = new javax.swing.JPanel();
-    txtSearch = new javax.swing.JTextField();
-    cboSearchField = new javax.swing.JComboBox<>();
+    jScrollPane1 = new JScrollPane();
+    tblData = new JTable();
+    jPanel1 = new JPanel();
+    btnDelete = new JButton();
+    btnSync = new JButton();
+    btnEdit = new JButton();
+    btnAdd = new JButton();
+    jPanel2 = new JPanel();
+    txtSearch = new JTextField();
+    cboSearchField = new JComboBox<>();
 
-    setBackground(new java.awt.Color(118, 215, 196));
+    setBackground(new Color(118, 215, 196));
     setAlignmentX(0.0F);
     setAlignmentY(0.0F);
-    setPreferredSize(new java.awt.Dimension(1008, 680));
-    setLayout(new java.awt.BorderLayout());
+    setPreferredSize(new Dimension(1008, 680));
+    setLayout(new BorderLayout());
 
     jScrollPane1.setOpaque(false);
 
-    tblData.setModel(new javax.swing.table.DefaultTableModel(
+    tblData.setModel(new DefaultTableModel(
         new Object[][] {
             { null, null, null, null },
             { null, null, null, null },
@@ -187,73 +253,73 @@ public abstract class ManagerPaneView<T extends Model> extends JPanel {
     tblData.getTableHeader().setReorderingAllowed(false);
     jScrollPane1.setViewportView(tblData);
 
-    add(jScrollPane1, java.awt.BorderLayout.CENTER);
+    add(jScrollPane1, BorderLayout.CENTER);
 
     jPanel1.setOpaque(false);
-    jPanel1.setLayout(new java.awt.GridBagLayout());
+    jPanel1.setLayout(new GridBagLayout());
 
-    btnDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+    btnDelete.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
     btnDelete.setText("Delete");
-    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints = new GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
     gridBagConstraints.ipadx = 42;
-    gridBagConstraints.insets = new java.awt.Insets(15, 5, 15, 5);
+    gridBagConstraints.insets = new Insets(15, 5, 15, 5);
     jPanel1.add(btnDelete, gridBagConstraints);
 
-    btnEdit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+    btnEdit.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
     btnEdit.setText("Edit");
-    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints = new GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
     gridBagConstraints.ipadx = 42;
-    gridBagConstraints.insets = new java.awt.Insets(15, 5, 15, 5);
+    gridBagConstraints.insets = new Insets(15, 5, 15, 5);
     jPanel1.add(btnEdit, gridBagConstraints);
 
-    btnAdd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+    btnAdd.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
     btnAdd.setText("Add");
-    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints = new GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
     gridBagConstraints.ipadx = 42;
-    gridBagConstraints.insets = new java.awt.Insets(15, 5, 15, 5);
+    gridBagConstraints.insets = new Insets(15, 5, 15, 5);
     jPanel1.add(btnAdd, gridBagConstraints);
 
-    add(jPanel1, java.awt.BorderLayout.LINE_END);
+    add(jPanel1, BorderLayout.LINE_END);
 
-    jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 10));
+    jPanel2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
     jPanel2.setOpaque(false);
-    jPanel2.setPreferredSize(new java.awt.Dimension(1008, 40));
-    jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+    jPanel2.setPreferredSize(new Dimension(1008, 40));
+    jPanel2.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-    txtSearch.setForeground(new java.awt.Color(153, 153, 153));
+    txtSearch.setForeground(new Color(153, 153, 153));
     txtSearch.setText("Search");
     txtSearch.setAlignmentX(0.0F);
     txtSearch.setAlignmentY(0.0F);
     txtSearch.setBorder(null);
-    txtSearch.setPreferredSize(new java.awt.Dimension(200, 25));
+    txtSearch.setPreferredSize(new Dimension(200, 25));
     jPanel2.add(txtSearch);
 
-    cboSearchField.setMinimumSize(new java.awt.Dimension(100, 25));
-    cboSearchField.setPreferredSize(new java.awt.Dimension(100, 25));
+    cboSearchField.setMinimumSize(new Dimension(100, 25));
+    cboSearchField.setPreferredSize(new Dimension(100, 25));
     jPanel2.add(cboSearchField);
 
-    add(jPanel2, java.awt.BorderLayout.PAGE_START);
+    add(jPanel2, BorderLayout.PAGE_START);
   }// </editor-fold>//GEN-END:initComponents
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton btnAdd;
-  private javax.swing.JButton btnDelete;
-  private javax.swing.JButton btnEdit;
-  private javax.swing.JButton btnSync;
-  private javax.swing.JComboBox<String> cboSearchField;
-  private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
-  private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JTable tblData;
-  private javax.swing.JTextField txtSearch;
+  private JButton btnAdd;
+  private JButton btnDelete;
+  private JButton btnEdit;
+  private JButton btnSync;
+  private JComboBox<String> cboSearchField;
+  private JPanel jPanel1;
+  private JPanel jPanel2;
+  private JScrollPane jScrollPane1;
+  private JTable tblData;
+  private JTextField txtSearch;
   // End of variables declaration//GEN-END:variables
 }

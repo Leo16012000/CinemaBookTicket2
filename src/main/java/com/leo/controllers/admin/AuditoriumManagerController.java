@@ -3,44 +3,50 @@ package com.leo.controllers.admin;
 import javax.swing.JOptionPane;
 
 import com.leo.controllers.ManagerController;
-import com.leo.controllers.popup.AuditoriumPopupController;
 import com.leo.dao.AuditoriumDao;
 import com.leo.models.Auditorium;
+import com.leo.views.admin.AuditoriumManagerView;
 import com.leo.views.popup.AuditoriumPopupView;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AuditoriumManagerController extends ManagerController {
+public class AuditoriumManagerController extends ManagerController<Auditorium, AuditoriumManagerView> {
   private AuditoriumDao auditoriumDao;
-  private AuditoriumPopupController popupController;
+  private AuditoriumPopupView popup;
 
-  public AuditoriumManagerController() {
-    super();
-    auditoriumDao = AuditoriumDao.getInstance();
-    popupController = new AuditoriumPopupController();
+  public AuditoriumManagerController(AuditoriumManagerView view) {
+    super(view);
+    this.auditoriumDao = AuditoriumDao.getInstance();
   }
 
   @Override
   public void actionAdd() {
-    popupController.add(new AuditoriumPopupView(), this::updateData, view::showError);
+    if (popup != null && popup.isVisible()) {
+      return;
+    }
+    this.popup = new AuditoriumPopupView();
+    popup.registerErrorHandler(view::showError);
+    popup.show();
   }
 
   @Override
   public void actionEdit() {
+    if (popup != null && popup.isVisible()) {
+      return;
+    }
     try {
       int selectedId = view.getSelectedId();
       if (selectedId < 0) {
         throw new Exception("Chooose the one to edit");
       }
       Auditorium auditorium = auditoriumDao.get(selectedId);
-      if (auditorium == null) {
-        throw new Exception("Invalid auditorium selected");
-      }
-      popupController.edit(new AuditoriumPopupView(), auditorium, this::updateData, view::showError);
-
+      this.popup = new AuditoriumPopupView(auditorium);
+      popup.registerErrorHandler(view::showError);
+      popup.show();
     } catch (Exception e) {
       view.showError(e);
     }
@@ -56,32 +62,30 @@ public class AuditoriumManagerController extends ManagerController {
       }
       for (int i = 0; i < selectedIds.length; i++) {
         auditoriumDao.deleteById(selectedIds[i]);
-        updateData();
       }
+      view.refresh();
     } catch (Exception e) {
       view.showError(e);
     }
   }
 
   @Override
-  public void updateData() {
+  public List<Auditorium> getAllData() {
     try {
-      List<Auditorium> auditoriums = auditoriumDao.getAll();
-      System.out.println(auditoriums);
-      view.setTableData(auditoriums);
+      return auditoriumDao.getAll();
     } catch (Exception e) {
       view.showError(e);
+      return new ArrayList<>();
     }
   }
 
   @Override
-  public void actionSearch() {
+  public List<Auditorium> search(String key, String word) {
     try {
-      List<Auditorium> auditoriums = auditoriumDao.searchByKey(
-          view.getCboSearchField().getSelectedItem().toString(), String.valueOf(view.getTxtSearch().getText()));
-      view.setTableData(auditoriums);
+      return auditoriumDao.searchByKey(key, word);
     } catch (Exception e) {
       view.showError(e);
+      return new ArrayList<>();
     }
   }
 }

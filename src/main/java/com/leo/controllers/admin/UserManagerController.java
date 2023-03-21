@@ -4,6 +4,7 @@ import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.UserPopupController;
 import com.leo.dao.UserDao;
 import com.leo.utils.UserPermission;
+import com.leo.views.admin.UserManagerView;
 import com.leo.views.popup.UserPopupView;
 import com.leo.models.User;
 
@@ -12,23 +13,33 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class UserManagerController extends ManagerController {
-  UserDao userDao = UserDao.getInstance();
-  UserPopupController popupController = new UserPopupController();
+public class UserManagerController extends ManagerController<User, UserManagerView> {
+  private UserDao userDao;
+  private UserPopupView popup;
 
-  public UserManagerController() {
-    super();
+  public UserManagerController(UserManagerView view) {
+    super(view);
+    this.userDao = UserDao.getInstance();
   }
 
   @Override
   public void actionAdd() {
-    popupController.add(new UserPopupView(), this::updateData, view::showError);
+    if (popup != null && popup.isVisible()) {
+      return;
+    }
+    this.popup = new UserPopupView();
+    popup.registerErrorHandler(view::showError);
+    popup.show();
   }
 
   @Override
   public void actionEdit() {
+    if (popup != null && popup.isVisible()) {
+      return;
+    }
     try {
       int selectedId = view.getSelectedId();
       if (selectedId < 0) {
@@ -44,7 +55,9 @@ public class UserManagerController extends ManagerController {
           return;
         }
       }
-      popupController.edit(new UserPopupView(), u, this::updateData, view::showError);
+      this.popup = new UserPopupView();
+      popup.registerErrorHandler(view::showError);
+      popup.show();
 
     } catch (Exception e) {
       view.showError(e);
@@ -60,32 +73,30 @@ public class UserManagerController extends ManagerController {
       }
       for (int i = 0; i < selectedIds.length; i++) {
         userDao.deleteById(selectedIds[i]);
-        updateData();
       }
+      view.refresh();
     } catch (Exception e) {
       view.showError(e);
     }
   }
 
   @Override
-  public void updateData() {
+  public List<User> getAllData() {
     try {
-      List<User> users = userDao.getAll();
-      System.out.println(users);
-      view.setTableData(users);
+      return userDao.getAll();
     } catch (Exception e) {
       view.showError(e);
+      return new ArrayList<>();
     }
   }
 
   @Override
-  public void actionSearch() {
+  public List<User> search(String key, String word) {
     try {
-      List<User> users = userDao.searchByKey(view.getCboSearchField().getSelectedItem().toString(),
-          String.valueOf(view.getTxtSearch().getText()));
-      view.setTableData(users);
+      return userDao.searchByKey(key, word);
     } catch (Exception e) {
       view.showError(e);
+      return new ArrayList<>();
     }
   }
 }

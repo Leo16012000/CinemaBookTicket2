@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class Movie extends Model {
+public class Movie implements Model {
   private int id, durationTime, price;
   private String title, country;
   private Timestamp createdAt;
@@ -70,13 +70,11 @@ public class Movie extends Model {
 
   @Override
   public String toString() {
-    // TODO Auto-generated method stub
     return title;
   }
 
   @Override
   public Object[] toRowTable() {
-    // TODO Auto-generated method stub
     return new Object[] { id, title, country, durationTime, price, createdAt };
   }
 }

@@ -1,8 +1,9 @@
 package com.leo.views.popup;
 
-import com.demo.ComboJumbo;
 import com.leo.components.TimePicker;
+import com.leo.controllers.popup.ShowtimePopupController;
 import com.leo.models.Auditorium;
+import com.leo.models.Showtime;
 import com.leo.utils.ErrorPopup;
 import com.toedter.calendar.JDateChooser;
 
@@ -10,27 +11,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Date;
+import java.util.Optional;
 
-public class ShowtimePopupView extends JFrame implements PopupView {
+public class ShowtimePopupView extends AbstractCrudPopupView<Showtime, ShowtimePopupController> implements PopupView {
   private JButton btnCancel, btnOK;
-  private JLabel jLabel1, jLabel2,jLabel3,jLabel4,jLabel5;
+  private JLabel jLabel1, jLabel2, jLabel3, jLabel4, jLabel5;
   private JPanel jPanel1, jPanel2, jPanel3;
   private JLabel lbTitle;
   private JSpinner startTimeSpinner, endTimeSpinner;
   private JDateChooser jDate;
+  private JComboBox<String> cboMovieName, cboAuditoriumNumber;
 
-  public JComboBox getCboMovieName() {
-    return cboMovieName;
-  }
 
-  public JComboBox getCboAuditoriumNumber() {
-    return cboAuditoriumNumber;
-  }
-
-  private JComboBox cboMovieName, cboAuditoriumNumber;
-
-  // End of variables declaration//GEN-END:variables
   public ShowtimePopupView() {
     initComponents();
     setLocationRelativeTo(null);
@@ -121,8 +113,8 @@ public class ShowtimePopupView extends JFrame implements PopupView {
     gridBagConstraints = new GridBagConstraints();
     gridBagConstraints.gridx = 3;
     gridBagConstraints.gridy = 0;
-//    gridBagConstraints.fill = GridBagConstraints.BOTH;
-//    gridBagConstraints.ipadx = 136;
+    // gridBagConstraints.fill = GridBagConstraints.BOTH;
+    // gridBagConstraints.ipadx = 136;
     gridBagConstraints.anchor = GridBagConstraints.WEST;
     gridBagConstraints.insets = new Insets(5, 5, 5, 5);
     gridBagConstraints.gridwidth = 1;
@@ -130,8 +122,8 @@ public class ShowtimePopupView extends JFrame implements PopupView {
 
     gridBagConstraints.gridx = 3;
     gridBagConstraints.gridy = 1;
-//    gridBagConstraints.fill = GridBagConstraints.BOTH;
-//    gridBagConstraints.ipadx = 136;
+    // gridBagConstraints.fill = GridBagConstraints.BOTH;
+    // gridBagConstraints.ipadx = 136;
     gridBagConstraints.anchor = GridBagConstraints.WEST;
     gridBagConstraints.insets = new Insets(5, 5, 5, 5);
     jPanel1.add(endTimeSpinner, gridBagConstraints);
@@ -184,7 +176,7 @@ public class ShowtimePopupView extends JFrame implements PopupView {
 
     pack();
 
-    cboAuditoriumNumber.addItemListener(new ItemListener(){
+    cboAuditoriumNumber.addItemListener(new ItemListener() {
       public void itemStateChanged(ItemEvent e) {
         Auditorium c = (Auditorium) e.getItem();
         System.out.println("You selected auditorium id: " + c.getId());
@@ -237,5 +229,40 @@ public class ShowtimePopupView extends JFrame implements PopupView {
 
   public void setjDate(JDateChooser jDate) {
     this.jDate = jDate;
+  }
+
+  @Override
+  public void confirm() throws Exception {
+    super.confirm(editingModel -> {
+      if (!isUpdating) {
+        return controller.addShowtime(editingModel);
+      } else {
+        return controller.editShowtime(editingModel);
+      }
+    }, showtime -> {
+      if (!isUpdating) {
+        showMessage("Added showtime successfully!");
+      } else {
+        showMessage("Updated showtime successfully!");
+      }
+    }, this::showError);
+  }
+
+  @Override
+  public void init() {
+    this.editingModel = new Showtime();
+    this.controller = new ShowtimePopupController();
+    initComponents();
+    setLocationRelativeTo(null);
+  }
+
+  @Override
+  public void bindModel(Showtime model) {
+    this.model = Optional.ofNullable(model).orElse(new Showtime());
+  }
+
+  @Override
+  public void refresh() {
+    
   }
 }

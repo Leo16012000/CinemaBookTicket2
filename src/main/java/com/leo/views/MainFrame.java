@@ -181,7 +181,6 @@ public class MainFrame extends JFrame {
   }
 
   public MoviePanel getMoviePanel() {
-    // TODO Auto-generated method stub
     return moviePanel;
   }
 }

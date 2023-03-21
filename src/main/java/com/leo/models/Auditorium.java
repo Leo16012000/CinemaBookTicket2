@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class Auditorium extends Model {
+public class Auditorium implements Model {
   private int id, auditoriumNum, seatsRowNum, seatsColumnNum;
   private Timestamp createdAt;
 
@@ -60,13 +60,11 @@ public class Auditorium extends Model {
 
   @Override
   public String toString() {
-    // TODO Auto-generated method stub
     return Integer.toString(auditoriumNum);
   }
 
   @Override
   public Object[] toRowTable() {
-    // TODO Auto-generated method stub
     return new Object[] { id, auditoriumNum, seatsRowNum, seatsColumnNum, createdAt };
   }
 }

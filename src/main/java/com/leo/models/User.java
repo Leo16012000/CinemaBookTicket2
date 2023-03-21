@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class User extends Model {
+public class User implements Model {
   private int id;
   private String name;
   private String username;
@@ -79,13 +79,11 @@ public class User extends Model {
 
   @Override
   public String toString() {
-    // TODO Auto-generated method stub
     return id + " " + username + " " + password + " " + createdAt + " " + permission;
   }
 
   @Override
   public Object[] toRowTable() {
-    // TODO Auto-generated method stub
     return new Object[] {
         id, name, username,
         permission.getName(), createdAt

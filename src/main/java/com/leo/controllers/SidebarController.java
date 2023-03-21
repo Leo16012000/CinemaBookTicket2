@@ -5,6 +5,8 @@ import com.leo.views.admin.MenuItem;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JPanel;
 
 /**
@@ -15,23 +17,21 @@ import javax.swing.JPanel;
 public class SidebarController {
 
   private JPanel panelSidebar;
-  private ArrayList<MenuItem> menuItems = new ArrayList<>();
+  private List<MenuItem> menuItems = new ArrayList<>();
   private MenuItem activeMenuItem = null; // item vừa chọn
 
-  interface MenuBarEvent {
-
+  public interface MenuBarEvent {
     public abstract void onSelectMenuItem(MenuItem item);
   }
 
   public SidebarController() {
-
   }
 
   public SidebarController(JPanel panelSidebar) {
     this.panelSidebar = panelSidebar;
   }
 
-  public void setMenuItems(ArrayList<MenuItem> menuItems) {
+  public void setMenuItems(List<MenuItem> menuItems) {
     this.menuItems = menuItems;
   }
 
@@ -43,7 +43,7 @@ public class SidebarController {
     this.panelSidebar = panelSidebar;
   }
 
-  public ArrayList<MenuItem> getMenuItems() {
+  public List<MenuItem> getMenuItems() {
     return menuItems;
   }
 
@@ -54,7 +54,7 @@ public class SidebarController {
       menuItems.add(item);
       item.setActive(false);
       panelSidebar.add(item);
-      ArrayList<MenuItem> subMenus = item.getSubMenu();
+      List<MenuItem> subMenus = item.getSubMenu();
       for (MenuItem subMenu : subMenus) {
         addMenu(subMenu);
         subMenu.setVisible(false);

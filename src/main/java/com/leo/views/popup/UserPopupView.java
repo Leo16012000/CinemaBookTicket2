@@ -1,18 +1,21 @@
 package com.leo.views.popup;
 
 import java.awt.GridBagConstraints;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.leo.controllers.popup.UserPopupController;
+import com.leo.models.User;
+import com.leo.utils.DocumentBinder;
 import com.leo.utils.ErrorPopup;
 
-public class UserPopupView extends JFrame implements PopupView {
+public class UserPopupView extends AbstractCrudPopupView<User, UserPopupController> implements PopupView {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private JButton btnCancel;
   private JButton btnOK;
@@ -42,8 +45,7 @@ public class UserPopupView extends JFrame implements PopupView {
 
   // End of variables declaration//GEN-END:variables
   public UserPopupView() {
-    initComponents();
-    setLocationRelativeTo(null);
+    super();
   }
 
   @SuppressWarnings("unchecked")
@@ -201,5 +203,45 @@ public class UserPopupView extends JFrame implements PopupView {
 
   public JTextField getTxtUsername() {
     return txtUsername;
+  }
+
+  @Override
+  public void confirm() throws Exception {
+    super.confirm(editingModel -> {
+      if (!isUpdating) {
+        return controller.addUser(editingModel);
+      } else {
+        return controller.editUser(editingModel);
+      }
+    }, showtime -> {
+      if (!isUpdating) {
+        showMessage("Added user successfully!");
+      } else {
+        showMessage("Updated user successfully!");
+      }
+    }, this::showError);
+  }
+
+  @Override
+  public void bindModel(User model) {
+    this.model = Optional.ofNullable(model).orElse(new User());
+  }
+
+  @Override
+  public void init() {
+    initComponents();
+    setLocationRelativeTo(null);
+    this.editingModel = new User();
+    this.controller = new UserPopupController();
+    txtUsername.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setUsername));
+    txtPassword.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setPassword));
+    txtName.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setName));
+  }
+
+  @Override
+  public void refresh() {
+    txtUsername.setText(model.getUsername());
+    txtPassword.setText(model.getPassword());
+    txtName.setText(model.getName());
   }
 }

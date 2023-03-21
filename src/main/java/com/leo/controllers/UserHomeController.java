@@ -6,8 +6,8 @@
 package com.leo.controllers;
 
 import com.leo.dao.MovieDao;
-import com.leo.main.SessionManager;
 import com.leo.models.Movie;
+import com.leo.utils.SessionManager;
 import com.leo.views.HeaderPanel;
 import com.leo.views.LoginView;
 import com.leo.views.MainFrame;
@@ -51,7 +51,7 @@ public class UserHomeController {
         return;
       }
       try {
-        SessionManager.update();// Đăng xuất
+        SessionManager.logout();// Đăng xuất
       } catch (SQLException ex) {
         headerPanel.showError(ex);
       }

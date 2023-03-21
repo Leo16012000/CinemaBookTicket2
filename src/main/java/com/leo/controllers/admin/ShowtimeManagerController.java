@@ -1,11 +1,10 @@
 package com.leo.controllers.admin;
 
 import com.leo.controllers.ManagerController;
-import com.leo.controllers.popup.ShowtimePopupController;
-import com.leo.controllers.popup.ShowtimePopupController;
 import com.leo.dao.ShowtimeDao;
 import com.leo.dao.ShowtimeDao;
 import com.leo.models.Showtime;
+import com.leo.views.admin.ShowtimeManagerView;
 import com.leo.views.popup.ShowtimePopupView;
 
 import javax.swing.*;
@@ -16,23 +15,30 @@ import java.util.List;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
-public class ShowtimeManagerController extends ManagerController {
+public class ShowtimeManagerController extends ManagerController<Showtime, ShowtimeManagerView> {
   private ShowtimeDao showtimeDao;
-  private ShowtimePopupController popupController;
+  private ShowtimePopupView popup;
 
-  public ShowtimeManagerController() {
-    super();
-    showtimeDao = new ShowtimeDao();
-    popupController = new ShowtimePopupController();
+  public ShowtimeManagerController(ShowtimeManagerView view) {
+    super(view);
+    this.showtimeDao = ShowtimeDao.getInstance();
   }
 
   @Override
   public void actionAdd() throws SQLException {
-    popupController.add(new ShowtimePopupView(), this::updateData, view::showError);
+    if (popup != null && popup.isVisible()) {
+      return;
+    }
+    this.popup = new ShowtimePopupView();
+    popup.registerErrorHandler(view::showError);
+    popup.show();
   }
 
   @Override
   public void actionEdit() {
+    if (popup != null && popup.isVisible()) {
+      return;
+    }
     try {
       int selectedId = view.getSelectedId();
       if (selectedId < 0) {
@@ -42,8 +48,9 @@ public class ShowtimeManagerController extends ManagerController {
       if (showtime == null) {
         throw new Exception("Invalid showtime selected");
       }
-      popupController.edit(new ShowtimePopupView(), showtime, this::updateData, view::showError);
-
+      this.popup = new ShowtimePopupView();
+      popup.registerErrorHandler(view::showError);
+      popup.show();
     } catch (Exception e) {
       view.showError(e);
     }
@@ -59,32 +66,30 @@ public class ShowtimeManagerController extends ManagerController {
       }
       for (int i = 0; i < selectedIds.length; i++) {
         showtimeDao.deleteById(selectedIds[i]);
-        updateData();
       }
+      view.refresh();
     } catch (Exception e) {
       view.showError(e);
     }
   }
 
   @Override
-  public void updateData() {
+  public List<Showtime> getAllData() {
     try {
-      List<Showtime> showtimes = showtimeDao.getAll();
-      System.out.println(showtimes);
-      view.setTableData(showtimes);
+      return showtimeDao.getAll();
     } catch (Exception e) {
       view.showError(e);
+      return new ArrayList<>();
     }
   }
 
   @Override
-  public void actionSearch() {
+  public List<Showtime> search(String key, String word) {
     try {
-      List<Showtime> showtimes = showtimeDao.searchByKey(
-          view.getCboSearchField().getSelectedItem().toString(), String.valueOf(view.getTxtSearch().getText()));
-      view.setTableData(showtimes);
+      return showtimeDao.searchByKey(key, word);
     } catch (Exception e) {
       view.showError(e);
+      return new ArrayList<>();
     }
   }
 }

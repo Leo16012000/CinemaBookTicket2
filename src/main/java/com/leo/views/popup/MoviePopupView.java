@@ -1,19 +1,22 @@
 package com.leo.views.popup;
 
 import java.awt.GridBagConstraints;
+import java.sql.SQLException;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.leo.controllers.popup.MoviePopupController;
+import com.leo.models.Movie;
+import com.leo.utils.DocumentBinder;
 import com.leo.utils.ErrorPopup;
 
-public class MoviePopupView extends JFrame implements PopupView {
-  // Variables declaration - do not modify//GEN-BEGIN:variables
+public class MoviePopupView extends AbstractCrudPopupView<Movie, MoviePopupController> implements PopupView {
   private JButton btnCancel;
   private JButton btnOK;
   private JComboBox<String> cboPermission;
@@ -21,9 +24,6 @@ public class MoviePopupView extends JFrame implements PopupView {
   private JLabel jLabel2;
   private JLabel jLabel3;
   private JLabel jLabel4;
-  private JLabel jLabel5;
-  private JLabel jLabel6;
-  private JLabel jLabel7;
   private JPanel jPanel1;
   private JPanel jPanel2;
   private JPanel jPanel3;
@@ -33,10 +33,12 @@ public class MoviePopupView extends JFrame implements PopupView {
   private JTextField txtDurationTime;
   private JTextField txtPrice;
 
-  // End of variables declaration//GEN-END:variables
   public MoviePopupView() {
-    initComponents();
-    setLocationRelativeTo(null);
+    super();
+  }
+
+  public MoviePopupView(Movie movie) {
+    super(movie);
   }
 
   @SuppressWarnings("unchecked")
@@ -46,8 +48,6 @@ public class MoviePopupView extends JFrame implements PopupView {
     jLabel2 = new JLabel();
     jLabel3 = new JLabel();
     jLabel4 = new JLabel();
-    jLabel5 = new JLabel();
-    jLabel6 = new JLabel();
     jPanel2 = new JPanel();
     jPanel1 = new JPanel();
     lbTitle = new JLabel();
@@ -215,5 +215,47 @@ public class MoviePopupView extends JFrame implements PopupView {
 
   public JLabel getLbTitle() {
     return lbTitle;
+  }
+
+  @Override
+  public void bindModel(Movie model) {
+    this.model = Optional.ofNullable(model).orElse(new Movie());
+  }
+
+  @Override
+  public void refresh() {
+    txtTitle.setText(model.getTitle());
+    txtCountry.setText(model.getCountry());
+    txtDurationTime.setText(Optional.ofNullable(model.getDurationTime()).map(item -> Integer.toString(item)).orElse(""));
+    txtPrice.setText(Optional.ofNullable(model.getPrice()).map(item -> Integer.toString(item)).orElse(""));
+  }
+
+  @Override
+  public void init() {
+    this.editingModel = new Movie();
+    this.controller = new MoviePopupController();
+    initComponents();
+    txtTitle.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setTitle));
+    txtCountry.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setCountry));
+    txtDurationTime.getDocument()
+        .addDocumentListener(DocumentBinder.bind(editingModel::setDurationTime, Integer::valueOf));
+    txtPrice.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setPrice, Integer::valueOf));
+  }
+
+  @Override
+  public void confirm() throws SQLException {
+    super.confirm(editingModel -> {
+      if (!isUpdating) {
+        return controller.addMovie(editingModel);
+      } else {
+        return controller.editMovie(editingModel);
+      }
+    }, movie -> {
+      if (!isUpdating) {
+        showMessage("Added movie successfully!");
+      } else {
+        showMessage("Updated movie successfully!");
+      }
+    }, this::showError);
   }
 }

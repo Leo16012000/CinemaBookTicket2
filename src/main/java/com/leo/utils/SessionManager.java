@@ -1,4 +1,4 @@
-package com.leo.main;
+package com.leo.utils;
 
 import com.leo.dao.SessionDao;
 import com.leo.models.Session;
@@ -32,12 +32,10 @@ public class SessionManager {
     ss.setMessage("login");
     ss.setStartTime(new Timestamp(System.currentTimeMillis()));
     ss.setEndTime(new Timestamp(System.currentTimeMillis() + 7200000));
-    sessionDao.save(ss);
-    Session sss = sessionDao.getLast(user.getId());
-    setSession(sss);
+    setSession(sessionDao.get(sessionDao.save(ss)));
   }
 
-  public static void update() throws SQLException {
+  public static void logout() throws SQLException {
     if (session == null) {
       throw new SQLException("You need to log in!");
     }
@@ -46,5 +44,4 @@ public class SessionManager {
     sessionDao.update(session);
     setSession(null);
   }
-
 }

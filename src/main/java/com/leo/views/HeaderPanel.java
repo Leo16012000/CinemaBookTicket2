@@ -1,7 +1,7 @@
 package com.leo.views;
 
-import com.leo.main.SessionManager;
 import com.leo.utils.ErrorPopup;
+import com.leo.utils.SessionManager;
 
 import java.awt.GridBagConstraints;
 

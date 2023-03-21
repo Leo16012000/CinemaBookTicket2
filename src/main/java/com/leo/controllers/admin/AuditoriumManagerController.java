@@ -30,7 +30,8 @@ public class AuditoriumManagerController extends ManagerController<Auditorium, A
     }
     this.popup = new AuditoriumPopupView();
     popup.registerErrorHandler(view::showError);
-    popup.show();
+    popup.registerConfirmHandler(view::updateData);
+    popup.popup();
   }
 
   @Override
@@ -46,7 +47,8 @@ public class AuditoriumManagerController extends ManagerController<Auditorium, A
       Auditorium auditorium = auditoriumDao.get(selectedId);
       this.popup = new AuditoriumPopupView(auditorium);
       popup.registerErrorHandler(view::showError);
-      popup.show();
+      popup.registerConfirmHandler(view::updateData);
+      popup.popup();
     } catch (Exception e) {
       view.showError(e);
     }

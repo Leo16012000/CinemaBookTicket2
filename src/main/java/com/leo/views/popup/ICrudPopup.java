@@ -10,10 +10,4 @@ public interface ICrudPopup<T> extends IPopup, IView {
   void confirm() throws Exception;
 
   void bindModel(T model);
-
-  void registerErrorHandler(Consumer<Exception> errorHandler);
-
-  void registerConfirmHandler(Consumer<T> successHandler);
-
-  void registerCancelHandler(Runnable cancelHandler);
 }

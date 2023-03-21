@@ -14,6 +14,7 @@ import com.leo.controllers.popup.AuditoriumPopupController;
 import com.leo.models.Auditorium;
 import com.leo.utils.DocumentBinder;
 import com.leo.utils.ErrorPopup;
+import com.leo.views.admin.AuditoriumManagerView;
 
 public class AuditoriumPopupView extends AbstractCrudPopupView<Auditorium, AuditoriumPopupController> {
   private JButton btnCancel;
@@ -28,13 +29,16 @@ public class AuditoriumPopupView extends AbstractCrudPopupView<Auditorium, Audit
   private JTextField txtNumber;
   private JTextField txtRowsNum;
   private JTextField txtColumnsNum;
+  private AuditoriumManagerView managerView;
 
-  public AuditoriumPopupView() {
+  public AuditoriumPopupView(AuditoriumManagerView managerView) {
     super();
+    this.managerView = managerView;
   }
 
-  public AuditoriumPopupView(Auditorium auditorium) {
+  public AuditoriumPopupView(Auditorium auditorium, AuditoriumManagerView managerView) {
     super(auditorium);
+    this.managerView = managerView;
   }
 
   @SuppressWarnings("unchecked")
@@ -198,26 +202,42 @@ public class AuditoriumPopupView extends AbstractCrudPopupView<Auditorium, Audit
     this.editingModel = new Auditorium();
     this.controller = new AuditoriumPopupController();
     initComponents();
-    txtNumber.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setAuditoriumNum, Integer::valueOf));
-    txtRowsNum.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setSeatsRowNum, Integer::valueOf));
+    txtNumber.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setAuditoriumNum, s -> DocumentBinder.toInt(s, 0)));
+    txtRowsNum.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setSeatsRowNum, s -> DocumentBinder.toInt(s, 0)));
     txtColumnsNum.getDocument()
-        .addDocumentListener(DocumentBinder.bind(editingModel::setSeatsColumnNum, Integer::valueOf));
+        .addDocumentListener(DocumentBinder.bind(editingModel::setSeatsColumnNum, s -> DocumentBinder.toInt(s, 0)));
+    addEvent();
   }
 
   @Override
-  public void confirm() throws SQLException {
-    super.confirm(editingModel -> {
-      if (!isUpdating) {
-        return controller.addAuditorium(editingModel);
-      } else {
-        return controller.editAuditorium(editingModel);
-      }
-    }, auditorium -> {
-      if (!isUpdating) {
-        showMessage("Added auditorium successfully!");
-      } else {
-        showMessage("Updated auditorium successfully!");
-      }
-    }, this::showError);
+  protected void onSuccess() {
+    if (!isUpdating) {
+      showMessage("Added auditorium successfully!");
+    } else {
+      showMessage("Updated auditorium successfully!");
+    }
+    close();
+    managerView.refresh();
+  }
+
+  @Override
+  protected void onError(Exception e) {
+    showError(e);
+  }
+
+  @Override
+  protected void onConfirm() throws Exception {
+    btnOK.setText("In progress");
+    if (!isUpdating) {
+      controller.addAuditorium(editingModel);
+    } else {
+      controller.editAuditorium(editingModel);
+    }
+  }
+
+  @Override
+  protected void addEvent() {
+    btnOK.addActionListener(e -> confirm());
+    btnCancel.addActionListener(e -> cancel());
   }
 }

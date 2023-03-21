@@ -44,16 +44,16 @@ public class DocumentBinder {
     setter.accept(val);
   }
 
-  public static Integer parseInteger(String txt) {
+  public static Integer toInt(String txt, int defaultValue) {
     if (StringUtils.isBlank(txt)) {
-      return null;
+      return defaultValue;
     }
     try {
       int num = Integer.valueOf(txt);
       return num;
     }
     catch (Exception e) {
-      return null;
+      return defaultValue;
     }
   }
 }

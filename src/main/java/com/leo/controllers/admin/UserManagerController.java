@@ -32,7 +32,8 @@ public class UserManagerController extends ManagerController<User, UserManagerVi
     }
     this.popup = new UserPopupView();
     popup.registerErrorHandler(view::showError);
-    popup.show();
+    popup.registerConfirmHandler(it -> view.updateData());
+    popup.popup();
   }
 
   @Override
@@ -57,7 +58,8 @@ public class UserManagerController extends ManagerController<User, UserManagerVi
       }
       this.popup = new UserPopupView();
       popup.registerErrorHandler(view::showError);
-      popup.show();
+      popup.registerConfirmHandler(it -> view.updateData());
+      popup.popup();
 
     } catch (Exception e) {
       view.showError(e);

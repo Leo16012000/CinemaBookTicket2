@@ -31,7 +31,8 @@ public class ShowtimeManagerController extends ManagerController<Showtime, Showt
     }
     this.popup = new ShowtimePopupView();
     popup.registerErrorHandler(view::showError);
-    popup.show();
+    popup.registerConfirmHandler(it -> view.updateData());
+    popup.popup();
   }
 
   @Override
@@ -50,7 +51,8 @@ public class ShowtimeManagerController extends ManagerController<Showtime, Showt
       }
       this.popup = new ShowtimePopupView();
       popup.registerErrorHandler(view::showError);
-      popup.show();
+      popup.registerConfirmHandler(view::updateData);
+      popup.popup();
     } catch (Exception e) {
       view.showError(e);
     }

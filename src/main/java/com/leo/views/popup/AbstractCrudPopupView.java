@@ -1,7 +1,9 @@
 package com.leo.views.popup;
 
+import java.sql.SQLException;
 import java.util.function.Consumer;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import com.leo.dao.Transaction.TxFunction;
@@ -13,7 +15,8 @@ public abstract class AbstractCrudPopupView<T, K> extends JFrame
   protected T editingModel;
   protected boolean isInit = false;
   protected Consumer<Exception> errorHandler;
-  protected Consumer<T> confirmHandler;
+  protected Consumer<T> successHandler;
+  protected Runnable confirmHandler;
   protected Runnable cancelHandler;
   protected boolean isUpdating = false;
 
@@ -32,7 +35,7 @@ public abstract class AbstractCrudPopupView<T, K> extends JFrame
   }
 
   @Override
-  public void show() {
+  public void popup() {
     if (isOpened()) {
       return;
     }
@@ -55,12 +58,11 @@ public abstract class AbstractCrudPopupView<T, K> extends JFrame
     close();
   }
 
-  public void confirm(TxFunction<T, T> saveFn, Consumer<ThreadGroup> successHandler, Consumer<Exception> errorHandler) {
+  @Override
+  public void confirm() {
     try {
-      T updatedModel = saveFn.apply(editingModel);
-      if (confirmHandler != null) {
-        confirmHandler.accept(updatedModel);
-      }
+      onConfirm();
+      onSuccess();
       close();
     } catch (Exception e) {
       if (errorHandler != null) {
@@ -75,18 +77,8 @@ public abstract class AbstractCrudPopupView<T, K> extends JFrame
     return isVisible();
   }
 
-  @Override
-  public void registerErrorHandler(Consumer<Exception> errorHandler) {
-    this.errorHandler = errorHandler;
-  }
-
-  @Override
-  public void registerConfirmHandler(Consumer<T> confirmHandler) {
-    this.confirmHandler = confirmHandler;
-  }
-
-  @Override
-  public void registerCancelHandler(Runnable cancelHandler) {
-    this.cancelHandler = cancelHandler;
-  }
+  protected abstract void addEvent();
+  protected abstract void onSuccess();
+  protected abstract void onError(Exception e);
+  protected abstract void onConfirm() throws SQLException, Exception;
 }

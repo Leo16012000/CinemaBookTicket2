@@ -238,12 +238,28 @@ public class MoviePopupView extends AbstractCrudPopupView<Movie, MoviePopupContr
     txtTitle.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setTitle));
     txtCountry.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setCountry));
     txtDurationTime.getDocument()
-        .addDocumentListener(DocumentBinder.bind(editingModel::setDurationTime, Integer::valueOf));
-    txtPrice.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setPrice, Integer::valueOf));
+        .addDocumentListener(DocumentBinder.bind(editingModel::setDurationTime, s -> DocumentBinder.toInt(s, 0)));
+    txtPrice.getDocument().addDocumentListener(DocumentBinder.bind(editingModel::setPrice, s -> DocumentBinder.toInt(s, 0)));
   }
 
   @Override
   public void confirm() throws SQLException {
+    super.confirm(editingModel -> {
+      if (!isUpdating) {
+        return controller.addMovie(editingModel);
+      } else {
+        return controller.editMovie(editingModel);
+      }
+    }, 
+    () -> btnOK.setText("In progress"),
+    movie -> {
+      if (!isUpdating) {
+        showMessage("Added movie successfully!");
+      } else {
+        showMessage("Updated movie successfully!");
+      }
+      refresh();
+    }, this::showError);
     super.confirm(editingModel -> {
       if (!isUpdating) {
         return controller.addMovie(editingModel);

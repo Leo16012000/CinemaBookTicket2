@@ -30,7 +30,8 @@ public class MovieManagerController extends ManagerController<Movie, MovieManage
     }
     this.popup = new MoviePopupView();
     popup.registerErrorHandler(view::showError);
-    popup.show();
+    popup.registerConfirmHandler(it -> view.updateData());
+    popup.popup();
   }
 
   @Override
@@ -49,7 +50,8 @@ public class MovieManagerController extends ManagerController<Movie, MovieManage
       }
       this.popup = new MoviePopupView();
       popup.registerErrorHandler(view::showError);
-      popup.show();
+      popup.registerConfirmHandler(view::updateData);
+      popup.popup();
     } catch (Exception e) {
       view.showError(e);
     }

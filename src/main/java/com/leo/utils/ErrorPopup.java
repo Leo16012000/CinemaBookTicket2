@@ -1,23 +1,19 @@
 package com.leo.utils;
 
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import javax.swing.JOptionPane;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import javax.swing.*;
 public class ErrorPopup {
-
-  static PrintStream ps;
+  private static final Logger logger = LogManager.getLogger(ErrorPopup.class);
 
   public static void show(Exception e) {
     try {
-      if (ps == null) {
-        ps = new PrintStream(new FileOutputStream("log.txt", true));
-      }
-      e.printStackTrace(ps);
+      logger.error(e.getMessage());
 
       // JOptionPane.showMessageDialog(null, e.getMessage(), "Something happened",
       // JOptionPane.ERROR_MESSAGE);
-      int val = JOptionPane.showConfirmDialog(null, e.getMessage() + "!\nXem chi tiểt lỗi?", "Có lỗi xảy ra",
+      int val = JOptionPane.showConfirmDialog(null, e.getMessage() + "!\nSee details?", "Error",
           JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
       if (val == JOptionPane.YES_OPTION) {
         String errorSummary = "";
@@ -30,6 +26,7 @@ public class ErrorPopup {
             errorSummary += "\n";
           }
         }
+        logger.error(errorSummary);
         JOptionPane.showMessageDialog(null, errorSummary, "Có lỗi xảy ra", JOptionPane.ERROR_MESSAGE);
       }
     } catch (Exception ex) {

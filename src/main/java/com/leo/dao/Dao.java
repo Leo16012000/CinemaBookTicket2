@@ -1,9 +1,13 @@
 package com.leo.dao;
 
+import com.leo.models.User;
+
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class Dao<T> {
+  private static final Logger logger = Logger.getLogger(Dao.class.getName());
 
   protected TransactionManager transactionManager;
 

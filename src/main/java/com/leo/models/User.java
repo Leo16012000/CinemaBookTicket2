@@ -5,6 +5,7 @@ import com.leo.utils.UserPermission;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.logging.Logger;
 
 public class User extends Model {
   private int id;

@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.List;
 
 public class ReservationDao extends Dao<Reservation> {
+  private static ReservationDao instance;
+
   @Override
   public List<Reservation> getAll() throws SQLException {
     return transactionManager
@@ -40,7 +42,7 @@ public class ReservationDao extends Dao<Reservation> {
               }
               PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
-                      "INSERT INTO `reservations` (`userId`, `showtime_id`) VALUES (?, ?)",
+                      "INSERT INTO `reservations` (`user_id`, `showtime_id`) VALUES (?, ?)",
                       Statement.RETURN_GENERATED_KEYS),
                   t.getUserId(),
                   t.getShowtimeId());
@@ -83,6 +85,17 @@ public class ReservationDao extends Dao<Reservation> {
                   conn.prepareStatement("DELETE FROM `reservations` WHERE `id` = ?"), id)
                   .executeUpdate();
             });
+  }
+
+  public static ReservationDao getInstance() {
+    if (instance == null) {
+      synchronized (ReservationDao.class) {
+        if (instance == null) {
+          instance = new ReservationDao();
+        }
+      }
+    }
+    return instance;
   }
 
   public List<Reservation> searchByKey(String key, String word) throws SQLException {

@@ -3,17 +3,24 @@ package com.leo.controllers;
 import com.leo.dao.UserDao;
 import com.leo.main.SessionManager;
 import com.leo.views.LoginView;
+import com.leo.views.MainFrame;
 import com.leo.models.User;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.util.Optional;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LoginController {
+  private static final Logger logger = LogManager.getLogger(LoginController.class);
 
   private LoginView view;
   UserDao userDao = UserDao.getInstance();
+  private MainFrame bookingMovieFrame;
 
   public LoginController(LoginView view) {
     this.view = view;
@@ -31,8 +38,12 @@ public class LoginController {
   }
 
   public void loginAsGuest() throws SQLException {
-    UserHomeController controller = new UserHomeController();
-    // controller.getView().setPanel(new HomeView());
+    if (!Optional.ofNullable(bookingMovieFrame).map(it -> it.isVisible()).orElse(false)) {
+      view.dispose();
+      this.bookingMovieFrame = new MainFrame();
+      bookingMovieFrame.pack();
+      bookingMovieFrame.setVisible(true);
+    }
   }
 
   public void login() {
@@ -51,9 +62,12 @@ public class LoginController {
       SessionManager.create(user);// Khởi tạo session
       switch (user.getPermission()) {
         case USER:
-          UserHomeController controller = new UserHomeController();
-          // controller.getView().setPanel(new MainPanel());
-          view.dispose();// Tắt form đăng nhập
+          MainFrame bookingMovieFrame;
+          bookingMovieFrame = new MainFrame();
+          bookingMovieFrame.pack();
+          bookingMovieFrame.setVisible(true);
+
+          view.dispose();
           break;
         case ADMIN:
           AdminDashboardController controller2 = new AdminDashboardController();
@@ -103,8 +117,7 @@ public class LoginController {
         try {
           loginAsGuest();
         } catch (SQLException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+          logger.error(e.getMessage());
         }
       }
     });

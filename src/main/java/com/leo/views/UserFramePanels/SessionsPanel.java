@@ -6,6 +6,7 @@ import com.leo.models.Movie;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -61,6 +62,10 @@ public class SessionsPanel extends JPanel {
   public void setMovie(Movie movie) {
     this.movie = movie;
     film_title.setText(movie.getTitle() + " (" + movie.getDurationTime() + " toi thieu)");
+  }
+
+  public void addBackBtnActionListener(ActionListener l) {
+    back.addActionListener(l);
   }
 
 }

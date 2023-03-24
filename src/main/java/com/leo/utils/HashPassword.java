@@ -3,7 +3,12 @@ package com.leo.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class HashPassword {
+  private static final Logger logger = LogManager.getLogger(HashPassword.class);
+
   public static String genHashValue(String passwordToHash) {
     String generatedPassword = null;
     try {
@@ -25,7 +30,7 @@ public class HashPassword {
       // Get complete hashed password in hex format
       generatedPassword = sb.toString();
     } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
     return generatedPassword;
   }

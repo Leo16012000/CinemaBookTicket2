@@ -6,6 +6,7 @@ import com.leo.utils.PrepareStatements;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeatDao extends Dao<Seat> {
@@ -98,6 +99,16 @@ public class SeatDao extends Dao<Seat> {
                 word)
                 .executeQuery(),
             Seat::getFromResultSet);
+  }
+
+  public List<Seat> saveBatch(List<Seat> seats) throws SQLException {
+    return transactionManager.getTransaction().func(conn -> {
+      List<Seat> result = new ArrayList<>();
+      for (Seat seat : seats) {
+        result.add(get(save(seat)));
+      }
+      return result;
+    });
   }
 
   public static SeatDao getInstance() {

@@ -27,16 +27,14 @@ public class Transaction implements AutoCloseable {
     startCount++;
   }
 
-  public void rollback() {
+  public void rollback() throws SQLException {
     try {
       if (con.isClosed()) {
-        closeQuietly();
         return;
       }
       con.rollback();
+    } finally {
       closeQuietly();
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
     }
   }
 
@@ -48,12 +46,14 @@ public class Transaction implements AutoCloseable {
       startCount--;
     }
     if (startCount == 0) {
-      if (con.isClosed()) {
+      try {
+        if (con.isClosed()) {
+          return;
+        }
+        con.commit();
+      } finally {
         closeQuietly();
-        return;
       }
-      con.commit();
-      closeQuietly();
     }
   }
 
@@ -65,6 +65,22 @@ public class Transaction implements AutoCloseable {
       if (rs.next()) {
         ret = mapper.apply(rs);
       }
+      commit();
+      return ret;
+    } catch (SQLException e) {
+      rollback();
+      throw e;
+    } catch (Exception e) {
+      rollback();
+      throw new RuntimeException(e);
+    }
+  }
+
+  public <T> T func(TxFunction<Connection, T> fn)
+      throws SQLException {
+    start();
+    try {
+      T ret = fn.apply(con);
       commit();
       return ret;
     } catch (SQLException e) {
@@ -122,9 +138,9 @@ public class Transaction implements AutoCloseable {
   public void close() throws Exception {
     if (!con.isClosed()) {
       con.close();
+      startCount = 0;
+      threadLocal.remove();
     }
-    startCount = 0;
-    threadLocal.remove();
   }
 
   public interface TxFunction<T, K> {

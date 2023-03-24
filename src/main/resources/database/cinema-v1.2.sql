@@ -47,8 +47,8 @@ create table if not exists seats(
 	id int primary key auto_increment,
 	auditorium_id int not null,
 	seat_column int not null,
-	seat_row varchar(2) not null,
-	created_at timestamp not null,
+	seat_row int not null,
+	created_at timestamp not null default current_timestamp,
 	foreign key(auditorium_id) references auditoriums(id)
 );
 
@@ -57,7 +57,7 @@ create table if not exists seats_reservation(
 	id int primary key auto_increment,
 	seat_id int not null,
 	reservation_id int not null,
-	created_at timestamp not null,
+	created_at timestamp not null default current_timestamp,
 	foreign key(seat_id) references seats(id),
 	foreign key(reservation_id) references reservations(id)
 );
@@ -70,5 +70,3 @@ create table if not exists session(
 	message varchar(255),
 	foreign key(user_id) references users(id)
 );
-
-INSERT INTO cinema.users (name, username, password, created_at, permission) VALUES('ADMIN', 'admin', '1', CURRENT_TIMESTAMP(), 'ADMIN');

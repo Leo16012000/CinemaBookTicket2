@@ -1,7 +1,5 @@
 package com.leo.dao;
 
-import com.leo.models.User;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;

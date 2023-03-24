@@ -10,7 +10,6 @@ import com.leo.views.popup.ShowtimePopupView;
 
 import javax.swing.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
@@ -22,7 +21,7 @@ public class ShowtimeManagerController extends ManagerController {
 
   public ShowtimeManagerController() {
     super();
-    showtimeDao = new ShowtimeDao();
+    showtimeDao = ShowtimeDao.getInstance();
     popupController = new ShowtimePopupController();
   }
 

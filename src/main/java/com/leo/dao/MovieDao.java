@@ -1,12 +1,16 @@
 package com.leo.dao;
 
 import com.leo.models.Movie;
+import com.leo.models.Showtime;
 import com.leo.utils.PrepareStatements;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MovieDao extends Dao<Movie> {
   private static MovieDao instance;
@@ -92,15 +96,26 @@ public class MovieDao extends Dao<Movie> {
   }
 
   public List<Movie> searchByKey(String key, String word) throws SQLException {
+    final Set<String> columnNames = Arrays.asList("id", "title", "duration_time", "country", "price").stream()
+        .collect(Collectors.toSet());
+    if (!columnNames.contains(key)) {
+      throw new IllegalArgumentException();
+    }
     return transactionManager
         .getTransaction()
         .queryList(
             conn -> PrepareStatements.setPreparedStatementParams(
-                conn.prepareStatement("SELECT * FROM `movies` WHERE ? LIKE '%?%'"),
-                key,
-                word)
+                conn.prepareStatement("SELECT * FROM `movies` WHERE " + key + " LIKE ?"),
+                "%" + word.trim() + "%")
                 .executeQuery(),
             Movie::getFromResultSet);
+  }
+
+  public List<Showtime> getMovieShowtimes(int movieId) throws SQLException {
+    return transactionManager.getTransaction().queryList(
+        conn -> PrepareStatements.setPreparedStatementParams(
+            conn.prepareStatement("SELECT * FROM `showtimes` s WHERE s.movie_id = ?"), movieId).executeQuery(),
+        Showtime::getFromResultSet);
   }
 
   public static MovieDao getInstance() {

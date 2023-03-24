@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class LoadConfig {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+public class LoadConfig {
+  private static final Logger logger = LogManager.getLogger(LoadConfig.class);
   private static final String CONFIG_PATH = "src/main/resources/config.properties";
   private static LoadConfig instance;
   private Properties properties = new Properties();
@@ -38,7 +41,7 @@ public class LoadConfig {
     try (InputStream inputStream = new FileInputStream(CONFIG_PATH)) {
       properties.load(inputStream);
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 }

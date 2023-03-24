@@ -5,25 +5,19 @@
  */
 package com.leo.controllers;
 
-import com.leo.dao.MovieDao;
 import com.leo.main.SessionManager;
-import com.leo.models.Movie;
 import com.leo.views.HeaderPanel;
 import com.leo.views.LoginView;
 import com.leo.views.MainFrame;
 import com.leo.views.MoviePanel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 
 public class UserHomeController {
 
@@ -31,7 +25,6 @@ public class UserHomeController {
   private HeaderPanel headerPanel;
   private MoviePanel moviePanel;
   private JTable movieTable;
-  private JPanel contentPane;
   JPanel[] cards = { headerPanel };
 
   public UserHomeController() throws SQLException {
@@ -39,12 +32,20 @@ public class UserHomeController {
     headerPanel = view.getHeaderPanel();
     moviePanel = view.getMoviePanel();
     movieTable = moviePanel.getMovieTable();
-    contentPane = view.getContentPane();
     view.setVisible(true);
     addEvent();
   }
 
   private void addEvent() {
+    headerPanel.addBackActionListener(evt -> {
+      int confirm = JOptionPane.showConfirmDialog(view, "Do you want to log out?");
+      if (confirm != JOptionPane.YES_OPTION) {
+        return;
+      }
+      view.dispose();
+      new LoginController(new LoginView());
+      System.out.println("click logout");
+    });
     headerPanel.getBtnLogout().addActionListener(evt -> {
       int confirm = JOptionPane.showConfirmDialog(view, "Do you want to log out?");
       if (confirm != JOptionPane.YES_OPTION) {
@@ -66,25 +67,6 @@ public class UserHomeController {
     });
     // Add a MouseListener to the JTable
     movieTable.addMouseListener(new MyMouseListener());
-    moviePanel.getBtnSearch().addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        ArrayList<Movie> movies;
-        try {
-          contentPane.remove(moviePanel);
-          movies = new ArrayList<>(
-              MovieDao.getInstance().searchByKey("title", moviePanel.getTextField().getText()));
-          moviePanel.updatePanel(movies, contentPane);
-          moviePanel.setBounds(194, 32, 432, 379);
-          contentPane.add(moviePanel);
-          moviePanel.setLayout(null);
-          SwingUtilities.updateComponentTreeUI(contentPane);
-          System.out.println("trigger search " + moviePanel.getTextField().getText());
-        } catch (SQLException e1) {
-          // TODO Auto-generated catch block
-          e1.printStackTrace();
-        }
-      }
-    });
   }
 
   // ------------------------------------------------------------------------------

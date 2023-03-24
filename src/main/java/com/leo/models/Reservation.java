@@ -4,6 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class Reservation {
   private int id, userId, showtimeId;
   private Timestamp createdAt;
@@ -13,9 +22,9 @@ public class Reservation {
   public static Reservation getFromResultSet(ResultSet rs) throws SQLException {
     Reservation o = new Reservation();
     o.setId(rs.getInt("id"));
-    o.setUserId(rs.getInt("userId"));
-    o.setShowtimeId(rs.getInt("showtimeId"));
-    o.setCreatedAt(rs.getTimestamp("createdAt"));
+    o.setUserId(rs.getInt("user_id"));
+    o.setShowtimeId(rs.getInt("showtime_id"));
+    o.setCreatedAt(rs.getTimestamp("created_at"));
     return o;
   }
 

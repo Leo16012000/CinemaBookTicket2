@@ -1,6 +1,7 @@
 package com.leo.main;
 
 import com.leo.dao.SessionDao;
+import com.leo.dao.UserDao;
 import com.leo.models.Session;
 import com.leo.models.User;
 
@@ -11,6 +12,7 @@ public class SessionManager {
 
   public static Session session;
   static SessionDao sessionDao = SessionDao.getInstance();
+  private static UserDao userDao = UserDao.getInstance();
 
   public SessionManager() {
   }
@@ -32,8 +34,8 @@ public class SessionManager {
     ss.setMessage("login");
     ss.setStartTime(new Timestamp(System.currentTimeMillis()));
     ss.setEndTime(new Timestamp(System.currentTimeMillis() + 7200000));
-    sessionDao.save(ss);
-    Session sss = sessionDao.getLast(user.getId());
+    Session sss = sessionDao.get(sessionDao.save(ss));
+    sss.setUser(userDao.get(sss.getUserId()));
     setSession(sss);
   }
 

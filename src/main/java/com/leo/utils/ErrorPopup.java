@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
+
 public class ErrorPopup {
   private static final Logger logger = LogManager.getLogger(ErrorPopup.class);
 

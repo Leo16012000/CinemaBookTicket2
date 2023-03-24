@@ -12,12 +12,7 @@ import com.leo.views.popup.ShowtimePopupView;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.Arrays.asList;
 
 public class ShowtimePopupController {
   ShowtimeDao showtimeDao = new ShowtimeDao();
@@ -31,7 +26,8 @@ public class ShowtimePopupController {
     previousView = view;
     view.setVisible(true);
     view.getCboMovieName().setModel(new DefaultComboBoxModel(MovieDao.getInstance().getAll().stream().toArray()));
-    view.getCboAuditoriumNumber().setModel(new DefaultComboBoxModel(AuditoriumDao.getInstance().getAll().stream().toArray()));
+    view.getCboAuditoriumNumber()
+        .setModel(new DefaultComboBoxModel(AuditoriumDao.getInstance().getAll().stream().toArray()));
     view.getBtnCancel().addActionListener(evt -> view.dispose());
     view.getBtnOK().addActionListener(evt -> {
       try {
@@ -51,21 +47,25 @@ public class ShowtimePopupController {
     String startTime = view.getStartTimeSpinner().getValue().toString();
     Timestamp timestamp = TimeHandle.dateStimestampConversion(startTime);
     Date date = view.getjDate().getDate();
-    Timestamp saveTime = new Timestamp(date.getYear(),date.getMonth(), date.getDate(), timestamp.getHours(), timestamp.getMinutes(),0,0);
+    Timestamp saveTime = new Timestamp(date.getYear(), date.getMonth(), date.getDate(), timestamp.getHours(),
+        timestamp.getMinutes(), 0, 0);
     showtime.setStartTime(saveTime);
     String endTime = view.getEndTimeSpinner().getValue().toString();
     timestamp = TimeHandle.dateStimestampConversion(endTime);
-    saveTime = new Timestamp(date.getYear(),date.getMonth(), date.getDate(), timestamp.getHours(), timestamp.getMinutes(),0,0);
+    saveTime = new Timestamp(date.getYear(), date.getMonth(), date.getDate(), timestamp.getHours(),
+        timestamp.getMinutes(), 0, 0);
     showtime.setEndTime(saveTime);
-    System.out.println(view.getStartTimeSpinner().getValue().toString() + "|" + view.getEndTimeSpinner().getValue().toString() + "|" + view.getjDate().getDate().toString());
-    Movie m = (Movie)(view.getCboMovieName().getSelectedItem());
+    System.out.println(view.getStartTimeSpinner().getValue().toString() + "|"
+        + view.getEndTimeSpinner().getValue().toString() + "|" + view.getjDate().getDate().toString());
+    Movie m = (Movie) (view.getCboMovieName().getSelectedItem());
     showtime.setMovieId(m.getId());
     Auditorium a = (Auditorium) (view.getCboAuditoriumNumber().getSelectedItem());
     showtime.setAuditoriumId(a.getId());
     showtimeDao.save(showtime);
   }
 
-  public void edit(ShowtimePopupView view, Showtime showtime, SuccessCallback sc, ErrorCallback ec) throws SQLException {
+  public void edit(ShowtimePopupView view, Showtime showtime, SuccessCallback sc, ErrorCallback ec)
+      throws SQLException {
     if (previousView != null && previousView.isDisplayable()) {
       previousView.requestFocus();
       return;
@@ -100,13 +100,15 @@ public class ShowtimePopupController {
     String startTime = view.getStartTimeSpinner().getValue().toString();
     Timestamp timestamp = TimeHandle.dateStimestampConversion(startTime);
     Date date = view.getjDate().getDate();
-    Timestamp saveTime = new Timestamp(date.getYear(),date.getMonth(), date.getDate(), timestamp.getHours(), timestamp.getMinutes(),0,0);
+    Timestamp saveTime = new Timestamp(date.getYear(), date.getMonth(), date.getDate(), timestamp.getHours(),
+        timestamp.getMinutes(), 0, 0);
     showtime.setStartTime(saveTime);
     String endTime = view.getEndTimeSpinner().getValue().toString();
     timestamp = TimeHandle.dateStimestampConversion(endTime);
-    saveTime = new Timestamp(date.getYear(),date.getMonth(), date.getDate(), timestamp.getHours(), timestamp.getMinutes(),0,0);
+    saveTime = new Timestamp(date.getYear(), date.getMonth(), date.getDate(), timestamp.getHours(),
+        timestamp.getMinutes(), 0, 0);
     showtime.setEndTime(saveTime);
-    Movie m = (Movie)(view.getCboMovieName().getSelectedItem());
+    Movie m = (Movie) (view.getCboMovieName().getSelectedItem());
     showtime.setMovieId(m.getId());
     Auditorium a = (Auditorium) (view.getCboAuditoriumNumber().getSelectedItem());
     showtime.setAuditoriumId(a.getId());

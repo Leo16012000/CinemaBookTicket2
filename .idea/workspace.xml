@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dcf68383-dd25-4d61-80ba-7f50414a95bf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/CinemaBookTicket2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/demo/ComboJumbo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/demo/DateTimePickerExample.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/components/TimePicker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/AdminDashboardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/ManagerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/Payload.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/SidebarController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/UserHomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/admin/AuditoriumManagerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/admin/MovieManagerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/admin/ShowtimeManagerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/admin/UserManagerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/ErrorCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/MoviePopupController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/ShowtimePopupController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/SuccessCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/UserPopupController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/AuditoriumDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/Dao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/Database.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/MovieDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/ReservationDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/SeatDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/SessionDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/ShowtimeDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/Transaction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/TransactionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dao/UserDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/main/SessionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/models/Auditorium.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/models/Model.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/models/Movie.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/models/Reservation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/models/Seat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/models/SeatsReservation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/models/Session.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/models/Showtime.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/models/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/Convert.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/ErrorPopup.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/HashPassword.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/LoadConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/PrepareStatements.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/SidebarColor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/TimeHandle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/UserPermission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/AdminDahsboardFramebuffer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/AdminDashboardFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/HeaderPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/JTablePopupMenuExample.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/LoginView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/MainFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/MoviePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/MoviesPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/ShowtimePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/TableMouseListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/UserFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/UserFramePanels/MoviesPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/UserFramePanels/SessionsPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/UserFramePanels/TicketsPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/admin/AuditoriumManagerView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/admin/ManagerPaneView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/admin/MenuItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/admin/MovieManagerView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/admin/ShowtimeManagerView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/admin/UserManagerView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/popup/AuditoriumPopupView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/popup/MoviePopupView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/popup/PopupView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/popup/ShowtimePopupView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/views/popup/UserPopupView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/resources/config.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/resources/database/cinema-v1.1.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/resources/database/cinema-v1.2.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/resources/images/back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/resources/log4j2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/app-2023-03-22.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/demo/ComboJumbo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/demo/DateTimePickerExample.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/Server.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/Server1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/ServiceRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/admin/AuditoriumManagerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/AuditoriumDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/Dao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/Database.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/MovieDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/ReservationDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/SeatDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/SessionDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/ShowtimeDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/Transaction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/TransactionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/UserDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dtos/XmlPayload.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/main/SessionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Auditorium.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Model.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Movie.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Reservation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Seat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/SeatsReservation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Session.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Showtime.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/HashPassword.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/LoadConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/PrepareStatements.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/SidebarColor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/TimeHandle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/UserPermission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/config.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/database/cinema-v1.1.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/database/cinema-v1.2.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/images/back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Requirements" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eclipse-formatter.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/app.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/hooks/pre-commit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spotless.xml.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/ComboJumbo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/DateTimePickerExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/components/TimePicker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/AdminDashboardController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/ManagerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/SidebarController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/UserHomeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/admin/AuditoriumManagerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/admin/MovieManagerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/admin/ShowtimeManagerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/admin/UserManagerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/popup/ErrorCallback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/popup/MoviePopupController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/popup/ShowtimePopupController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/popup/SuccessCallback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/controllers/popup/UserPopupController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/AuditoriumDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/Dao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/Database.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/MovieDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/ReservationDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/SeatDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/SessionDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/ShowtimeDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/Transaction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/TransactionManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/dao/UserDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/main/SessionManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/models/Auditorium.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/models/Model.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/models/Movie.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/models/Reservation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/models/Seat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/models/SeatsReservation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/models/Session.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/models/Showtime.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/models/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/utils/ErrorPopup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/utils/HashPassword.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/utils/LoadConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/utils/PrepareStatements.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/utils/SidebarColor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/utils/TimeHandle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/utils/UserPermission.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/AdminDahsboardFramebuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/AdminDashboardFrame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/HeaderPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/JTablePopupMenuExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/LoginView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/MainFrame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/MoviePanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/MoviesPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/ShowtimePanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/TableMouseListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/UserFrame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/UserFramePanels/MoviesPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/UserFramePanels/SessionsPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/UserFramePanels/TicketsPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/admin/AuditoriumManagerView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/admin/ManagerPaneView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/admin/MenuItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/admin/MovieManagerView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/admin/ShowtimeManagerView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/admin/UserManagerView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/popup/AuditoriumPopupView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/popup/MoviePopupView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/popup/PopupView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/popup/ShowtimePopupView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/leo/views/popup/UserPopupView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/database/cinema-v1.1.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/database/cinema-v1.2.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectId" id="2N2cTyStrTjbEvX2fv2dKNZSIid" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-19&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/leodang/Laboratory/CinemaBookTicket2/server&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.44158074&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/client" />
+      <recent name="$PROJECT_DIR$/client/src" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/resources/database" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.demo" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.leo" />
+      <recent name="com.leo.controllers.admin.controllers" />
+      <recent name="com.leo.dtos" />
+      <recent name="com.leo.controllers" />
+      <recent name="com.leo.controllers.admin" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="Application" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Client">
+    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-19" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.leo.Client" />
+      <module name="client" />
+      <option name="PROGRAM_PARAMETERS" value="--add-modules java.xml.bind" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.leo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ComboJumbo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.demo.ComboJumbo" />
+      <module name="cinema-manager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DateTimePickerExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.demo.demo.DateTimePickerExample" />
+      <module name="cinema-manager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.demo.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="APP_LOG_ROOT" value="logs" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="com.leo.Main" />
+      <module name="cinema-manager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.leo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.leo.Server" />
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.leo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Client" />
+      <item itemvalue="Application.Server" />
+      <item itemvalue="Application.ComboJumbo" />
+      <item itemvalue="Application.DateTimePickerExample" />
+      <item itemvalue="Application.Main" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Client" />
+        <item itemvalue="Application.Server" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.DateTimePickerExample" />
+        <item itemvalue="Application.ComboJumbo" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dcf68383-dd25-4d61-80ba-7f50414a95bf" name="Changes" comment="" />
+      <created>1678865637284</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1678865637284</updated>
+      <workItem from="1679756811394" duration="4443000" />
+      <workItem from="1679796142926" duration="7355000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>jar://$USER_HOME$/.jdks/openjdk-19.0.2/lib/src.zip!/java.desktop/javax/swing/JComboBox.java</url>
+          <line>581</line>
+          <properties class="javax.swing.JComboBox" method="setSelectedItem">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/com/leo/controllers/Payload.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.jdks/openjdk-19.0.2/lib/src.zip!/java.base/java/net/Socket.java</url>
+          <line>1087</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="18" language="JAVA" />
+        <watch expression="e" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>

@@ -1,6 +1,7 @@
 package com.leo.controllers.admin;
 
 import com.leo.dao.AuditoriumDao;
+import com.leo.dtos.ResponseDto;
 import com.leo.models.Auditorium;
 
 public class AuditoriumManagerController {
@@ -10,14 +11,18 @@ public class AuditoriumManagerController {
 
   }
 
-  public String actionAdd(Auditorium auditorium){
+  public ResponseDto actionAdd(Auditorium auditorium){
+    ResponseDto responseDto = new ResponseDto();
     try{
       Integer id = auditoriumDao.save(auditorium);
-      String res = "SUCCESS:<id>" + id + "<id>";
-      return res;
+      responseDto.setMessage("Add auditorium successfully");
+      responseDto.setStatus("SUCCESS");
+      return responseDto;
     }
     catch (Exception e){
-      return e.getMessage();
+      responseDto.setMessage(e.getMessage());
+      responseDto.setStatus("FAILURE");
+      return responseDto;
     }
   }
 

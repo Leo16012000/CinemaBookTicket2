@@ -2,24 +2,14 @@ package com.leo.dtos;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+import java.util.LinkedHashMap;
+
 public class ResponseDto {
-    public Object getPayload() {
+    public LinkedHashMap getPayload() {
         return payload;
     }
 
     private String message;
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setPayload(Object payload) {
-        this.payload = payload;
-    }
 
     public String getMessage() {
         return message;
@@ -31,5 +21,5 @@ public class ResponseDto {
 
     private String status;
     @JacksonXmlProperty(localName = "Payload")
-    private Object payload;
+    private LinkedHashMap payload;
 }

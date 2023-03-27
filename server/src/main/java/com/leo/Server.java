@@ -1,6 +1,8 @@
 package com.leo;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.leo.controllers.ServiceRegistry;
+import com.leo.dtos.ResponseDto;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,7 +30,10 @@ public class Server {
 
             // Process the XML data as needed
             ServiceRegistry serviceRegistry = new ServiceRegistry();
-            String response = serviceRegistry.handleRequest(request);
+            ResponseDto responseDto = serviceRegistry.handleRequest(request);
+            // Send the payload to the server
+            XmlMapper xmlMapper = new XmlMapper();
+            String response = xmlMapper.writeValueAsString(responseDto);
             OutputStream os = socket.getOutputStream();
             os.write(response.getBytes());
             os.flush();

@@ -32,7 +32,7 @@ public class RequestDto {
         this.payload = payload;
     }
 
-    public String sendRequest(JFrame view) throws IOException {
+    public LinkedHashMap sendRequest(JFrame view) throws IOException {
             socket = Client.getSocket();
             System.out.println("Connected to server");
 
@@ -49,14 +49,17 @@ public class RequestDto {
             byte[] buffer = new byte[1024];
             int bytesRead = is.read(buffer);
             String response = new String(buffer, 0, bytesRead);
-            LinkedHashMap object = convert.XMLToObject(xmlPayload);
-            System.out.println(status + " " + object);
-            if(status == "ERROR"){
-                JOptionPane.showMessageDialog(null, "Error: " + object.get("message"));
+            ResponseDto responseDto
+                    = xmlMapper.readValue(response, ResponseDto.class);
+            String status = responseDto.getStatus();
+            String message = responseDto.getMessage();
+            LinkedHashMap payload = responseDto.getPayload();
+            if(status == "FAILURE"){
+                JOptionPane.showMessageDialog(null, "Error: " + message);
             } else {
                 view.dispose();
-                JOptionPane.showMessageDialog(null, "Successfully");
+                JOptionPane.showMessageDialog(null, message);
             }
-            return response;
+            return payload;
     }
 }

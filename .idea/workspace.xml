@@ -5,13 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcf68383-dd25-4d61-80ba-7f50414a95bf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dtos/ResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/dtos/RequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dtos/RequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/popup/AuditoriumPopupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/popup/AuditoriumPopupController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/dtos/RequestDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/leo/dtos/RequestDto.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/ServiceRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/ServiceRegistry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/admin/AuditoriumManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/admin/AuditoriumManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/dtos/ResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dtos/ResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Auditorium.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Auditorium.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/ServiceRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/ServiceRegistry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/admin/AuditoriumManagerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/admin/AuditoriumManagerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/models/Auditorium.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/models/Auditorium.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +115,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Client">
-    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Client" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-19" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.leo.Client" />
@@ -207,7 +213,7 @@
       <updated>1678865637284</updated>
       <workItem from="1679756811394" duration="4443000" />
       <workItem from="1679796142926" duration="16679000" />
-      <workItem from="1679879415827" duration="9419000" />
+      <workItem from="1679879415827" duration="13818000" />
     </task>
     <servers />
   </component>
@@ -239,6 +245,16 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/leo/controllers/ServiceRegistry.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/leo/Server.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

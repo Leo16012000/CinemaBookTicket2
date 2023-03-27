@@ -27,9 +27,10 @@ public class ServiceRegistry {
                 return auditoriumManagerController.actionAdd(auditorium);
 //            case "read":
 //                return "Response from MyServiceController for read operation";
-//            case "update":
-//                return "Response from MyServiceController for update operation";
-//            case "delete":
+            case "UPDATE_AUDITORIUM":
+                auditorium = new Auditorium(Integer.parseInt(payload.get("id").toString()),Integer.parseInt(payload.get("auditoriumNum").toString()), Integer.parseInt(payload.get("seatsRowNum").toString()), Integer.parseInt(payload.get("seatsColumnNum").toString()));
+                return auditoriumManagerController.actionEdit(auditorium);
+                //            case "delete":
 //                return "Response from MyServiceController for delete operation";
             default:
                 throw new IllegalArgumentException("Invalid service name: " + requestDto.getServiceName());

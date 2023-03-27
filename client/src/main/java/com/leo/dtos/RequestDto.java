@@ -32,7 +32,7 @@ public class RequestDto {
         this.payload = payload;
     }
 
-    public LinkedHashMap sendRequest(JFrame view) throws IOException {
+    public ResponseDto sendRequest(JFrame view) throws IOException {
             socket = Client.getSocket();
             System.out.println("Connected to server");
 
@@ -56,10 +56,10 @@ public class RequestDto {
             LinkedHashMap payload = responseDto.getPayload();
             if(status == "FAILURE"){
                 JOptionPane.showMessageDialog(null, "Error: " + message);
-            } else {
+            } else if(status == "SUCCESS") {
                 view.dispose();
                 JOptionPane.showMessageDialog(null, message);
             }
-            return payload;
+            return responseDto;
     }
 }

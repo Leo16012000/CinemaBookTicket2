@@ -8,6 +8,13 @@ public class Auditorium extends Model {
   private int id, auditoriumNum, seatsRowNum, seatsColumnNum;
   private Timestamp createdAt;
 
+  public Auditorium(int id, int auditoriumNum, int seatsRowNum, int seatsColumnNum) {
+    this.id = id;
+    this.auditoriumNum = auditoriumNum;
+    this.seatsRowNum = seatsRowNum;
+    this.seatsColumnNum = seatsColumnNum;
+  }
+
   public Auditorium(int auditoriumNum, int seatsRowNum, int seatsColumnNum) {
     this.id = id;
     this.auditoriumNum = auditoriumNum;

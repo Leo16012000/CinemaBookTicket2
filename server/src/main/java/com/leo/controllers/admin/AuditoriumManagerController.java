@@ -26,22 +26,20 @@ public class AuditoriumManagerController {
     }
   }
 
-//  public void actionEdit() {
-//    try {
-//      int selectedId = view.getSelectedId();
-//      if (selectedId < 0) {
-//        throw new Exception("Chooose the one to edit");
-//      }
-//      Auditorium auditorium = auditoriumDao.get(selectedId);
-//      if (auditorium == null) {
-//        throw new Exception("Invalid auditorium selected");
-//      }
-//      popupController.edit(new AuditoriumPopupView(), auditorium, this::updateData, view::showError);
-//
-//    } catch (Exception e) {
-//      view.showError(e);
-//    }
-//  }
+  public ResponseDto actionEdit(Auditorium auditorium) {
+    ResponseDto responseDto = new ResponseDto();
+    try{
+      auditoriumDao.update(auditorium);
+      responseDto.setMessage("Edit auditorium successfully");
+      responseDto.setStatus("SUCCESS");
+      return responseDto;
+    }
+    catch (Exception e){
+      responseDto.setMessage(e.getMessage());
+      responseDto.setStatus("FAILURE");
+      return responseDto;
+    }
+  }
 //
 //  public void actionDelete() {
 //    int selectedIds[] = view.getSelectedIds();

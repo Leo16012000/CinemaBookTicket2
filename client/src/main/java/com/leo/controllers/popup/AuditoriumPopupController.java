@@ -3,6 +3,7 @@ package com.leo.controllers.popup;
 import com.leo.Client;
 import com.leo.dtos.RequestDto;
 import com.leo.dao.AuditoriumDao;
+import com.leo.dtos.ResponseDto;
 import com.leo.models.Auditorium;
 import com.leo.utils.Convert;
 import com.leo.views.popup.AuditoriumPopupView;
@@ -26,8 +27,15 @@ public class AuditoriumPopupController {
     view.setVisible(true);
     view.getBtnCancel().addActionListener(evt -> view.dispose());
     view.getBtnOK().addActionListener(evt -> {
+      ResponseDto responseDto = addAuditorium(view);
+      if (responseDto.getStatus().equals("SUCCESS")){
+        view.dispose();
+        view.showMessage("Added auditorium successfully!");
+        sc.onSuccess();
+      } else {
+        view.showError("Something wrong!!!");
+      }
 //      try {
-        addAuditorium(view);
 //        view.dispose();
 //        view.showMessage("Added auditorium successfully!");
 //        sc.onSuccess();
@@ -38,19 +46,20 @@ public class AuditoriumPopupController {
 
   }
 
-  public void addAuditorium(AuditoriumPopupView view){
+  public ResponseDto addAuditorium(AuditoriumPopupView view){
+    try {
     Auditorium auditorium = new Auditorium();
     auditorium.setAuditoriumNum(Integer.valueOf(view.getTxtNumber().getText()));
     auditorium.setSeatsRowNum(Integer.valueOf(view.getTxtRowsNum().getText()));
     auditorium.setSeatsColumnNum(Integer.valueOf(view.getTxtColumnsNum().getText()));
-    try {
       logger.info("Add auditorium: ", auditorium);
       RequestDto payload = new RequestDto("CREATE_AUDITORIUM", auditorium);
-      payload.sendRequest(view);
+      ResponseDto responseDto = payload.sendRequest(view);
+      return responseDto;
     } catch (Exception e) {
-//      JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+      JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+      return null;
     }
-    return;
   }
 
   public void edit(AuditoriumPopupView view, Auditorium auditorium, SuccessCallback sc, ErrorCallback ec) {
@@ -77,7 +86,7 @@ public class AuditoriumPopupController {
     });
   }
 
-  public boolean editAuditorium(AuditoriumPopupView view, Auditorium auditorium) throws Exception {
+  public ResponseDto editAuditorium(AuditoriumPopupView view, Auditorium auditorium) throws Exception {
     Integer number = Integer.valueOf(view.getTxtNumber().getText()),
         rowsNum = Integer.valueOf(view.getTxtRowsNum().getText()),
         columnsNum = Integer.valueOf(view.getTxtColumnsNum().getText());
@@ -88,7 +97,9 @@ public class AuditoriumPopupController {
     auditorium.setAuditoriumNum(number);
     auditorium.setSeatsRowNum(rowsNum);
     auditorium.setSeatsColumnNum(columnsNum);
-    auditoriumDao.update(auditorium);
-    return true;
+    logger.info("Edit auditorium: ", auditorium);
+    RequestDto payload = new RequestDto("UPDATE_AUDITORIUM", auditorium);
+    ResponseDto responseDto = payload.sendRequest(view);
+    return responseDto;
   }
 }

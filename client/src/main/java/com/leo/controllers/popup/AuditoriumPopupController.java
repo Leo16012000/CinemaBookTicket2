@@ -26,19 +26,19 @@ public class AuditoriumPopupController {
     view.setVisible(true);
     view.getBtnCancel().addActionListener(evt -> view.dispose());
     view.getBtnOK().addActionListener(evt -> {
-      try {
+//      try {
         addAuditorium(view);
-        view.dispose();
-        view.showMessage("Added auditorium successfully!");
-        sc.onSuccess();
-      } catch (Exception ex) {
-        ec.onError(ex);
-      }
+//        view.dispose();
+//        view.showMessage("Added auditorium successfully!");
+//        sc.onSuccess();
+//      } catch (Exception ex) {
+//        ec.onError(ex);
+//      }
     });
 
   }
 
-  public void addAuditorium(AuditoriumPopupView view) throws Exception {
+  public void addAuditorium(AuditoriumPopupView view){
     Auditorium auditorium = new Auditorium();
     auditorium.setAuditoriumNum(Integer.valueOf(view.getTxtNumber().getText()));
     auditorium.setSeatsRowNum(Integer.valueOf(view.getTxtRowsNum().getText()));
@@ -46,9 +46,9 @@ public class AuditoriumPopupController {
     try {
       logger.info("Add auditorium: ", auditorium);
       Payload payload = new Payload("CREATE_AUDITORIUM", convert.objectToXML(auditorium));
-      payload.sendPayload();
+      payload.sendPayload(view);
     } catch (Exception e) {
-      JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+//      JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
     }
     return;
   }

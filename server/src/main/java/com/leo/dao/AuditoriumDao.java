@@ -5,6 +5,7 @@ import com.leo.utils.PrepareStatements;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class AuditoriumDao extends Dao<Auditorium> {
@@ -29,27 +30,30 @@ public class AuditoriumDao extends Dao<Auditorium> {
                 .executeQuery(),
             Auditorium::getFromResultSet);
   }
-  @Override
-  public Integer save(Auditorium t) throws SQLException {
+  public Integer save(LinkedHashMap o) throws SQLException {
     return transactionManager
         .getTransaction()
         .query(
             conn -> {
-              if (t == null) {
+              if (o == null) {
                 throw new SQLException("Empty Auditorium");
               }
               PreparedStatement stmt = PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement(
                       "INSERT INTO `auditoriums` (`auditorium_num`, `seats_row_num`, `seats_column_num`) VALUES (?, ?, ?)",
                       Statement.RETURN_GENERATED_KEYS),
-                  t.getAuditoriumNum(),
-                  t.getSeatsRowNum(),
-                  t.getSeatsColumnNum());
+                  o.get("auditoriumNum"),
+                  o.get("seatsRowNum"),
+                  o.get("seatsColumnNum"));
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
             }, rs->rs.getInt(1));
   }
 
+    @Override
+    public Integer save(Auditorium t) throws SQLException {
+      return 0;
+    }
   @Override
   public void update(Auditorium t) throws SQLException {
     transactionManager

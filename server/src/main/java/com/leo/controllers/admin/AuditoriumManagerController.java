@@ -1,19 +1,25 @@
 package com.leo.controllers.admin;
 
 import com.leo.dao.AuditoriumDao;
-import com.leo.models.Auditorium;
 
-import java.sql.SQLException;
+import java.util.LinkedHashMap;
 
 public class AuditoriumManagerController {
-  private AuditoriumDao auditoriumDao;
+  private AuditoriumDao auditoriumDao = new AuditoriumDao();
 
   public AuditoriumManagerController() {
 
   }
 
-  public void actionAdd(Auditorium auditorium) throws SQLException {
-      auditoriumDao.save(auditorium);
+  public String actionAdd(LinkedHashMap object){
+    try{
+      Integer id = auditoriumDao.save(object);
+      String res = "SUCCESS:<id>" + id + "<id>";
+      return res;
+    }
+    catch (Exception e){
+      return e.getMessage();
+    }
   }
 
 //  public void actionEdit() {

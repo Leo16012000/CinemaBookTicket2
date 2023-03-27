@@ -1,28 +1,37 @@
 package com.leo.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.leo.controllers.admin.AuditoriumManagerController;
+import com.leo.dtos.RequestDto;
+import com.leo.models.Auditorium;
+import com.leo.utils.Convert;
 
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 
 public class ServiceRegistry {
     private AuditoriumManagerController auditoriumManagerController = new AuditoriumManagerController();
-    public String handleRequest(String serviceName, LinkedHashMap object) throws SQLException {
+    private Convert convert= new Convert();
+
+    private XmlMapper xmlMapper = new XmlMapper();
+    public String handleRequest(String request) throws SQLException, JsonProcessingException {
+        RequestDto requestDto
+                = xmlMapper.readValue(request, RequestDto.class);
+        String serviceName = requestDto.getServiceName();
+        LinkedHashMap payload = requestDto.getPayload();
         switch (serviceName) {
             case "CREATE_AUDITORIUM":
-                // Implement the logic for the "create" operation of the "myService" service here
-                return auditoriumManagerController.actionAdd(object);
+                Auditorium auditorium = new Auditorium(Integer.parseInt(payload.get("auditoriumNum").toString()), Integer.parseInt(payload.get("seatsRowNum").toString()), Integer.parseInt(payload.get("seatsColumnNum").toString()));
+                return auditoriumManagerController.actionAdd(auditorium);
             case "read":
-                // Implement the logic for the "read" operation of the "myService" service here
                 return "Response from MyServiceController for read operation";
             case "update":
-                // Implement the logic for the "update" operation of the "myService" service here
                 return "Response from MyServiceController for update operation";
             case "delete":
-                // Implement the logic for the "delete" operation of the "myService" service here
                 return "Response from MyServiceController for delete operation";
             default:
-                throw new IllegalArgumentException("Invalid service name: " + serviceName);
+                throw new IllegalArgumentException("Invalid service name: " + requestDto.getServiceName());
         }
     }
 }

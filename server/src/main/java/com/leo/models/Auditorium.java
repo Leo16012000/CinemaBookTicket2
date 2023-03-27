@@ -8,6 +8,15 @@ public class Auditorium extends Model {
   private int id, auditoriumNum, seatsRowNum, seatsColumnNum;
   private Timestamp createdAt;
 
+  public Auditorium(int auditoriumNum, int seatsRowNum, int seatsColumnNum) {
+    this.id = id;
+    this.auditoriumNum = auditoriumNum;
+    this.seatsRowNum = seatsRowNum;
+    this.seatsColumnNum = seatsColumnNum;
+  }
+
+  public Auditorium() {}
+
   public static Auditorium getFromResultSet(ResultSet rs) throws SQLException {
     Auditorium o = new Auditorium();
     o.setId(rs.getInt("id"));

@@ -1,43 +1,54 @@
-package com.leo.controllers;
+package com.leo.dtos;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.leo.Client;
 import com.leo.utils.Convert;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.LinkedHashMap;
 
-public class Payload {
+public class RequestDto {
     private String serviceName;
-    private String xmlPayload;
+    @JacksonXmlProperty(localName = "Payload")
+    private Object payload;
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public Object getPayload() {
+        return payload;
+    }
+
     private Socket socket;
 
     private Convert convert = new Convert();
 
-    public Payload(String serviceName, String xmlPayload) {
+    public RequestDto(String serviceName, Object payload) {
         this.serviceName = serviceName;
-        this.xmlPayload = xmlPayload;
+        this.payload = payload;
     }
 
-    public String sendPayload(JFrame view) throws IOException {
+    public String sendRequest(JFrame view) throws IOException {
             socket = Client.getSocket();
             System.out.println("Connected to server");
 
             // Send the payload to the server
+            XmlMapper xmlMapper = new XmlMapper();
+            String xml = xmlMapper.writeValueAsString(this);
+            System.out.println(xml);
             OutputStream os = socket.getOutputStream();
-            os.write(this.toString().getBytes());
+            os.write(xml.getBytes());
             os.flush();
 
             // Read the response from the server
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String response = reader.readLine();
-            String[] parts = response.split(":");
-            String status = parts[0];
-            String xmlPayload = parts[1];
+            InputStream is = socket.getInputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead = is.read(buffer);
+            String response = new String(buffer, 0, bytesRead);
             LinkedHashMap object = convert.XMLToObject(xmlPayload);
             System.out.println(status + " " + object);
             if(status == "ERROR"){
@@ -47,9 +58,5 @@ public class Payload {
                 JOptionPane.showMessageDialog(null, "Successfully");
             }
             return response;
-    }
-
-    public String toString(){
-        return serviceName + ":" + xmlPayload;
     }
 }

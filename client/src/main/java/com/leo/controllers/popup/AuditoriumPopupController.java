@@ -1,7 +1,7 @@
 package com.leo.controllers.popup;
 
 import com.leo.Client;
-import com.leo.controllers.Payload;
+import com.leo.dtos.RequestDto;
 import com.leo.dao.AuditoriumDao;
 import com.leo.models.Auditorium;
 import com.leo.utils.Convert;
@@ -45,8 +45,8 @@ public class AuditoriumPopupController {
     auditorium.setSeatsColumnNum(Integer.valueOf(view.getTxtColumnsNum().getText()));
     try {
       logger.info("Add auditorium: ", auditorium);
-      Payload payload = new Payload("CREATE_AUDITORIUM", convert.objectToXML(auditorium));
-      payload.sendPayload(view);
+      RequestDto payload = new RequestDto("CREATE_AUDITORIUM", auditorium);
+      payload.sendRequest(view);
     } catch (Exception e) {
 //      JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
     }

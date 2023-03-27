@@ -1,8 +1,7 @@
 package com.leo.controllers.admin;
 
 import com.leo.dao.AuditoriumDao;
-
-import java.util.LinkedHashMap;
+import com.leo.models.Auditorium;
 
 public class AuditoriumManagerController {
   private AuditoriumDao auditoriumDao = new AuditoriumDao();
@@ -11,9 +10,9 @@ public class AuditoriumManagerController {
 
   }
 
-  public String actionAdd(LinkedHashMap object){
+  public String actionAdd(Auditorium auditorium){
     try{
-      Integer id = auditoriumDao.save(object);
+      Integer id = auditoriumDao.save(auditorium);
       String res = "SUCCESS:<id>" + id + "<id>";
       return res;
     }

@@ -5,26 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcf68383-dd25-4d61-80ba-7f50414a95bf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/Convert.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/Response.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dtos/RequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/Payload.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/Payload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/Payload.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dtos/RequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/Convert.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/utils/Convert.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/Payload.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/Payload.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/Payload.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/popup/AuditoriumPopupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/popup/AuditoriumPopupController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/utils/Convert.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/leo/utils/Convert.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/ServiceRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/ServiceRegistry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/admin/AuditoriumManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/admin/AuditoriumManagerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/AuditoriumDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/AuditoriumDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/Dao.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/dao/Dao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/dtos/XmlPayload.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Auditorium.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Auditorium.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/LoadConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/utils/LoadConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/Server.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/ServiceRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/ServiceRegistry.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/admin/AuditoriumManagerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/admin/AuditoriumManagerController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/dao/AuditoriumDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/dao/AuditoriumDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/dao/Dao.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/dao/Dao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/dtos/XmlPayload.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/models/Auditorium.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/models/Auditorium.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/utils/LoadConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/utils/LoadConfig.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +221,7 @@
       <updated>1678865637284</updated>
       <workItem from="1679756811394" duration="4443000" />
       <workItem from="1679796142926" duration="16679000" />
-      <workItem from="1679879415827" duration="301000" />
+      <workItem from="1679879415827" duration="8053000" />
     </task>
     <servers />
   </component>
@@ -252,16 +253,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$USER_HOME$/.jdks/openjdk-19.0.2/lib/src.zip!/java.base/java/net/Socket.java</url>
-          <line>1087</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/com/leo/Server.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

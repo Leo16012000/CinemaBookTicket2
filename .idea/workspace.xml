@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcf68383-dd25-4d61-80ba-7f50414a95bf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/dtos/RequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dtos/RequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/popup/AuditoriumPopupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/popup/AuditoriumPopupController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/dtos/RequestDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/leo/dtos/RequestDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/ServiceRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/ServiceRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/admin/AuditoriumManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/controllers/admin/AuditoriumManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Auditorium.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/models/Auditorium.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/ServiceRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/ServiceRegistry.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/admin/AuditoriumManagerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/controllers/admin/AuditoriumManagerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/target/classes/com/leo/models/Auditorium.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/com/leo/models/Auditorium.class" afterDir="false" />
-    </list>
+    <list default="true" id="dcf68383-dd25-4d61-80ba-7f50414a95bf" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,32 +48,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-19&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/leodang/Laboratory/CinemaBookTicket2/server&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.44158074&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "openjdk-19",
+    "last_opened_file_path": "/home/leodang/Laboratory/CinemaBookTicket2/server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.44158074",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -213,7 +199,7 @@
       <updated>1678865637284</updated>
       <workItem from="1679756811394" duration="4443000" />
       <workItem from="1679796142926" duration="16679000" />
-      <workItem from="1679879415827" duration="13818000" />
+      <workItem from="1679879415827" duration="17914000" />
     </task>
     <servers />
   </component>
@@ -248,13 +234,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/com/leo/controllers/ServiceRegistry.java</url>
-          <line>29</line>
+          <line>30</line>
           <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/com/leo/Server.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

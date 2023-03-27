@@ -40,22 +40,21 @@ public class AuditoriumManagerController {
       return responseDto;
     }
   }
-//
-//  public void actionDelete() {
-//    int selectedIds[] = view.getSelectedIds();
-//    try {
-//      if (JOptionPane.showConfirmDialog(null, "Delete multiple records?", "Delete auditorium",
-//          ERROR_MESSAGE) != YES_OPTION) {
-//        return;
-//      }
-//      for (int i = 0; i < selectedIds.length; i++) {
-//        auditoriumDao.deleteById(selectedIds[i]);
-//        updateData();
-//      }
-//    } catch (Exception e) {
-//      view.showError(e);
-//    }
-//  }
+
+  public ResponseDto actionDelete(Auditorium auditorium) {
+    ResponseDto responseDto = new ResponseDto();
+    try{
+      auditoriumDao.delete(auditorium);
+      responseDto.setMessage("Delete auditorium successfully");
+      responseDto.setStatus("SUCCESS");
+      return responseDto;
+    }
+    catch (Exception e){
+      responseDto.setMessage(e.getMessage());
+      responseDto.setStatus("FAILURE");
+      return responseDto;
+    }
+  }
 //
 //  public void actionSearch() {
 //    try {

@@ -5,10 +5,10 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.leo.Client;
 import com.leo.utils.Convert;
 
-import javax.swing.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
-import java.util.LinkedHashMap;
 
 public class RequestDto {
     private String serviceName;
@@ -32,7 +32,7 @@ public class RequestDto {
         this.payload = payload;
     }
 
-    public ResponseDto sendRequest(JFrame view) throws IOException {
+    public ResponseDto sendRequest() throws IOException {
             socket = Client.getSocket();
             System.out.println("Connected to server");
 
@@ -51,15 +51,6 @@ public class RequestDto {
             String response = new String(buffer, 0, bytesRead);
             ResponseDto responseDto
                     = xmlMapper.readValue(response, ResponseDto.class);
-            String status = responseDto.getStatus();
-            String message = responseDto.getMessage();
-            LinkedHashMap payload = responseDto.getPayload();
-            if(status == "FAILURE"){
-                JOptionPane.showMessageDialog(null, "Error: " + message);
-            } else if(status == "SUCCESS") {
-                view.dispose();
-                JOptionPane.showMessageDialog(null, message);
-            }
             return responseDto;
     }
 }

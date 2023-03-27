@@ -54,7 +54,7 @@ public class AuditoriumPopupController {
     auditorium.setSeatsColumnNum(Integer.valueOf(view.getTxtColumnsNum().getText()));
       logger.info("Add auditorium: ", auditorium);
       RequestDto payload = new RequestDto("CREATE_AUDITORIUM", auditorium);
-      ResponseDto responseDto = payload.sendRequest(view);
+      ResponseDto responseDto = payload.sendRequest();
       return responseDto;
     } catch (Exception e) {
       JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
@@ -99,7 +99,7 @@ public class AuditoriumPopupController {
     auditorium.setSeatsColumnNum(columnsNum);
     logger.info("Edit auditorium: ", auditorium);
     RequestDto payload = new RequestDto("UPDATE_AUDITORIUM", auditorium);
-    ResponseDto responseDto = payload.sendRequest(view);
+    ResponseDto responseDto = payload.sendRequest();
     return responseDto;
   }
 }

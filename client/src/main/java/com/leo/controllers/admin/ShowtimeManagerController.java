@@ -2,15 +2,13 @@ package com.leo.controllers.admin;
 
 import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.ShowtimePopupController;
-import com.leo.controllers.popup.ShowtimePopupController;
 import com.leo.dao.ShowtimeDao;
-import com.leo.dao.ShowtimeDao;
+import com.leo.dtos.ResponseDto;
 import com.leo.models.Showtime;
 import com.leo.views.popup.ShowtimePopupView;
 
 import javax.swing.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
@@ -50,12 +48,12 @@ public class ShowtimeManagerController extends ManagerController {
   }
 
   @Override
-  public void actionDelete() {
+  public ResponseDto actionDelete() {
     int selectedIds[] = view.getSelectedIds();
     try {
       if (JOptionPane.showConfirmDialog(null, "Delete multiple records?", "Delete showtime",
           ERROR_MESSAGE) != YES_OPTION) {
-        return;
+          return null;
       }
       for (int i = 0; i < selectedIds.length; i++) {
         showtimeDao.deleteById(selectedIds[i]);
@@ -64,6 +62,7 @@ public class ShowtimeManagerController extends ManagerController {
     } catch (Exception e) {
       view.showError(e);
     }
+      return null;
   }
 
   @Override

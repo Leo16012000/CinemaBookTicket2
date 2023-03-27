@@ -3,6 +3,7 @@ package com.leo.controllers.admin;
 import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.UserPopupController;
 import com.leo.dao.UserDao;
+import com.leo.dtos.ResponseDto;
 import com.leo.utils.UserPermission;
 import com.leo.views.popup.UserPopupView;
 import com.leo.models.User;
@@ -52,11 +53,11 @@ public class UserManagerController extends ManagerController {
   }
 
   @Override
-  public void actionDelete() {
+  public ResponseDto actionDelete() {
     int selectedIds[] = view.getSelectedIds();
     try {
       if (JOptionPane.showConfirmDialog(null, "Delete multiple records?", "Delete user", ERROR_MESSAGE) != YES_OPTION) {
-        return;
+          return null;
       }
       for (int i = 0; i < selectedIds.length; i++) {
         userDao.deleteById(selectedIds[i]);
@@ -65,6 +66,7 @@ public class UserManagerController extends ManagerController {
     } catch (Exception e) {
       view.showError(e);
     }
+      return null;
   }
 
   @Override

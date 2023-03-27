@@ -1,5 +1,6 @@
 package com.leo.controllers;
 
+import com.leo.dtos.ResponseDto;
 import com.leo.views.admin.ManagerPaneView;
 
 import java.awt.Color;
@@ -38,7 +39,7 @@ public abstract class ManagerController {
 
   public abstract void actionSearch();
 
-  public abstract void actionDelete();
+  public abstract ResponseDto actionDelete();
 
   public abstract void actionEdit();
 

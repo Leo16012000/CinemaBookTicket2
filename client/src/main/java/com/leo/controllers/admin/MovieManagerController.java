@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.MoviePopupController;
 import com.leo.dao.MovieDao;
+import com.leo.dtos.ResponseDto;
 import com.leo.models.Movie;
 import com.leo.views.popup.MoviePopupView;
 
@@ -47,12 +48,12 @@ public class MovieManagerController extends ManagerController {
   }
 
   @Override
-  public void actionDelete() {
+  public ResponseDto actionDelete() {
     int selectedIds[] = view.getSelectedIds();
     try {
       if (JOptionPane.showConfirmDialog(null, "Delete multiple records?", "Delete movie",
           ERROR_MESSAGE) != YES_OPTION) {
-        return;
+        return null;
       }
       for (int i = 0; i < selectedIds.length; i++) {
         movieDao.deleteById(selectedIds[i]);
@@ -61,6 +62,7 @@ public class MovieManagerController extends ManagerController {
     } catch (Exception e) {
       view.showError(e);
     }
+    return null;
   }
 
   @Override

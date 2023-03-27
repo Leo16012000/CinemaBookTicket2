@@ -13,9 +13,10 @@ import java.util.LinkedHashMap;
 
 public class ServiceRegistry {
     private AuditoriumManagerController auditoriumManagerController = new AuditoriumManagerController();
-    private Convert convert= new Convert();
+    private Convert convert = new Convert();
 
     private XmlMapper xmlMapper = new XmlMapper();
+
     public ResponseDto handleRequest(String request) throws SQLException, JsonProcessingException {
         RequestDto requestDto
                 = xmlMapper.readValue(request, RequestDto.class);
@@ -28,10 +29,12 @@ public class ServiceRegistry {
 //            case "read":
 //                return "Response from MyServiceController for read operation";
             case "UPDATE_AUDITORIUM":
-                auditorium = new Auditorium(Integer.parseInt(payload.get("id").toString()),Integer.parseInt(payload.get("auditoriumNum").toString()), Integer.parseInt(payload.get("seatsRowNum").toString()), Integer.parseInt(payload.get("seatsColumnNum").toString()));
+                auditorium = new Auditorium(Integer.parseInt(payload.get("id").toString()), Integer.parseInt(payload.get("auditoriumNum").toString()), Integer.parseInt(payload.get("seatsRowNum").toString()), Integer.parseInt(payload.get("seatsColumnNum").toString()));
                 return auditoriumManagerController.actionEdit(auditorium);
-                //            case "delete":
-//                return "Response from MyServiceController for delete operation";
+            case "DELETE_AUDITORIUM":
+                auditorium = new Auditorium();
+                auditorium.setId(Integer.parseInt(payload.get("id").toString()));
+                return auditoriumManagerController.actionDelete(auditorium);
             default:
                 throw new IllegalArgumentException("Invalid service name: " + requestDto.getServiceName());
         }

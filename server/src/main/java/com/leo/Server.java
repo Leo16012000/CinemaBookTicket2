@@ -23,7 +23,7 @@ public class Server {
                     try {
                 // Receive the XML payload from the client
                 InputStream is = socket.getInputStream();
-                byte[] buffer = new byte[1024*1024];
+                byte[] buffer = new byte[1024*1024*1024];
                 int bytesRead = is.read(buffer);
                 String request = new String(buffer, 0, bytesRead);
                 // Parse the payload to extract the service name and XML payload

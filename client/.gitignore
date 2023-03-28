@@ -4,4 +4,4 @@ bin
 .idea
 *.class
 target
-logs/app.log
+*.iml

@@ -1,8 +1,5 @@
 package com.leo.models;
 
-import com.leo.dao.AuditoriumDao;
-import com.leo.dao.MovieDao;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -23,8 +20,6 @@ public class Showtime extends Model{
     s.setStartTime(rs.getTimestamp("start_time"));
     s.setEndTime(rs.getTimestamp("end_time"));
     s.setCreatedAt(rs.getTimestamp("created_at"));
-    s.setMovie(MovieDao.getInstance().get(s.getMovieId()));
-    s.setAuditorium(AuditoriumDao.getInstance().get(s.getAuditoriumId()));
     return s;
   }
   public Auditorium getAuditorium() {

@@ -10,16 +10,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class RequestDto {
+public class RequestDto<T> {
     private String serviceName;
-    @JacksonXmlProperty(localName = "Payload")
-    private Object payload;
+    @JacksonXmlProperty(localName = "payload")
+    private T payload;
 
     public String getServiceName() {
         return serviceName;
     }
 
-    public Object getPayload() {
+    public T getPayload() {
         return payload;
     }
 
@@ -27,7 +27,7 @@ public class RequestDto {
 
     private Convert convert = new Convert();
 
-    public RequestDto(String serviceName, Object payload) {
+    public RequestDto(String serviceName, T payload) {
         this.serviceName = serviceName;
         this.payload = payload;
     }

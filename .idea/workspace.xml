@@ -182,10 +182,10 @@
     </configuration>
     <list>
       <item itemvalue="Application.Client" />
+      <item itemvalue="Application.Server" />
       <item itemvalue="Application.ComboJumbo" />
       <item itemvalue="Application.DateTimePickerExample" />
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.Server" />
     </list>
     <recent_temporary>
       <list>

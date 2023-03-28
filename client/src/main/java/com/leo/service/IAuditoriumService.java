@@ -1,19 +1,20 @@
 package com.leo.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.leo.models.Auditorium;
 
 public interface IAuditoriumService {
-  Auditorium get(int auditoriumId);
+  Auditorium get(int auditoriumId) throws IOException;
 
-  List<Auditorium> getAll();
+  List<Auditorium> getAll() throws IOException;
 
-  List<Auditorium> searchByKey(String string, String valueOf);
+  List<Auditorium> searchByKey(String key, String term) throws IOException;
 
-  void deleteByIds(List<Integer> ids);
+  void deleteByIds(List<Integer> ids) throws IOException;
 
-  void save(Auditorium showtime);
+  void save(Auditorium auditorium) throws IOException;
 
-  void update(Auditorium showtime);
+  void update(Auditorium auditorium) throws IOException;
 }

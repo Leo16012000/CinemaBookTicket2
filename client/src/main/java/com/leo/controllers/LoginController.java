@@ -4,16 +4,18 @@ import com.leo.main.SessionManager;
 import com.leo.views.LoginView;
 import com.leo.models.User;
 import com.leo.service.IUserService;
+import com.leo.service.impl.UserService;
+import com.leo.utils.ErrorPopup;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
+import java.io.IOException;
 
 public class LoginController {
 
   private LoginView view;
-  private IUserService userService;
+  private IUserService userService = UserService.getInstance();
 
   public LoginController(LoginView view) {
     this.view = view;
@@ -30,7 +32,7 @@ public class LoginController {
     view.setVisible(true);
   }
 
-  public void loginAsGuest() throws SQLException {
+  public void loginAsGuest() throws IOException {
     UserHomeController controller = new UserHomeController();
     // controller.getView().setPanel(new HomeView());
   }
@@ -102,9 +104,8 @@ public class LoginController {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
         try {
           loginAsGuest();
-        } catch (SQLException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+        } catch (IOException e) {
+          ErrorPopup.show(e);
         }
       }
     });

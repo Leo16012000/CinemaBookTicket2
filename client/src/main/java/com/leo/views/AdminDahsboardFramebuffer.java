@@ -4,6 +4,7 @@ import com.leo.models.Movie;
 import com.leo.models.Showtime;
 import com.leo.service.IMovieService;
 import com.leo.service.IShowtimeService;
+import com.leo.utils.ErrorPopup;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,7 +15,7 @@ import javax.swing.JTable;
 
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -40,9 +41,9 @@ public class AdminDahsboardFramebuffer extends JFrame {
   /**
    * Create the frame.
    * 
-   * @throws SQLException
+   * @throws IOException
    */
-  public AdminDahsboardFramebuffer() throws SQLException {
+  public AdminDahsboardFramebuffer() throws IOException {
     mainPanel = new HeaderPanel();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setBounds(100, 100, 1280, 1024);
@@ -102,7 +103,7 @@ public class AdminDahsboardFramebuffer extends JFrame {
     // contentPane.add(btnBack);
   }
 
-  public void displayMoviePanel() throws SQLException {
+  public void displayMoviePanel() throws IOException {
     List<Movie> movies = movieService.getAll();
     moviePanel = new MoviePanel(movies, contentPane);
     moviePanel.setBounds(194, 32, 432, 379);
@@ -115,15 +116,19 @@ public class AdminDahsboardFramebuffer extends JFrame {
     // contentPane.add(scrollPane);
     moviePanel.getBtnSearch().addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        contentPane.remove(moviePanel);
-        List<Movie> movies = new ArrayList<>(
-            movieService.searchByKey("title", moviePanel.getTextField().getText()));
-        moviePanel.updatePanel(movies, contentPane);
-        moviePanel.setBounds(194, 32, 432, 379);
-        contentPane.add(moviePanel);
-        moviePanel.setLayout(null);
-        SwingUtilities.updateComponentTreeUI(contentPane);
-        System.out.println("trigger search " + moviePanel.getTextField().getText());
+        try {
+          contentPane.remove(moviePanel);
+          List<Movie> movies = new ArrayList<>(
+              movieService.searchByKey("title", moviePanel.getTextField().getText()));
+          moviePanel.updatePanel(movies, contentPane);
+          moviePanel.setBounds(194, 32, 432, 379);
+          contentPane.add(moviePanel);
+          moviePanel.setLayout(null);
+          SwingUtilities.updateComponentTreeUI(contentPane);
+          System.out.println("trigger search " + moviePanel.getTextField().getText());
+        } catch (Exception e1) {
+          ErrorPopup.show(e1);
+        }
       }
     });
     //
@@ -156,7 +161,7 @@ public class AdminDahsboardFramebuffer extends JFrame {
     // MoviePanel.add(btnNewButton);
   }
 
-  public void displayShowtimePanel(String movieName, int movieId) throws SQLException {
+  public void displayShowtimePanel(String movieName, int movieId) throws IOException {
     List<Showtime> showtimes = showtimeService.searchByKey("movie_id", Integer.toString(movieId));
     showtimePanel = new ShowtimePanel(showtimes);
     showtimePanel.setBounds(114, 32, 553, 471);

@@ -1,12 +1,10 @@
 package com.leo.controllers.admin;
 
-import com.leo.component.ServiceHandler;
 import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.AuditoriumPopupController;
-import com.leo.dtos.ResponseDto;
 import com.leo.models.Auditorium;
 import com.leo.service.IAuditoriumService;
-import com.leo.utils.Sockets;
+import com.leo.service.impl.AuditoriumService;
 import com.leo.views.popup.AuditoriumPopupView;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,8 +19,7 @@ import static javax.swing.JOptionPane.YES_OPTION;
 public class AuditoriumManagerController extends ManagerController {
   private AuditoriumPopupController popupController;
   private static Logger logger = LogManager.getLogger(AuditoriumManagerController.class);
-  private IAuditoriumService auditoriumService;
-  private ServiceHandler serviceHandler;
+  private IAuditoriumService auditoriumService = AuditoriumService.getInstance();
 
   public AuditoriumManagerController() {
     super();
@@ -53,21 +50,13 @@ public class AuditoriumManagerController extends ManagerController {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public void actionDelete() {
     try {
       if (JOptionPane.showConfirmDialog(null, "Delete multiple records?", "Delete auditorium",
           ERROR_MESSAGE) != YES_OPTION) {
       }
       auditoriumService.deleteByIds(view.getSelectedIds());
-      for (int i = 0; i < selectedIds.length; i++) {
-        logger.info("Delete auditorium id: ", selectedIds[i]);
-        Auditorium auditorium = new Auditorium();
-        auditorium.setId(selectedIds[i]);
-        ResponseDto<Void> responseDto = serviceHandler.sendRequest(Sockets.getSocket(), "DELETE_AUDITORIUM", auditorium,
-            Void.class);
-        if (responseDto.getStatus().equals("FAILURE"))
-          throw new Exception(responseDto.getMessage());
-      }
       updateData();
     } catch (Exception e) {
       // view.showError(e);

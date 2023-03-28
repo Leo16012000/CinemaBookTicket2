@@ -4,10 +4,12 @@ import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.ShowtimePopupController;
 import com.leo.models.Showtime;
 import com.leo.service.IShowtimeService;
+import com.leo.service.impl.ShowtimeService;
 import com.leo.views.popup.ShowtimePopupView;
 
 import javax.swing.*;
-import java.sql.SQLException;
+
+import java.io.IOException;
 import java.util.List;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
@@ -15,7 +17,7 @@ import static javax.swing.JOptionPane.YES_OPTION;
 
 public class ShowtimeManagerController extends ManagerController {
   private ShowtimePopupController popupController;
-  private IShowtimeService showtimeService;
+  private IShowtimeService showtimeService = ShowtimeService.getInstance();
 
   public ShowtimeManagerController() {
     super();
@@ -23,7 +25,7 @@ public class ShowtimeManagerController extends ManagerController {
   }
 
   @Override
-  public void actionAdd() throws SQLException {
+  public void actionAdd() throws IOException {
     popupController.add(new ShowtimePopupView(), this::updateData, view::showError);
   }
 
@@ -46,6 +48,7 @@ public class ShowtimeManagerController extends ManagerController {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public void actionDelete() {
     List<Integer> selectedIds = view.getSelectedIds();
     try {

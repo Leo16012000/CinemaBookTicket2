@@ -4,12 +4,13 @@ import javax.swing.JFrame;
 
 import com.leo.models.User;
 import com.leo.service.IUserService;
+import com.leo.service.impl.UserService;
 import com.leo.utils.UserPermission;
 import com.leo.views.popup.UserPopupView;
 
 public class UserPopupController {
   JFrame previousView;
-  private IUserService userService;
+  private IUserService userService = UserService.getInstance();
 
   public void add(UserPopupView view, SuccessCallback sc, ErrorCallback ec) {
     if (previousView != null && previousView.isDisplayable()) {

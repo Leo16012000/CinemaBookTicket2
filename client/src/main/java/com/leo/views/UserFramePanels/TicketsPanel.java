@@ -10,6 +10,7 @@ import com.leo.models.Auditorium;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class TicketsPanel extends JPanel {
   private IAuditoriumService auditoriumService;
   private IShowtimeService showtimeService;
 
-  public TicketsPanel(int auditoriumId, int showtimeId) {
+  public TicketsPanel(int auditoriumId, int showtimeId) throws IOException {
     this.seats = seatService.getByAuditoriumIdAndShowtimeId(auditoriumId, showtimeId);
     this.auditorium = auditoriumService.get(auditoriumId);
     this.showtime = showtimeService.get(showtimeId);

@@ -1,21 +1,22 @@
 package com.leo.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.leo.models.Showtime;
 
 public interface IShowtimeService {
 
-  Showtime get(int showtimeId);
+  Showtime get(int showtimeId) throws IOException;
 
-  void deleteById(int i);
+  List<Showtime> getAll() throws IOException;
 
-  List<Showtime> getAll();
+  List<Showtime> searchByKey(String key, String term) throws IOException;
 
-  List<Showtime> searchByKey(String string, String valueOf);
+  void save(Showtime showtime) throws IOException;
 
-  void save(Showtime showtime);
+  void update(Showtime showtime) throws IOException;
 
-  void update(Showtime showtime);
+  void deleteByIds(List<Integer> selectedIds) throws IOException;
 
 }

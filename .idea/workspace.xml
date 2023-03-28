@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="dcf68383-dd25-4d61-80ba-7f50414a95bf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/controllers/popup/AuditoriumPopupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/leo/dtos/RequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/com/leo/dtos/RequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/popup/AuditoriumPopupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/leo/controllers/popup/AuditoriumPopupController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/com/leo/dtos/RequestDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/classes/com/leo/dtos/RequestDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/app.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,6 +204,7 @@
       <workItem from="1679879415827" duration="23398000" />
       <workItem from="1679933540319" duration="558000" />
       <workItem from="1679953315233" duration="1020000" />
+      <workItem from="1679967293860" duration="954000" />
     </task>
     <servers />
   </component>

@@ -1,7 +1,5 @@
 package com.leo.views;
 
-import com.leo.dao.MovieDao;
-import com.leo.dao.ShowtimeDao;
 import com.leo.models.Movie;
 
 import java.awt.EventQueue;
@@ -13,8 +11,10 @@ import javax.swing.JTable;
 
 import javax.swing.JLabel;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import com.leo.models.Showtime;
+import com.leo.service.IMovieService;
+import com.leo.service.IShowtimeService;
+
 import java.util.List;
 
 public class MainFrame extends JFrame {
@@ -23,6 +23,8 @@ public class MainFrame extends JFrame {
   private JTable movieTable;
   private JTable reservationTable;
   private JPanel contentPane;
+  private IMovieService movieService;
+  private IShowtimeService showtimeService;
 
   public JPanel getContentPane() {
     return contentPane;
@@ -115,7 +117,7 @@ public class MainFrame extends JFrame {
   }
 
   public void displayMoviePanel() throws SQLException {
-    ArrayList<Movie> movies = new ArrayList<>(MovieDao.getInstance().getAll());
+    List<Movie> movies = movieService.getAll();
     moviePanel = new MoviePanel(movies, contentPane);
     moviePanel.setBounds(194, 32, 432, 379);
     contentPane.add(moviePanel);
@@ -156,7 +158,7 @@ public class MainFrame extends JFrame {
   }
 
   public void displayShowtimePanel(String movieName, int movieId) throws SQLException {
-    List<Showtime> showtimes = ShowtimeDao.getInstance().searchByKey("movie_id", Integer.toString(movieId));
+    List<Showtime> showtimes = showtimeService.searchByKey("movie_id", Integer.toString(movieId));
     showtimePanel = new ShowtimePanel(showtimes);
     showtimePanel.setBounds(114, 32, 553, 471);
     // contentPane.remove(moviePanel);

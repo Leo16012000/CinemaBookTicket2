@@ -50,7 +50,7 @@ public class AdminDashboardController {
     view.setVisible(true);
     initMenu();
     addEvent();
-    User session = SessionManager.getSession().getUser();
+    User session = SessionManager.getSession();
     if (session != null) {
       view.getLbName().setText(session.getName());
     }
@@ -89,11 +89,7 @@ public class AdminDashboardController {
         if (confirm != JOptionPane.YES_OPTION) {
           return;
         }
-        try {
-          SessionManager.update();// Log out
-        } catch (SQLException ex) {
-          view.showError(ex);
-        }
+        SessionManager.clear();// Log out
         view.dispose();
         new LoginController(new LoginView());
       }

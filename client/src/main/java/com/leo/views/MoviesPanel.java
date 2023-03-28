@@ -1,17 +1,18 @@
 package com.leo.views;
 
-import com.leo.dao.MovieDao;
 import com.leo.models.Movie;
+import com.leo.service.IMovieService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class MoviesPanel extends JPanel {
-  public ArrayList<Movie> movies = new ArrayList<Movie>(MovieDao.getInstance().getAll());;
+  private IMovieService movieService;
+  public List<Movie> movies = movieService.getAll();
   private JTextField textField;
   private JTable table_1;
 

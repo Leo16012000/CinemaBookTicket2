@@ -2,9 +2,8 @@ package com.leo.controllers.admin;
 
 import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.ShowtimePopupController;
-import com.leo.dao.ShowtimeDao;
-import com.leo.dtos.ResponseDto;
 import com.leo.models.Showtime;
+import com.leo.service.IShowtimeService;
 import com.leo.views.popup.ShowtimePopupView;
 
 import javax.swing.*;
@@ -15,12 +14,11 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
 public class ShowtimeManagerController extends ManagerController {
-  private ShowtimeDao showtimeDao;
   private ShowtimePopupController popupController;
+  private IShowtimeService showtimeService;
 
   public ShowtimeManagerController() {
     super();
-    showtimeDao = new ShowtimeDao();
     popupController = new ShowtimePopupController();
   }
 
@@ -36,7 +34,7 @@ public class ShowtimeManagerController extends ManagerController {
       if (selectedId < 0) {
         throw new Exception("Chooose the one to edit");
       }
-      Showtime showtime = showtimeDao.get(selectedId);
+      Showtime showtime = showtimeService.get(selectedId);
       if (showtime == null) {
         throw new Exception("Invalid showtime selected");
       }
@@ -48,27 +46,24 @@ public class ShowtimeManagerController extends ManagerController {
   }
 
   @Override
-  public ResponseDto actionDelete() {
-    int selectedIds[] = view.getSelectedIds();
+  public void actionDelete() {
+    List<Integer> selectedIds = view.getSelectedIds();
     try {
       if (JOptionPane.showConfirmDialog(null, "Delete multiple records?", "Delete showtime",
           ERROR_MESSAGE) != YES_OPTION) {
-          return null;
+        return;
       }
-      for (int i = 0; i < selectedIds.length; i++) {
-        showtimeDao.deleteById(selectedIds[i]);
-        updateData();
-      }
+      showtimeService.deleteByIds(selectedIds);
+      updateData();
     } catch (Exception e) {
       view.showError(e);
     }
-      return null;
   }
 
   @Override
   public void updateData() {
     try {
-      List<Showtime> showtimes = showtimeDao.getAll();
+      List<Showtime> showtimes = showtimeService.getAll();
       System.out.println(showtimes);
       view.setTableData(showtimes);
     } catch (Exception e) {
@@ -79,7 +74,7 @@ public class ShowtimeManagerController extends ManagerController {
   @Override
   public void actionSearch() {
     try {
-      List<Showtime> showtimes = showtimeDao.searchByKey(
+      List<Showtime> showtimes = showtimeService.searchByKey(
           view.getCboSearchField().getSelectedItem().toString(), String.valueOf(view.getTxtSearch().getText()));
       view.setTableData(showtimes);
     } catch (Exception e) {

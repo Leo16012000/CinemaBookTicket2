@@ -1,9 +1,9 @@
 package com.leo.controllers;
 
-import com.leo.dao.UserDao;
 import com.leo.main.SessionManager;
 import com.leo.views.LoginView;
 import com.leo.models.User;
+import com.leo.service.IUserService;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class LoginController {
 
   private LoginView view;
-  UserDao userDao = UserDao.getInstance();
+  private IUserService userService;
 
   public LoginController(LoginView view) {
     this.view = view;
@@ -39,7 +39,7 @@ public class LoginController {
     String username = view.getTxtUsername().getText();
     String password = new String(view.getTxtPassword().getPassword());
     try {
-      User user = userDao.getByUsername(username);
+      User user = userService.getByUsername(username);
       if (user == null) {
         view.showError("Account is not existed!");
         return;
@@ -48,7 +48,7 @@ public class LoginController {
         view.showError("Wrong password");
         return;
       }
-      SessionManager.create(user);// Khởi tạo session
+      SessionManager.setSession(user);// Khởi tạo session
       switch (user.getPermission()) {
         case USER:
           UserHomeController controller = new UserHomeController();
@@ -62,7 +62,7 @@ public class LoginController {
           break;
         default:
           view.showError("Unexpected error");
-          SessionManager.update();
+          SessionManager.clear();
           view.dispose();
           break;
       }

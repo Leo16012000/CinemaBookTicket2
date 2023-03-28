@@ -5,9 +5,9 @@
  */
 package com.leo.controllers;
 
-import com.leo.dao.MovieDao;
 import com.leo.main.SessionManager;
 import com.leo.models.Movie;
+import com.leo.service.IMovieService;
 import com.leo.views.HeaderPanel;
 import com.leo.views.LoginView;
 import com.leo.views.MainFrame;
@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserHomeController {
-
+  private IMovieService movieService;
   private MainFrame view;
   private HeaderPanel headerPanel;
   private MoviePanel moviePanel;
@@ -46,11 +46,7 @@ public class UserHomeController {
       if (confirm != JOptionPane.YES_OPTION) {
         return;
       }
-      try {
-        SessionManager.update();// Đăng xuất
-      } catch (SQLException ex) {
-        headerPanel.showError(ex);
-      }
+      SessionManager.clear();// Đăng xuất
       view.dispose();
       new LoginController(new LoginView());
       System.out.println("click logout");
@@ -65,20 +61,15 @@ public class UserHomeController {
     moviePanel.getBtnSearch().addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         ArrayList<Movie> movies;
-        try {
-          contentPane.remove(moviePanel);
-          movies = new ArrayList<>(
-              MovieDao.getInstance().searchByKey("title", moviePanel.getTextField().getText()));
-          moviePanel.updatePanel(movies, contentPane);
-          moviePanel.setBounds(194, 32, 432, 379);
-          contentPane.add(moviePanel);
-          moviePanel.setLayout(null);
-          SwingUtilities.updateComponentTreeUI(contentPane);
-          System.out.println("trigger search " + moviePanel.getTextField().getText());
-        } catch (SQLException e1) {
-          // TODO Auto-generated catch block
-          e1.printStackTrace();
-        }
+        contentPane.remove(moviePanel);
+        movies = new ArrayList<>(
+            movieService.searchByKey("title", moviePanel.getTextField().getText()));
+        moviePanel.updatePanel(movies, contentPane);
+        moviePanel.setBounds(194, 32, 432, 379);
+        contentPane.add(moviePanel);
+        moviePanel.setLayout(null);
+        SwingUtilities.updateComponentTreeUI(contentPane);
+        System.out.println("trigger search " + moviePanel.getTextField().getText());
       }
     });
   }

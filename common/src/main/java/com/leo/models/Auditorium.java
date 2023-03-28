@@ -16,7 +16,6 @@ public class Auditorium extends Model {
   }
 
   public Auditorium(int auditoriumNum, int seatsRowNum, int seatsColumnNum) {
-    this.id = id;
     this.auditoriumNum = auditoriumNum;
     this.seatsRowNum = seatsRowNum;
     this.seatsColumnNum = seatsColumnNum;

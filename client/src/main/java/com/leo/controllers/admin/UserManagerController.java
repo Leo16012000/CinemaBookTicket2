@@ -2,11 +2,10 @@ package com.leo.controllers.admin;
 
 import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.UserPopupController;
-import com.leo.dao.UserDao;
-import com.leo.dtos.ResponseDto;
 import com.leo.utils.UserPermission;
 import com.leo.views.popup.UserPopupView;
 import com.leo.models.User;
+import com.leo.service.IUserService;
 
 import javax.swing.JOptionPane;
 
@@ -16,8 +15,8 @@ import static javax.swing.JOptionPane.YES_OPTION;
 import java.util.List;
 
 public class UserManagerController extends ManagerController {
-  UserDao userDao = UserDao.getInstance();
   UserPopupController popupController = new UserPopupController();
+  private IUserService userService;
 
   public UserManagerController() {
     super();
@@ -35,7 +34,7 @@ public class UserManagerController extends ManagerController {
       if (selectedId < 0) {
         throw new Exception("Choose user need to edit");
       }
-      User u = userDao.get(selectedId);
+      User u = userService.get(selectedId);
       if (u == null) {
         throw new Exception("Invalid user selected");
       }
@@ -53,26 +52,23 @@ public class UserManagerController extends ManagerController {
   }
 
   @Override
-  public ResponseDto actionDelete() {
-    int selectedIds[] = view.getSelectedIds();
+  public void actionDelete() {
+    List<Integer> selectedIds = view.getSelectedIds();
     try {
       if (JOptionPane.showConfirmDialog(null, "Delete multiple records?", "Delete user", ERROR_MESSAGE) != YES_OPTION) {
-          return null;
+        return;
       }
-      for (int i = 0; i < selectedIds.length; i++) {
-        userDao.deleteById(selectedIds[i]);
-        updateData();
-      }
+      userService.deleteByIds(selectedIds);
+      updateData();
     } catch (Exception e) {
       view.showError(e);
     }
-      return null;
   }
 
   @Override
   public void updateData() {
     try {
-      List<User> users = userDao.getAll();
+      List<User> users = userService.getAll();
       System.out.println(users);
       view.setTableData(users);
     } catch (Exception e) {
@@ -83,7 +79,7 @@ public class UserManagerController extends ManagerController {
   @Override
   public void actionSearch() {
     try {
-      List<User> users = userDao.searchByKey(view.getCboSearchField().getSelectedItem().toString(),
+      List<User> users = userService.searchByKey(view.getCboSearchField().getSelectedItem().toString(),
           String.valueOf(view.getTxtSearch().getText()));
       view.setTableData(users);
     } catch (Exception e) {

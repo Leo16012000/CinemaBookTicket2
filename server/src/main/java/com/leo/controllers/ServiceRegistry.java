@@ -1,6 +1,7 @@
 package com.leo.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.leo.controllers.admin.AuditoriumManagerController;
 import com.leo.dtos.RequestDto;
@@ -9,7 +10,6 @@ import com.leo.models.Auditorium;
 import com.leo.utils.Convert;
 
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
 
 public class ServiceRegistry {
     private AuditoriumManagerController auditoriumManagerController = new AuditoriumManagerController();
@@ -21,19 +21,20 @@ public class ServiceRegistry {
         RequestDto requestDto
                 = xmlMapper.readValue(request, RequestDto.class);
         String serviceName = requestDto.getServiceName();
-        LinkedHashMap payload = requestDto.getPayload();
         switch (serviceName) {
             case "CREATE_AUDITORIUM":
-                Auditorium auditorium = new Auditorium(Integer.parseInt(payload.get("auditoriumNum").toString()), Integer.parseInt(payload.get("seatsRowNum").toString()), Integer.parseInt(payload.get("seatsColumnNum").toString()));
+                RequestDto<Auditorium> requestDto1 = xmlMapper.readValue(request, new TypeReference<RequestDto<Auditorium>>() {});
+                Auditorium auditorium = requestDto1.getPayload();
                 return auditoriumManagerController.actionAdd(auditorium);
 //            case "read":
 //                return "Response from MyServiceController for read operation";
             case "UPDATE_AUDITORIUM":
-                auditorium = new Auditorium(Integer.parseInt(payload.get("id").toString()), Integer.parseInt(payload.get("auditoriumNum").toString()), Integer.parseInt(payload.get("seatsRowNum").toString()), Integer.parseInt(payload.get("seatsColumnNum").toString()));
+                requestDto1 = xmlMapper.readValue(request, new TypeReference<RequestDto<Auditorium>>() {});
+                auditorium = requestDto1.getPayload();
                 return auditoriumManagerController.actionEdit(auditorium);
             case "DELETE_AUDITORIUM":
-                auditorium = new Auditorium();
-                auditorium.setId(Integer.parseInt(payload.get("id").toString()));
+                requestDto1 = xmlMapper.readValue(request, new TypeReference<RequestDto<Auditorium>>() {});
+                auditorium = requestDto1.getPayload();
                 return auditoriumManagerController.actionDelete(auditorium);
             default:
                 throw new IllegalArgumentException("Invalid service name: " + requestDto.getServiceName());

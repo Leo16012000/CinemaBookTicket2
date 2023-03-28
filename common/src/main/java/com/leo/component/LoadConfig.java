@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class LoadConfig {
+  private static LoadConfig instance;
   private Properties properties = new Properties();
   private String configPath;
 
@@ -28,5 +29,16 @@ public class LoadConfig {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public static LoadConfig getInstance() {
+    if (instance == null) {
+      synchronized (LoadConfig.class) {
+        if (instance == null) {
+          instance = new LoadConfig("./src/main/resources/config.properties");
+        }
+      }
+    }
+    return instance;
   }
 }

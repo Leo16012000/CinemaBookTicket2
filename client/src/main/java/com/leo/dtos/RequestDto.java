@@ -33,24 +33,27 @@ public class RequestDto {
     }
 
     public ResponseDto sendRequest() throws IOException {
-            socket = Client.getSocket();
-            System.out.println("Connected to server");
+        socket = Client.getSocket();
+        System.out.println("Connected to server");
 
-            // Send the payload to the server
-            XmlMapper xmlMapper = new XmlMapper();
-            String xml = xmlMapper.writeValueAsString(this);
-            System.out.println(xml);
-            OutputStream os = socket.getOutputStream();
-            os.write(xml.getBytes());
-            os.flush();
+        // Send the payload to the server
+        XmlMapper xmlMapper = new XmlMapper();
+        String request = xmlMapper.writeValueAsString(this);
+        System.out.println(request);
+        OutputStream os = socket.getOutputStream();
+        os.write(request.getBytes());
+        os.flush();
 
-            // Read the response from the server
-            InputStream is = socket.getInputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead = is.read(buffer);
-            String response = new String(buffer, 0, bytesRead);
-            ResponseDto responseDto
-                    = xmlMapper.readValue(response, ResponseDto.class);
-            return responseDto;
+        // Read the response from the server
+        InputStream is = socket.getInputStream();
+        is = socket.getInputStream();
+        byte[] buffer = new byte[1024 * 1024];
+        int bytesRead = bytesRead = is.read(buffer);
+        String response = new String(buffer, 0, bytesRead);
+        ResponseDto responseDto
+                = xmlMapper.readValue(response, ResponseDto.class);
+        return responseDto;
+
+
     }
 }

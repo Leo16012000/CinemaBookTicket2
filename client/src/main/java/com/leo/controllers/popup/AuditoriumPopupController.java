@@ -28,7 +28,7 @@ public class AuditoriumPopupController {
     view.getBtnCancel().addActionListener(evt -> view.dispose());
     view.getBtnOK().addActionListener(evt -> {
       ResponseDto responseDto = addAuditorium(view);
-      if (responseDto.getStatus().equals("SUCCESS")){
+      if (responseDto!= null && responseDto.getStatus().equals("SUCCESS")){
         view.dispose();
         view.showMessage("Added auditorium successfully!");
         sc.onSuccess();

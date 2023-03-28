@@ -15,4 +15,5 @@ public class ResponseDto<T> {
   private T payload;
   private String serviceName;
   private String id;
+  private String status;
 }

@@ -13,7 +13,7 @@ import com.leo.dtos.RequestDto;
 import com.leo.dtos.ResponseDto;
 import com.leo.utils.ObjectMappers;
 
-public class SeviceHandler {
+public class ServiceHandler {
   public <T, K> ResponseDto<K> sendRequest(Socket socket, String serviceName, T payload,
       TypeReference<ResponseDto<K>> typeReference) throws IOException {
     RequestDto<T> request = RequestDto.<T>builder()

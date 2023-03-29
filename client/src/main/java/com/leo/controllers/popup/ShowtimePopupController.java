@@ -6,21 +6,25 @@ import com.leo.models.Showtime;
 import com.leo.service.IAuditoriumService;
 import com.leo.service.IMovieService;
 import com.leo.service.IShowtimeService;
+import com.leo.service.impl.AuditoriumService;
+import com.leo.service.impl.MovieService;
+import com.leo.service.impl.ShowtimeService;
 import com.leo.utils.TimeHandle;
 import com.leo.views.popup.ShowtimePopupView;
 
 import javax.swing.*;
-import java.sql.SQLException;
+
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.*;
 
 public class ShowtimePopupController {
   JFrame previousView;
-  private IShowtimeService showtimeService;
-  private IMovieService movieService;
-  private IAuditoriumService auditoriumService;
+  private IShowtimeService showtimeService = ShowtimeService.getInstance();
+  private IMovieService movieService = MovieService.getInstance();
+  private IAuditoriumService auditoriumService = AuditoriumService.getInstance();
 
-  public void add(ShowtimePopupView view, SuccessCallback sc, ErrorCallback ec) throws SQLException {
+  public void add(ShowtimePopupView view, SuccessCallback sc, ErrorCallback ec) throws IOException {
     if (previousView != null && previousView.isDisplayable()) {
       previousView.requestFocus();
       return;
@@ -65,8 +69,7 @@ public class ShowtimePopupController {
     showtimeService.save(showtime);
   }
 
-  public void edit(ShowtimePopupView view, Showtime showtime, SuccessCallback sc, ErrorCallback ec)
-      throws SQLException {
+  public void edit(ShowtimePopupView view, Showtime showtime, SuccessCallback sc, ErrorCallback ec) throws IOException {
     if (previousView != null && previousView.isDisplayable()) {
       previousView.requestFocus();
       return;

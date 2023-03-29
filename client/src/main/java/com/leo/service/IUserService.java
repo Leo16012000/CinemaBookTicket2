@@ -1,21 +1,22 @@
 package com.leo.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.leo.models.User;
 
 public interface IUserService {
-  User getByUsername(String username);
+  User getByUsername(String username) throws IOException;
 
-  User get(int selectedId);
+  User get(int selectedId) throws IOException;
 
-  void deleteById(int i);
+  List<User> getAll() throws IOException;
 
-  List<User> getAll();
+  List<User> searchByKey(String key, String term) throws IOException;
 
-  List<User> searchByKey(String string, String valueOf);
+  void update(User u) throws IOException;
 
-  void update(User u);
+  void save(User u) throws IOException;
 
-  void save(User u);
+  void deleteByIds(List<Integer> selectedIds) throws IOException;
 }

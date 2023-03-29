@@ -3,6 +3,8 @@ package com.leo.views;
 import com.leo.models.Movie;
 
 import java.awt.EventQueue;
+import java.io.IOException;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,7 +12,6 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 
 import javax.swing.JLabel;
-import java.sql.SQLException;
 import com.leo.models.Showtime;
 import com.leo.service.IMovieService;
 import com.leo.service.IShowtimeService;
@@ -54,9 +55,9 @@ public class MainFrame extends JFrame {
   /**
    * Create the frame.
    * 
-   * @throws SQLException
+   * @throws IOException
    */
-  public MainFrame() throws SQLException {
+  public MainFrame() throws IOException {
     headerPanel = new HeaderPanel();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setBounds(100, 100, 1280, 1024);
@@ -116,7 +117,7 @@ public class MainFrame extends JFrame {
     // contentPane.add(btnBack);
   }
 
-  public void displayMoviePanel() throws SQLException {
+  public void displayMoviePanel() throws IOException {
     List<Movie> movies = movieService.getAll();
     moviePanel = new MoviePanel(movies, contentPane);
     moviePanel.setBounds(194, 32, 432, 379);
@@ -157,7 +158,7 @@ public class MainFrame extends JFrame {
     // MoviePanel.add(btnNewButton);
   }
 
-  public void displayShowtimePanel(String movieName, int movieId) throws SQLException {
+  public void displayShowtimePanel(String movieName, int movieId) throws IOException {
     List<Showtime> showtimes = showtimeService.searchByKey("movie_id", Integer.toString(movieId));
     showtimePanel = new ShowtimePanel(showtimes);
     showtimePanel.setBounds(114, 32, 553, 471);

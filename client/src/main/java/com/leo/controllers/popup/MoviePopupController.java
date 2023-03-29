@@ -4,11 +4,12 @@ import javax.swing.JFrame;
 
 import com.leo.models.Movie;
 import com.leo.service.IMovieService;
+import com.leo.service.impl.MovieService;
 import com.leo.views.popup.MoviePopupView;
 
 public class MoviePopupController {
   JFrame previousView;
-  private IMovieService movieService;
+  private IMovieService movieService = MovieService.getInstance();
 
   public void add(MoviePopupView view, SuccessCallback sc, ErrorCallback ec) {
     if (previousView != null && previousView.isDisplayable()) {

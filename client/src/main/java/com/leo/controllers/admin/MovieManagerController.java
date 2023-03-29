@@ -6,6 +6,7 @@ import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.MoviePopupController;
 import com.leo.models.Movie;
 import com.leo.service.IMovieService;
+import com.leo.service.impl.MovieService;
 import com.leo.views.popup.MoviePopupView;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
@@ -14,7 +15,7 @@ import static javax.swing.JOptionPane.YES_OPTION;
 import java.util.List;
 
 public class MovieManagerController extends ManagerController {
-  private IMovieService movieService;
+  private IMovieService movieService = MovieService.getInstance();
   private MoviePopupController popupController;
 
   public MovieManagerController() {
@@ -46,6 +47,7 @@ public class MovieManagerController extends ManagerController {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public void actionDelete() {
     List<Integer> selectedIds = view.getSelectedIds();
     try {

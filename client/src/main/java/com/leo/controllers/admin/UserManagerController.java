@@ -6,6 +6,7 @@ import com.leo.utils.UserPermission;
 import com.leo.views.popup.UserPopupView;
 import com.leo.models.User;
 import com.leo.service.IUserService;
+import com.leo.service.impl.UserService;
 
 import javax.swing.JOptionPane;
 
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class UserManagerController extends ManagerController {
   UserPopupController popupController = new UserPopupController();
-  private IUserService userService;
+  private IUserService userService = UserService.getInstance();
 
   public UserManagerController() {
     super();
@@ -52,6 +53,7 @@ public class UserManagerController extends ManagerController {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public void actionDelete() {
     List<Integer> selectedIds = view.getSelectedIds();
     try {

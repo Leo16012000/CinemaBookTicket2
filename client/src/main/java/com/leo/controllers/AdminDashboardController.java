@@ -13,7 +13,6 @@ import com.leo.views.admin.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class AdminDashboardController {
   private AdminDashboardFrame view;
@@ -31,7 +30,7 @@ public class AdminDashboardController {
   private JPanel[] cards;
   private SidebarController sidebarController = new SidebarController();
 
-  public AdminDashboardController() throws SQLException {
+  public AdminDashboardController() {
     view = new AdminDashboardFrame();
 
     userManagerView = new UserManagerView();

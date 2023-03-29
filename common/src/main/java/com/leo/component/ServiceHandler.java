@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.Socket;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leo.dtos.RequestDto;
 import com.leo.dtos.ResponseDto;
 import com.leo.utils.ObjectMappers;
@@ -25,22 +24,16 @@ public class ServiceHandler {
         .build();
 
     DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-    os.write(ObjectMappers.getInstance().writeValueAsString(request).getBytes());
+    os.writeUTF(ObjectMappers.getInstance().writeValueAsString(request));
     os.flush();
 
     DataInputStream is = new DataInputStream(socket.getInputStream());
-    ObjectMapper objectMapper = ObjectMappers.getInstance();
-    return objectMapper.readValue(is, typeReference);
+    String response = is.readUTF();
+    return ObjectMappers.getInstance().readValue(response, typeReference);
   }
 
   public void setAuthentication(Object authentication) {
     this.authentication = authentication;
-  }
-
-  public <T, K> ResponseDto<K> sendRequest(Socket socket, String serviceName, T payload,
-      Class<K> clazz) throws IOException {
-    return sendRequest(socket, serviceName, payload, new TypeReference<ResponseDto<K>>() {
-    });
   }
 
   public static ServiceHandler getInstance() {

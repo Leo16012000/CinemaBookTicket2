@@ -10,7 +10,7 @@ import com.leo.models.Auditorium;
 import java.util.List;
 
 public class AuditoriumManagerController {
-  private AuditoriumDao auditoriumDao = new AuditoriumDao();
+  private AuditoriumDao auditoriumDao = AuditoriumDao.getInstance();
 
   public AuditoriumManagerController() {
   }

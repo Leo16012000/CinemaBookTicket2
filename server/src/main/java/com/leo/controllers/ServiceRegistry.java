@@ -11,7 +11,6 @@ import com.leo.models.Auditorium;
 import com.leo.utils.ObjectMappers;
 
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class ServiceRegistry {
   private static ServiceRegistry instance;
@@ -53,8 +52,8 @@ public class ServiceRegistry {
 
   private void checkAuthentication(RequestDto<?> requestDto) {
     if (requestDto.getAuthentication() == null) {
-        requestDto.setAuthenticated(false);
-        return;
+      requestDto.setAuthenticated(false);
+      return;
     }
     String authentication = (String) requestDto.getAuthentication();
     // TODO: Check validity of authentication before set authenticated

@@ -16,4 +16,5 @@ public class RequestDto<T> {
   private T payload;
   private String id;
   private Object authentication;
+  private boolean authenticated;
 }

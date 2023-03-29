@@ -11,6 +11,7 @@ import com.leo.models.Auditorium;
 import com.leo.utils.ObjectMappers;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class ServiceRegistry {
   private static ServiceRegistry instance;
@@ -19,6 +20,7 @@ public class ServiceRegistry {
 
   public ResponseDto<?> handleRequest(String request) throws SQLException, JsonProcessingException {
     RequestDto<?> requestDto = xmlMapper.readValue(request, RequestDto.class);
+    checkAuthentication(requestDto);
     String serviceName = requestDto.getServiceName();
     switch (serviceName) {
       case "CREATE_AUDITORIUM":
@@ -47,6 +49,16 @@ public class ServiceRegistry {
       default:
         throw new IllegalArgumentException("Invalid service name: " + requestDto.getServiceName());
     }
+  }
+
+  private void checkAuthentication(RequestDto<?> requestDto) {
+    if (requestDto.getAuthentication() == null) {
+        requestDto.setAuthenticated(false);
+        return;
+    }
+    String authentication = (String) requestDto.getAuthentication();
+    // TODO: Check validity of authentication before set authenticated
+    requestDto.setAuthenticated(true);
   }
 
   public static ServiceRegistry getInstance() {

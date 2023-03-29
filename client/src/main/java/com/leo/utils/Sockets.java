@@ -2,8 +2,6 @@ package com.leo.utils;
 
 import java.net.Socket;
 
-import com.leo.component.LoadConfig;
-
 public class Sockets {
   private static Socket socket;
   private static LoadConfig loadConfig = LoadConfig.getInstance();

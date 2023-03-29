@@ -3,11 +3,10 @@ package com.leo.service.impl;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.math3.util.Pair;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.leo.component.ServiceHandler;
 import com.leo.dtos.ResponseDto;
+import com.leo.dtos.SearchDto;
 import com.leo.models.Movie;
 import com.leo.service.IMovieService;
 import com.leo.utils.Sockets;
@@ -19,8 +18,10 @@ public class MovieService implements IMovieService {
   @Override
   public List<Movie> searchByKey(String key, String term) throws IOException {
     return serviceHandler
-        .sendRequest(Sockets.getSocket(), "", Pair.create(key, term), new TypeReference<ResponseDto<List<Movie>>>() {
-        }).getPayload();
+        .sendRequest(Sockets.getSocket(), "", SearchDto.builder().key(key).value(term).build(),
+            new TypeReference<ResponseDto<List<Movie>>>() {
+            })
+        .getPayload();
   }
 
   @Override

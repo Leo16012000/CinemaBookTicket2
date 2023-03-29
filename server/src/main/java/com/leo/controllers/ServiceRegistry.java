@@ -10,8 +10,12 @@ import com.leo.dtos.ResponseDto;
 import com.leo.dtos.SearchDto;
 import com.leo.models.Auditorium;
 import com.leo.utils.Convert;
+import com.leo.utils.ObjectMappers;
+import com.leo.component.ServiceHandler;
 
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ServiceRegistry {
     private AuditoriumManagerController auditoriumManagerController = new AuditoriumManagerController();
@@ -51,6 +55,17 @@ public class ServiceRegistry {
             default:
                 throw new IllegalArgumentException("Invalid service name: " + requestDto.getServiceName());
         }
+    }
+
+    public static ServiceRegistry getInstance() {
+        if (instance == null) {
+            synchronized (ServiceRegistry.class) {
+                if (instance == null) {
+                    instance = new ServiceRegistry();
+                }
+            }
+        }
+        return instance;
     }
 }
 

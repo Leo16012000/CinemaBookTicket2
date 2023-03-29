@@ -28,6 +28,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
                 .executeQuery(),
             Auditorium::getFromResultSet);
   }
+  
   public Integer save(Auditorium a) throws SQLException {
     return transactionManager
         .getTransaction()

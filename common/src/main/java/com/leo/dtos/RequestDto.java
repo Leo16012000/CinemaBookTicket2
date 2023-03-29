@@ -1,7 +1,5 @@
 package com.leo.dtos;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +15,5 @@ public class RequestDto<T> {
   private String serviceName;
   private T payload;
   private String id;
+  private Object authentication;
 }

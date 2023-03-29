@@ -3,11 +3,11 @@ package com.leo.service.impl;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.math3.util.Pair;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.leo.component.ServiceHandler;
+import com.leo.dtos.LoginDto;
 import com.leo.dtos.ResponseDto;
+import com.leo.dtos.SearchDto;
 import com.leo.models.User;
 import com.leo.service.IUserService;
 import com.leo.utils.Sockets;
@@ -36,7 +36,7 @@ public class UserService implements IUserService {
 
   @Override
   public List<User> searchByKey(String key, String term) throws IOException {
-    return serviceHandler.sendRequest(Sockets.getSocket(), "", Pair.create(key, term),
+    return serviceHandler.sendRequest(Sockets.getSocket(), "", SearchDto.builder().key(key).value(term).build(),
         new TypeReference<ResponseDto<List<User>>>() {
         }).getPayload();
   }
@@ -54,6 +54,13 @@ public class UserService implements IUserService {
   @Override
   public void deleteByIds(List<Integer> selectedIds) throws IOException {
     serviceHandler.sendRequest(Sockets.getSocket(), "", selectedIds, Void.class);
+  }
+
+  @Override
+  public User login(String username, String password) throws IOException {
+    serviceHandler.setAuthentication(serviceHandler.sendRequest(Sockets.getSocket(), "",
+        LoginDto.builder().username(username).password(password).build(), Object.class).getPayload());
+    return getByUsername(username);
   }
 
   public static IUserService getInstance() {

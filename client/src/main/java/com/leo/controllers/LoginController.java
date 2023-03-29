@@ -41,7 +41,7 @@ public class LoginController {
     String username = view.getTxtUsername().getText();
     String password = new String(view.getTxtPassword().getPassword());
     try {
-      User user = userService.getByUsername(username);
+      User user = userService.login(username, password);
       if (user == null) {
         view.showError("Account is not existed!");
         return;
@@ -50,7 +50,7 @@ public class LoginController {
         view.showError("Wrong password");
         return;
       }
-      SessionManager.setSession(user);// Khởi tạo session
+      SessionManager.getInstance().setSession(user);// Khởi tạo session
       switch (user.getPermission()) {
         case USER:
           UserHomeController controller = new UserHomeController();
@@ -64,7 +64,7 @@ public class LoginController {
           break;
         default:
           view.showError("Unexpected error");
-          SessionManager.clear();
+          SessionManager.getInstance().clear();
           view.dispose();
           break;
       }

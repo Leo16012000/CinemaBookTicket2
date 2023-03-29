@@ -1,5 +1,7 @@
 package com.leo.controllers.admin;
 
+import java.util.List;
+
 import com.leo.dao.AuditoriumDao;
 import com.leo.dtos.ListDto;
 import com.leo.dtos.ResponseDto;
@@ -33,7 +35,7 @@ public class AuditoriumManagerController {
   public ResponseDto add(Auditorium auditorium){
     ResponseDto responseDto = new ResponseDto();
     try{
-      Integer id = auditoriumDao.save(auditorium);
+      auditoriumDao.save(auditorium);
       responseDto.setMessage("Add auditorium successfully");
       responseDto.setStatus("SUCCESS");
       return responseDto;

@@ -48,7 +48,7 @@ public class UserHomeController {
       if (confirm != JOptionPane.YES_OPTION) {
         return;
       }
-      SessionManager.clear();// Đăng xuất
+      SessionManager.getInstance().clear();// Đăng xuất
       view.dispose();
       new LoginController(new LoginView());
       System.out.println("click logout");

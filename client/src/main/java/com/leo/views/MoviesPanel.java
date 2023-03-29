@@ -2,6 +2,7 @@ package com.leo.views;
 
 import com.leo.models.Movie;
 import com.leo.service.IMovieService;
+import com.leo.service.impl.MovieService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class MoviesPanel extends JPanel {
-  private IMovieService movieService;
+  private IMovieService movieService = MovieService.getInstance();
   public List<Movie> movies;
   private JTextField textField;
   private JTable table_1;

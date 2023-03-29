@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.List;
 
 public class AuditoriumDao extends Dao<Auditorium> {
+  private static AuditoriumDao instance;
+
   @Override
   public List<Auditorium> getAll() throws SQLException {
     return transactionManager
@@ -28,6 +30,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
                 .executeQuery(),
             Auditorium::getFromResultSet);
   }
+
   public Integer save(Auditorium a) throws SQLException {
     return transactionManager
         .getTransaction()
@@ -45,7 +48,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
                   a.getSeatsColumnNum());
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
-            }, rs->rs.getInt(1));
+            }, rs -> rs.getInt(1));
   }
 
   @Override
@@ -96,5 +99,16 @@ public class AuditoriumDao extends Dao<Auditorium> {
                 word)
                 .executeQuery(),
             Auditorium::getFromResultSet);
+  }
+
+  public static AuditoriumDao getInstance() {
+    if (instance == null) {
+      synchronized(AuditoriumDao.class) {
+        if (instance == null) {
+          instance = new AuditoriumDao();
+        }
+      }
+    }
+    return instance;
   }
 }

@@ -32,6 +32,6 @@ public class SeatsReservation {
   }
 
   public enum SeatsReservationStatus {
-      PENDING, BOOKING, AVAILABLE
+    PENDING, BOOKING, AVAILABLE
   }
 }

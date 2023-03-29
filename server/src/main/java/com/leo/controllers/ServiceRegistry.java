@@ -2,7 +2,7 @@ package com.leo.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leo.controllers.admin.AuditoriumManagerController;
 import com.leo.controllers.admin.MovieManagerController;
 import com.leo.controllers.admin.ShowtimeManagerController;
@@ -15,17 +15,19 @@ import com.leo.models.Movie;
 import com.leo.models.Showtime;
 import com.leo.models.User;
 import com.leo.utils.Convert;
+import com.leo.utils.ObjectMappers;
 
 import java.sql.SQLException;
 
 public class ServiceRegistry {
+    private static ServiceRegistry instance;
     private AuditoriumManagerController auditoriumManagerController = new AuditoriumManagerController();
     private MovieManagerController movieManagerController = new MovieManagerController();
     private UserManagerController userManagerController = new UserManagerController();
     private ShowtimeManagerController showtimeManagerController = new ShowtimeManagerController();
 
     private Convert convert = new Convert();
-    private XmlMapper xmlMapper = new XmlMapper();
+    private ObjectMapper xmlMapper = ObjectMappers.getInstance();
 
     public ResponseDto handleRequest(String request) throws SQLException, JsonProcessingException {
         RequestDto reqDto
@@ -146,6 +148,15 @@ public class ServiceRegistry {
             default:
                 throw new IllegalArgumentException("Invalid service name: " + reqDto.getServiceName());
         }
+      }
+    public static ServiceRegistry getInstance() {
+        if (instance == null) {
+            synchronized (ServiceRegistry.class) {
+                if (instance == null) {
+                    instance = new ServiceRegistry();
+                }
+            }
+        }
+        return instance;
     }
 }
-

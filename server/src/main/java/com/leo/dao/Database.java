@@ -1,10 +1,10 @@
 package com.leo.dao;
 
-import com.leo.utils.LoadConfig;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import com.leo.utils.LoadConfig;
 
 public class Database {
 

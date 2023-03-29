@@ -3,11 +3,10 @@ package com.leo.service.impl;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.math3.util.Pair;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.leo.component.ServiceHandler;
 import com.leo.dtos.ResponseDto;
+import com.leo.dtos.SearchDto;
 import com.leo.models.Auditorium;
 import com.leo.service.IAuditoriumService;
 import com.leo.utils.Sockets;
@@ -31,7 +30,7 @@ public class AuditoriumService implements IAuditoriumService {
 
   @Override
   public List<Auditorium> searchByKey(String key, String term) throws IOException {
-    return serviceHandler.sendRequest(Sockets.getSocket(), "", Pair.create(key, term),
+    return serviceHandler.sendRequest(Sockets.getSocket(), "", SearchDto.builder().key(key).value(term).build(),
         new TypeReference<ResponseDto<List<Auditorium>>>() {
         }).getPayload();
   }

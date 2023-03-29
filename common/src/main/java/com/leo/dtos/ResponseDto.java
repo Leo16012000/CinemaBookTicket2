@@ -16,7 +16,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ResponseDto<T> {
   private String message;
-  @JacksonXmlProperty(localName = "payload")
   private T payload;
   private String serviceName;
   private String id;

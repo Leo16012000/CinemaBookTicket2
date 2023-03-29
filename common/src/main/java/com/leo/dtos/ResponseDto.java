@@ -1,17 +1,23 @@
 package com.leo.dtos;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JacksonXmlRootElement(localName = "responseDto")
 public class ResponseDto<T> {
   private String message;
-  @JacksonXmlProperty(localName = "payload")
+  @JacksonXmlElementWrapper(useWrapping = false)
   private T payload;
   private String serviceName;
   private String id;

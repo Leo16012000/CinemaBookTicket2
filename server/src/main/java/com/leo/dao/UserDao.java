@@ -112,6 +112,18 @@ public class UserDao extends Dao<User> {
             .executeQuery(), User::getFromResultSet);
   }
 
+  @Override
+  public void deleteByIds(List<Integer> ids) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              for (Integer id : ids) {
+                deleteById(id);
+              }
+            });
+  }
+
   public static UserDao getInstance() {
     if (instance == null) {
       synchronized (UserDao.class) {

@@ -4,48 +4,34 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SeatsReservation {
-  private int id, seatId, reservationId;
-  private Timestamp createdAt;
+  private int id, seatId, userId, showtimeId;
+  private Timestamp createdAt, expiredAt;
+  private SeatsReservationStatus status;
 
   public static SeatsReservation getFromResultSet(ResultSet rs) throws SQLException {
     SeatsReservation o = new SeatsReservation();
     o.setId(rs.getInt("id"));
-    o.setSeatId(rs.getInt("seatId"));
-    o.setReservationId(rs.getInt("reservationId"));
-    o.setCreatedAt(rs.getTimestamp("createdAt"));
+    o.setSeatId(rs.getInt("seat_id"));
+    o.setCreatedAt(rs.getTimestamp("created_at"));
+    o.setUserId(rs.getInt("user_id"));
+    o.setShowtimeId(rs.getInt("showtime_id"));
+    o.setExpiredAt(rs.getTimestamp("expired_at"));
     return o;
   }
 
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public int getSeatId() {
-    return seatId;
-  }
-
-  public void setSeatId(int seatId) {
-    this.seatId = seatId;
-  }
-
-  public int getReservationId() {
-    return reservationId;
-  }
-
-  public void setReservationId(int reservationId) {
-    this.reservationId = reservationId;
-  }
-
-  public Timestamp getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Timestamp createdAt) {
-    this.createdAt = createdAt;
+  public enum SeatsReservationStatus {
+    PENDING, BOOKING, AVAILABLE
   }
 }

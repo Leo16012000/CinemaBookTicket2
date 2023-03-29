@@ -3,7 +3,7 @@ package com.leo.views;
 import com.leo.views.UserFramePanels.TicketsPanel;
 
 import java.awt.CardLayout;
-import java.sql.SQLException;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,8 +17,10 @@ public class UserFrame extends JFrame {
 
   /**
    * Create the frame.
+   * 
+   * @throws IOException
    */
-  public UserFrame() throws SQLException {
+  public UserFrame() throws IOException {
     mainPanel = new JPanel();
     mainPanel.setSize(800, 600);
     mainPanel.setLayout(cl);

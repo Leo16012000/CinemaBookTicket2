@@ -1,9 +1,16 @@
 package com.leo.models;
 
+import lombok.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Auditorium extends Model {
   private int id, auditoriumNum, seatsRowNum, seatsColumnNum;
   private Timestamp createdAt;
@@ -16,13 +23,10 @@ public class Auditorium extends Model {
   }
 
   public Auditorium(int auditoriumNum, int seatsRowNum, int seatsColumnNum) {
-    this.id = id;
     this.auditoriumNum = auditoriumNum;
     this.seatsRowNum = seatsRowNum;
     this.seatsColumnNum = seatsColumnNum;
   }
-
-  public Auditorium() {}
 
   public static Auditorium getFromResultSet(ResultSet rs) throws SQLException {
     Auditorium o = new Auditorium();

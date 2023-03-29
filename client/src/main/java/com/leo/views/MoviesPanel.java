@@ -1,21 +1,23 @@
 package com.leo.views;
 
-import com.leo.dao.MovieDao;
 import com.leo.models.Movie;
+import com.leo.service.IMovieService;
+import com.leo.service.impl.MovieService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.List;
 
 public class MoviesPanel extends JPanel {
-  public ArrayList<Movie> movies = new ArrayList<Movie>(MovieDao.getInstance().getAll());;
+  private IMovieService movieService = MovieService.getInstance();
+  public List<Movie> movies;
   private JTextField textField;
   private JTable table_1;
 
-  public MoviesPanel() throws SQLException {
+  public MoviesPanel() throws IOException {
     // Create a JTable with a DefaultTableModel
     DefaultTableModel model = new DefaultTableModel();
     JTable table = new JTable(model);
@@ -25,6 +27,8 @@ public class MoviesPanel extends JPanel {
     model.addColumn("Country");
     model.addColumn("Duration time");
     model.addColumn("Ticket price");
+
+    this.movies = movieService.getAll();
 
     // Add rows to the table
     for (Movie obj : movies) {

@@ -1,22 +1,24 @@
 package com.leo.controllers.popup;
 
-import com.leo.Client;
-import com.leo.dtos.RequestDto;
-import com.leo.dao.AuditoriumDao;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.leo.component.ServiceHandler;
 import com.leo.dtos.ResponseDto;
 import com.leo.models.Auditorium;
 import com.leo.utils.Convert;
+import com.leo.utils.Sockets;
 import com.leo.views.popup.AuditoriumPopupView;
+
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 
 public class AuditoriumPopupController {
-  private AuditoriumDao auditoriumDao = AuditoriumDao.getInstance();
   private JFrame previousView;
   private Convert convert = new Convert();
+  private ServiceHandler serviceHandler = ServiceHandler.getInstance();
 
-  private static Logger logger = Client.getLogger();
+  private static Logger logger = LogManager.getLogger(AuditoriumPopupController.class);
 
   public void add(AuditoriumPopupView view, SuccessCallback sc, ErrorCallback ec) {
     if (previousView != null && previousView.isDisplayable()) {
@@ -27,35 +29,35 @@ public class AuditoriumPopupController {
     view.setVisible(true);
     view.getBtnCancel().addActionListener(evt -> view.dispose());
     view.getBtnOK().addActionListener(evt -> {
-      ResponseDto responseDto = addAuditorium(view);
-      if (responseDto!= null && responseDto.getStatus().equals("SUCCESS")){
+      ResponseDto<Void> responseDto = addAuditorium(view);
+      if (responseDto != null && responseDto.getStatus().equals("SUCCESS")) {
         view.dispose();
         view.showMessage("Added auditorium successfully!");
         sc.onSuccess();
       } else {
         view.showError("Something wrong!!!");
       }
-//      try {
-//        view.dispose();
-//        view.showMessage("Added auditorium successfully!");
-//        sc.onSuccess();
-//      } catch (Exception ex) {
-//        ec.onError(ex);
-//      }
+      // try {
+      // view.dispose();
+      // view.showMessage("Added auditorium successfully!");
+      // sc.onSuccess();
+      // } catch (Exception ex) {
+      // ec.onError(ex);
+      // }
     });
 
   }
 
-  public ResponseDto addAuditorium(AuditoriumPopupView view){
+  public ResponseDto<Void> addAuditorium(AuditoriumPopupView view) {
     try {
-    Auditorium auditorium = new Auditorium();
-    auditorium.setAuditoriumNum(Integer.valueOf(view.getTxtNumber().getText()));
-    auditorium.setSeatsRowNum(Integer.valueOf(view.getTxtRowsNum().getText()));
-    auditorium.setSeatsColumnNum(Integer.valueOf(view.getTxtColumnsNum().getText()));
+      Auditorium auditorium = new Auditorium();
+      auditorium.setAuditoriumNum(Integer.valueOf(view.getTxtNumber().getText()));
+      auditorium.setSeatsRowNum(Integer.valueOf(view.getTxtRowsNum().getText()));
+      auditorium.setSeatsColumnNum(Integer.valueOf(view.getTxtColumnsNum().getText()));
       logger.info("Add auditorium: ", auditorium);
-      RequestDto payload = new RequestDto("CREATE_AUDITORIUM", auditorium);
-      ResponseDto responseDto = payload.sendRequest();
-      return responseDto;
+      return serviceHandler.sendRequest(Sockets.getSocket(), "CREATE_AUDITORIUM", auditorium,
+          new TypeReference<ResponseDto<Void>>() {
+          });
     } catch (Exception e) {
       JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
       return null;
@@ -86,7 +88,7 @@ public class AuditoriumPopupController {
     });
   }
 
-  public ResponseDto editAuditorium(AuditoriumPopupView view, Auditorium auditorium) throws Exception {
+  public void editAuditorium(AuditoriumPopupView view, Auditorium auditorium) throws Exception {
     Integer number = Integer.valueOf(view.getTxtNumber().getText()),
         rowsNum = Integer.valueOf(view.getTxtRowsNum().getText()),
         columnsNum = Integer.valueOf(view.getTxtColumnsNum().getText());
@@ -98,8 +100,9 @@ public class AuditoriumPopupController {
     auditorium.setSeatsRowNum(rowsNum);
     auditorium.setSeatsColumnNum(columnsNum);
     logger.info("Edit auditorium: ", auditorium);
-    RequestDto payload = new RequestDto("UPDATE_AUDITORIUM", auditorium);
-    ResponseDto responseDto = payload.sendRequest();
-    return responseDto;
+    serviceHandler.sendRequest(Sockets.getSocket(), "UPDATE_AUDITORIUM", auditorium,
+        new TypeReference<ResponseDto<Void>>() {
+        });
+    return;
   }
 }

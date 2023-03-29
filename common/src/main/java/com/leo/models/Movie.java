@@ -1,9 +1,16 @@
 package com.leo.models;
 
+import lombok.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Movie extends Model {
   private int id, durationTime, price;
   private String title, country;

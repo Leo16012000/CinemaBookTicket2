@@ -4,6 +4,7 @@ import com.leo.models.Showtime;
 import com.leo.utils.PrepareStatements;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -11,13 +12,20 @@ import java.util.List;
 public class ShowtimeDao extends Dao<Showtime> {
   public static ShowtimeDao instance = null;
 
+  public Showtime getFromResultSet(ResultSet rs) throws SQLException {
+    Showtime showtime = Showtime.getFromResultSet(rs);
+    showtime.setAuditorium(AuditoriumDao.getInstance().get(showtime.getAuditoriumId()));
+    showtime.setMovie(MovieDao.getInstance().get(showtime.getMovieId()));
+    return showtime;
+  }
+
   @Override
   public List<Showtime> getAll() throws SQLException {
     return transactionManager
         .getTransaction()
         .queryList(
             conn -> conn.prepareStatement("SELECT * FROM `showtimes`").executeQuery(),
-            Showtime::getFromResultSet);
+            this::getFromResultSet);
   }
 
   @Override
@@ -28,7 +36,7 @@ public class ShowtimeDao extends Dao<Showtime> {
             conn -> PrepareStatements.setPreparedStatementParams(
                 conn.prepareStatement("SELECT * FROM `showtimes` WHERE id = ?"), id)
                 .executeQuery(),
-            Showtime::getFromResultSet);
+            this::getFromResultSet);
   }
 
   @Override
@@ -94,9 +102,23 @@ public class ShowtimeDao extends Dao<Showtime> {
         .getTransaction()
         .queryList(
             conn -> PrepareStatements.setPreparedStatementParams(
-                conn.prepareStatement("SELECT * FROM `showtimes` inner join movies on showtimes.movie_id = movies.id inner join auditoriums on showtimes.auditorium_id = auditoriums.id WHERE ? LIKE '%?%'"), key, word)
+                conn.prepareStatement(
+                    "SELECT * FROM `showtimes` inner join movies on showtimes.movie_id = movies.id inner join auditoriums on showtimes.auditorium_id = auditoriums.id WHERE ? LIKE '%?%'"),
+                key, word)
                 .executeQuery(),
-            Showtime::getFromResultSet);
+            this::getFromResultSet);
+  }
+
+  @Override
+  public void deleteByIds(List<Integer> ids) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              for (Integer id : ids) {
+                deleteById(id);
+              }
+            });
   }
 
   public static ShowtimeDao getInstance() {

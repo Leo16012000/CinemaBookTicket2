@@ -2,14 +2,15 @@ package com.leo.controllers.popup;
 
 import javax.swing.JFrame;
 
-import com.leo.dao.UserDao;
 import com.leo.models.User;
+import com.leo.service.IUserService;
+import com.leo.service.impl.UserService;
 import com.leo.utils.UserPermission;
 import com.leo.views.popup.UserPopupView;
 
 public class UserPopupController {
-  UserDao userDao = UserDao.getInstance();
   JFrame previousView;
+  private IUserService userService = UserService.getInstance();
 
   public void add(UserPopupView view, SuccessCallback sc, ErrorCallback ec) {
     if (previousView != null && previousView.isDisplayable()) {
@@ -44,7 +45,7 @@ public class UserPopupController {
     if (username.isEmpty() || password.isEmpty()) {
       throw new Exception("Please complete all the fields");
     }
-    if (userDao.getByUsername(username) != null) {
+    if (userService.getByUsername(username) != null) {
       throw new Exception("User already existed");
     }
     User u = new User();
@@ -52,7 +53,7 @@ public class UserPopupController {
     u.setPassword(password);
     u.setName(name);
     u.setPermission(permission);
-    userDao.save(u);
+    userService.save(u);
     return;
   }
 
@@ -94,7 +95,7 @@ public class UserPopupController {
       throw new Exception("Please complete all the fields");
     }
 
-    User temp = userDao.getByUsername(username);
+    User temp = userService.getByUsername(username);
     if (temp != null && temp.getId() != u.getId()) {
       throw new Exception("User already exists");
     }
@@ -102,7 +103,7 @@ public class UserPopupController {
     u.setPassword(password);
     u.setName(name);
     u.setPermission(permission);
-    userDao.update(u);
+    userService.update(u);
     return true;
   }
 }

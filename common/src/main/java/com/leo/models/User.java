@@ -1,12 +1,17 @@
 package com.leo.models;
 
 import com.leo.utils.UserPermission;
+import lombok.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.logging.Logger;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends Model {
   private int id;
   private String name;

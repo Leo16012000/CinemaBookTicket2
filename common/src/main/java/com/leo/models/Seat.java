@@ -1,9 +1,16 @@
 package com.leo.models;
 
+import lombok.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Seat {
   private int id, auditoriumId, reservationId, seatColumn, seatRow;
   private Timestamp createdAt;

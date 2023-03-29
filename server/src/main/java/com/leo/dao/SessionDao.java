@@ -133,6 +133,18 @@ public class SessionDao extends Dao<Session> {
             Session::getFromResultSet);
   }
 
+  @Override
+  public void deleteByIds(List<Integer> ids) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              for (Integer id : ids) {
+                deleteById(id);
+              }
+            });
+  }
+
   public static SessionDao getInstance() {
     if (instance == null) {
       synchronized (SessionDao.class) {

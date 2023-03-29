@@ -29,7 +29,8 @@ public class HeaderPanel extends JPanel {
     btnLogout.setBounds(45, 25, 80, 25);
 
     lblName = new JLabel(
-        SessionManager.getSession() != null ? SessionManager.getSession().getUser().getName() : "Guest");
+        SessionManager.getInstance().getSession() != null ? SessionManager.getInstance().getSession().getName()
+            : "Guest");
     lblName.setBounds(0, 30, 70, 15);
 
     GridBagConstraints gc = new GridBagConstraints();
@@ -45,7 +46,7 @@ public class HeaderPanel extends JPanel {
 
     gc.gridx = 0;
     gc.gridy = 1;
-    add(SessionManager.getSession() != null ? btnLogout : btnLogin, gc);
+    add(SessionManager.getInstance().getSession() != null ? btnLogout : btnLogin, gc);
 
     gc.gridx = 0;
     gc.gridy = 2;

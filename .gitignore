@@ -5,3 +5,6 @@ bin
 *.class
 target
 logs/app.log
+.idea/workspace.xml
+client/client.iml
+server/server.iml

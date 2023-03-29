@@ -100,6 +100,18 @@ public class SeatDao extends Dao<Seat> {
             Seat::getFromResultSet);
   }
 
+  @Override
+  public void deleteByIds(List<Integer> ids) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              for (Integer id : ids) {
+                deleteById(id);
+              }
+            });
+  }
+
   public static SeatDao getInstance() {
     if (instance == null) {
       synchronized (SeatDao.class) {

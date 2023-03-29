@@ -17,7 +17,7 @@ public class ServiceHandler {
 
   public <T, K> ResponseDto<K> sendRequest(Socket socket, String serviceName, T payload,
       TypeReference<ResponseDto<K>> typeReference) throws IOException {
-    
+
     RequestDto<T> request = RequestDto.<T>builder()
         .payload(payload)
         .serviceName(serviceName)

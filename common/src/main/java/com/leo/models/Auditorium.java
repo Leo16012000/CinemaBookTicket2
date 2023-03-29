@@ -21,7 +21,8 @@ public class Auditorium extends Model {
     this.seatsColumnNum = seatsColumnNum;
   }
 
-  public Auditorium() {}
+  public Auditorium() {
+  }
 
   public static Auditorium getFromResultSet(ResultSet rs) throws SQLException {
     Auditorium o = new Auditorium();

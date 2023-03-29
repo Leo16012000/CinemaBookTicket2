@@ -5,6 +5,9 @@ import com.leo.models.Showtime;
 import com.leo.service.IAuditoriumService;
 import com.leo.service.ISeatService;
 import com.leo.service.IShowtimeService;
+import com.leo.service.impl.AuditoriumService;
+import com.leo.service.impl.SeatService;
+import com.leo.service.impl.ShowtimeService;
 import com.leo.models.Movie;
 import com.leo.models.Auditorium;
 
@@ -27,9 +30,9 @@ public class TicketsPanel extends JPanel {
   private Map<JButton, Seat> ticketsBtns = new LinkedHashMap<JButton, Seat>();
   private List<Integer> selected = new ArrayList<Integer>();
   private List<Integer> isSold = new ArrayList<Integer>();
-  private ISeatService seatService;
-  private IAuditoriumService auditoriumService;
-  private IShowtimeService showtimeService;
+  private ISeatService seatService = SeatService.getInstance();
+  private IAuditoriumService auditoriumService = AuditoriumService.getInstance();
+  private IShowtimeService showtimeService = ShowtimeService.getInstance();
 
   public TicketsPanel(int auditoriumId, int showtimeId) throws IOException {
     this.seats = seatService.getByAuditoriumIdAndShowtimeId(auditoriumId, showtimeId);

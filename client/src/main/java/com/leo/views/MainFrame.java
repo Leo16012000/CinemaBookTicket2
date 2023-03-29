@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import com.leo.models.Showtime;
 import com.leo.service.IMovieService;
 import com.leo.service.IShowtimeService;
+import com.leo.service.impl.MovieService;
+import com.leo.service.impl.ShowtimeService;
 
 import java.util.List;
 
@@ -24,8 +26,8 @@ public class MainFrame extends JFrame {
   private JTable movieTable;
   private JTable reservationTable;
   private JPanel contentPane;
-  private IMovieService movieService;
-  private IShowtimeService showtimeService;
+  private IMovieService movieService = MovieService.getInstance();
+  private IShowtimeService showtimeService = ShowtimeService.getInstance();
 
   public JPanel getContentPane() {
     return contentPane;

@@ -28,7 +28,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
                 .executeQuery(),
             Auditorium::getFromResultSet);
   }
-  
+
   public Integer save(Auditorium a) throws SQLException {
     return transactionManager
         .getTransaction()
@@ -46,7 +46,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
                   a.getSeatsColumnNum());
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
-            }, rs->rs.getInt(1));
+            }, rs -> rs.getInt(1));
   }
 
   @Override

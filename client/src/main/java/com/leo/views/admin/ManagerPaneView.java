@@ -105,14 +105,13 @@ public abstract class ManagerPaneView<T extends Model> extends JPanel {
   }
 
   // Lấy id các hàng đc chọn
-  public int[] getSelectedIds() {
-
+  public List<Integer> getSelectedIds() {
     int selectedRows[] = tblData.getSelectedRows();
-    int selectedIds[] = new int[selectedRows.length];
+    List<Integer> selectedIds = new ArrayList<>();
     for (int i = 0; i < selectedRows.length; i++) {
       int selectedRow = selectedRows[i];
       int id = (int) tblData.getValueAt(selectedRow, 0);
-      selectedIds[i] = id;
+      selectedIds.add(id);
     }
     return selectedIds;
   }

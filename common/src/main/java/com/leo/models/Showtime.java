@@ -1,10 +1,17 @@
 package com.leo.models;
 
+import lombok.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class Showtime extends Model{
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Showtime extends Model {
   private int id, movieId, auditoriumId;
   private Timestamp startTime, endTime, createdAt;
 
@@ -22,9 +29,11 @@ public class Showtime extends Model{
     s.setCreatedAt(rs.getTimestamp("created_at"));
     return s;
   }
+
   public Auditorium getAuditorium() {
     return auditorium;
   }
+
   public void setAuditorium(Auditorium auditorium) {
     this.auditorium = auditorium;
   }
@@ -80,7 +89,7 @@ public class Showtime extends Model{
 
   @Override
   public Object[] toRowTable() {
-    return new Object[]{id, startTime, endTime, auditorium.getAuditoriumNum(), movie.getTitle()};
+    return new Object[] { id, startTime, endTime, auditorium.getAuditoriumNum(), movie.getTitle() };
   }
 
   public void setAuditoriumId(int auditoriumId) {

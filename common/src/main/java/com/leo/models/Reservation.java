@@ -1,9 +1,16 @@
 package com.leo.models;
 
+import lombok.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Reservation {
   private int id, userId, showtimeId;
   private Timestamp createdAt;

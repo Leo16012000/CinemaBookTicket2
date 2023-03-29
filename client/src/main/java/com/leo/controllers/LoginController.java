@@ -1,19 +1,21 @@
 package com.leo.controllers;
 
-import com.leo.dao.UserDao;
 import com.leo.main.SessionManager;
 import com.leo.views.LoginView;
 import com.leo.models.User;
+import com.leo.service.IUserService;
+import com.leo.service.impl.UserService;
+import com.leo.utils.ErrorPopup;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
+import java.io.IOException;
 
 public class LoginController {
 
   private LoginView view;
-  UserDao userDao = UserDao.getInstance();
+  private IUserService userService = UserService.getInstance();
 
   public LoginController(LoginView view) {
     this.view = view;
@@ -30,7 +32,7 @@ public class LoginController {
     view.setVisible(true);
   }
 
-  public void loginAsGuest() throws SQLException {
+  public void loginAsGuest() throws IOException {
     UserHomeController controller = new UserHomeController();
     // controller.getView().setPanel(new HomeView());
   }
@@ -39,7 +41,7 @@ public class LoginController {
     String username = view.getTxtUsername().getText();
     String password = new String(view.getTxtPassword().getPassword());
     try {
-      User user = userDao.getByUsername(username);
+      User user = userService.login(username, password);
       if (user == null) {
         view.showError("Account is not existed!");
         return;
@@ -48,7 +50,7 @@ public class LoginController {
         view.showError("Wrong password");
         return;
       }
-      SessionManager.create(user);// Khởi tạo session
+      SessionManager.getInstance().setSession(user);// Khởi tạo session
       switch (user.getPermission()) {
         case USER:
           UserHomeController controller = new UserHomeController();
@@ -62,7 +64,7 @@ public class LoginController {
           break;
         default:
           view.showError("Unexpected error");
-          SessionManager.update();
+          SessionManager.getInstance().clear();
           view.dispose();
           break;
       }
@@ -102,9 +104,8 @@ public class LoginController {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
         try {
           loginAsGuest();
-        } catch (SQLException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+        } catch (IOException e) {
+          ErrorPopup.show(e);
         }
       }
     });

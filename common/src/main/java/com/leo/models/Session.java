@@ -1,18 +1,22 @@
 package com.leo.models;
 
+import lombok.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Session {
 
   private int id, userId;
   private Timestamp startTime, endTime;
   private User user;
   private String message;
-
-  public Session() {
-  }
 
   public int getId() {
     return id;

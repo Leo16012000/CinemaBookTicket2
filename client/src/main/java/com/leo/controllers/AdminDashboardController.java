@@ -13,7 +13,6 @@ import com.leo.views.admin.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class AdminDashboardController {
   private AdminDashboardFrame view;
@@ -31,7 +30,7 @@ public class AdminDashboardController {
   private JPanel[] cards;
   private SidebarController sidebarController = new SidebarController();
 
-  public AdminDashboardController() throws SQLException {
+  public AdminDashboardController() {
     view = new AdminDashboardFrame();
 
     userManagerView = new UserManagerView();
@@ -50,7 +49,7 @@ public class AdminDashboardController {
     view.setVisible(true);
     initMenu();
     addEvent();
-    User session = SessionManager.getSession().getUser();
+    User session = SessionManager.getInstance().getSession();
     if (session != null) {
       view.getLbName().setText(session.getName());
     }
@@ -89,11 +88,7 @@ public class AdminDashboardController {
         if (confirm != JOptionPane.YES_OPTION) {
           return;
         }
-        try {
-          SessionManager.update();// Log out
-        } catch (SQLException ex) {
-          view.showError(ex);
-        }
+        SessionManager.getInstance().clear();// Log out
         view.dispose();
         new LoginController(new LoginView());
       }

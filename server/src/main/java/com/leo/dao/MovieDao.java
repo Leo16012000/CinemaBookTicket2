@@ -103,6 +103,18 @@ public class MovieDao extends Dao<Movie> {
             Movie::getFromResultSet);
   }
 
+  @Override
+  public void deleteByIds(List<Integer> ids) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              for (Integer id : ids) {
+                deleteById(id);
+              }
+            });
+  }
+
   public static MovieDao getInstance() {
     if (instance == null) {
       synchronized (MovieDao.class) {

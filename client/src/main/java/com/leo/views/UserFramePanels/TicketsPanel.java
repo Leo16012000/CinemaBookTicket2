@@ -2,18 +2,22 @@ package com.leo.views.UserFramePanels;
 
 import com.leo.models.Seat;
 import com.leo.models.Showtime;
+import com.leo.service.IAuditoriumService;
+import com.leo.service.ISeatService;
+import com.leo.service.IShowtimeService;
+import com.leo.service.impl.AuditoriumService;
+import com.leo.service.impl.SeatService;
+import com.leo.service.impl.ShowtimeService;
 import com.leo.models.Movie;
 import com.leo.models.Auditorium;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import com.leo.dao.SeatDao;
-import com.leo.dao.AuditoriumDao;
-import com.leo.dao.ShowtimeDao;
+
 import java.util.List;
 
 public class TicketsPanel extends JPanel {
@@ -26,11 +30,14 @@ public class TicketsPanel extends JPanel {
   private Map<JButton, Seat> ticketsBtns = new LinkedHashMap<JButton, Seat>();
   private List<Integer> selected = new ArrayList<Integer>();
   private List<Integer> isSold = new ArrayList<Integer>();
+  private ISeatService seatService = SeatService.getInstance();
+  private IAuditoriumService auditoriumService = AuditoriumService.getInstance();
+  private IShowtimeService showtimeService = ShowtimeService.getInstance();
 
-  public TicketsPanel(int auditoriumId, int showtimeId) throws SQLException {
-    this.seats = SeatDao.getInstance().getByAuditoriumIdAndShowtimeId(auditoriumId, showtimeId);
-    this.auditorium = AuditoriumDao.getInstance().get(auditoriumId);
-    this.showtime = ShowtimeDao.getInstance().get(showtimeId);
+  public TicketsPanel(int auditoriumId, int showtimeId) throws IOException {
+    this.seats = seatService.getByAuditoriumIdAndShowtimeId(auditoriumId, showtimeId);
+    this.auditorium = auditoriumService.get(auditoriumId);
+    this.showtime = showtimeService.get(showtimeId);
     this.setSize(800, 600);
     this.setLayout(null);
     this.setBackground(new Color(255, 178, 102));

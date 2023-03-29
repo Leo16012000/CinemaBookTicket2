@@ -1,6 +1,5 @@
 package com.leo.views.popup;
 
-import com.demo.ComboJumbo;
 import com.leo.components.TimePicker;
 import com.leo.models.Auditorium;
 import com.leo.utils.ErrorPopup;
@@ -10,11 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Date;
 
 public class ShowtimePopupView extends JFrame implements PopupView {
   private JButton btnCancel, btnOK;
-  private JLabel jLabel1, jLabel2,jLabel3,jLabel4,jLabel5;
+  private JLabel jLabel1, jLabel2, jLabel3, jLabel4, jLabel5;
   private JPanel jPanel1, jPanel2, jPanel3;
   private JLabel lbTitle;
   private JSpinner startTimeSpinner, endTimeSpinner;
@@ -121,8 +119,8 @@ public class ShowtimePopupView extends JFrame implements PopupView {
     gridBagConstraints = new GridBagConstraints();
     gridBagConstraints.gridx = 3;
     gridBagConstraints.gridy = 0;
-//    gridBagConstraints.fill = GridBagConstraints.BOTH;
-//    gridBagConstraints.ipadx = 136;
+    // gridBagConstraints.fill = GridBagConstraints.BOTH;
+    // gridBagConstraints.ipadx = 136;
     gridBagConstraints.anchor = GridBagConstraints.WEST;
     gridBagConstraints.insets = new Insets(5, 5, 5, 5);
     gridBagConstraints.gridwidth = 1;
@@ -130,8 +128,8 @@ public class ShowtimePopupView extends JFrame implements PopupView {
 
     gridBagConstraints.gridx = 3;
     gridBagConstraints.gridy = 1;
-//    gridBagConstraints.fill = GridBagConstraints.BOTH;
-//    gridBagConstraints.ipadx = 136;
+    // gridBagConstraints.fill = GridBagConstraints.BOTH;
+    // gridBagConstraints.ipadx = 136;
     gridBagConstraints.anchor = GridBagConstraints.WEST;
     gridBagConstraints.insets = new Insets(5, 5, 5, 5);
     jPanel1.add(endTimeSpinner, gridBagConstraints);
@@ -184,7 +182,7 @@ public class ShowtimePopupView extends JFrame implements PopupView {
 
     pack();
 
-    cboAuditoriumNumber.addItemListener(new ItemListener(){
+    cboAuditoriumNumber.addItemListener(new ItemListener() {
       public void itemStateChanged(ItemEvent e) {
         Auditorium c = (Auditorium) e.getItem();
         System.out.println("You selected auditorium id: " + c.getId());
@@ -212,9 +210,11 @@ public class ShowtimePopupView extends JFrame implements PopupView {
   public JButton getBtnCancel() {
     return btnCancel;
   }
+
   public JLabel getLbTitle() {
     return lbTitle;
   }
+
   public JSpinner getStartTimeSpinner() {
     return startTimeSpinner;
   }

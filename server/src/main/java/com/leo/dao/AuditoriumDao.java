@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class AuditoriumDao extends Dao<Auditorium> {
-  public static AuditoriumDao instance = null;
+  private static AuditoriumDao instance;
 
   @Override
   public List<Auditorium> getAll() throws SQLException {
@@ -30,6 +30,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
                 .executeQuery(),
             Auditorium::getFromResultSet);
   }
+
   public Integer save(Auditorium a) throws SQLException {
     return transactionManager
         .getTransaction()
@@ -47,7 +48,7 @@ public class AuditoriumDao extends Dao<Auditorium> {
                   a.getSeatsColumnNum());
               stmt.executeUpdate();
               return stmt.getGeneratedKeys();
-            }, rs->rs.getInt(1));
+            }, rs -> rs.getInt(1));
   }
 
   @Override
@@ -85,6 +86,18 @@ public class AuditoriumDao extends Dao<Auditorium> {
               PreparedStatement stmt = conn.prepareStatement("DELETE FROM `auditoriums` WHERE `id` = ?");
               stmt.setInt(1, id);
               stmt.executeUpdate();
+            });
+  }
+
+  @Override
+  public void deleteByIds(List<Integer> ids) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              for (Integer id : ids) {
+                deleteById(id);
+              }
             });
   }
 

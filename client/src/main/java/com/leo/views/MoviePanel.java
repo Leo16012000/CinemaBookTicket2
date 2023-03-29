@@ -2,7 +2,7 @@ package com.leo.views;
 
 import com.leo.models.Movie;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -24,11 +24,11 @@ public class MoviePanel extends JPanel {
   /**
    * Create the panel.
    */
-  public MoviePanel(ArrayList<Movie> movies, JPanel contentPane) {
+  public MoviePanel(List<Movie> movies, JPanel contentPane) {
     this.updatePanel(movies, contentPane);
   }
 
-  public void updatePanel(ArrayList<Movie> movies, JPanel contentPane) {
+  public void updatePanel(List<Movie> movies, JPanel contentPane) {
     model = new DefaultTableModel();
     // Add columns to the table
     model.addColumn("Id");

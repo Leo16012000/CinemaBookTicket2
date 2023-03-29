@@ -28,4 +28,6 @@ public abstract class Dao<T> {
   public abstract void delete(T t) throws SQLException;
 
   public abstract void deleteById(Integer id) throws SQLException;
+
+  public abstract void deleteByIds(List<Integer> ids) throws SQLException;
 }

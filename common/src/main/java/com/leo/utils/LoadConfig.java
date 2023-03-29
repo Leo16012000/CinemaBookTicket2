@@ -1,4 +1,4 @@
-package com.leo.component;
+package com.leo.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -6,13 +6,24 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class LoadConfig {
+  private String configPath;
   private static LoadConfig instance;
   private Properties properties = new Properties();
-  private String configPath;
 
   public LoadConfig(String configPath) {
     this.configPath = configPath;
     readConfig();
+  }
+
+  public static LoadConfig getInstance() {
+    if (instance == null) {
+      synchronized (LoadConfig.class) {
+        if (instance == null) {
+          instance = new LoadConfig("./src/main/resources/config.properties");
+        }
+      }
+    }
+    return instance;
   }
 
   public String getProperty(String key) {
@@ -29,16 +40,5 @@ public class LoadConfig {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  public static LoadConfig getInstance() {
-    if (instance == null) {
-      synchronized (LoadConfig.class) {
-        if (instance == null) {
-          instance = new LoadConfig("./src/main/resources/config.properties");
-        }
-      }
-    }
-    return instance;
   }
 }

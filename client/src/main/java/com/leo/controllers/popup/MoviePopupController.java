@@ -2,13 +2,14 @@ package com.leo.controllers.popup;
 
 import javax.swing.JFrame;
 
-import com.leo.dao.MovieDao;
 import com.leo.models.Movie;
+import com.leo.service.IMovieService;
+import com.leo.service.impl.MovieService;
 import com.leo.views.popup.MoviePopupView;
 
 public class MoviePopupController {
-  MovieDao movieDao = MovieDao.getInstance();
   JFrame previousView;
+  private IMovieService movieService = MovieService.getInstance();
 
   public void add(MoviePopupView view, SuccessCallback sc, ErrorCallback ec) {
     if (previousView != null && previousView.isDisplayable()) {
@@ -38,7 +39,7 @@ public class MoviePopupController {
     movie.setDurationTime(Integer.valueOf(view.getTxtDurationTime().getText()));
     movie.setPrice(Integer.valueOf(view.getTxtPrice().getText()));
     System.out.println(movie);
-    movieDao.save(movie);
+    movieService.save(movie);
     return;
   }
 
@@ -80,7 +81,7 @@ public class MoviePopupController {
     movie.setCountry(country);
     movie.setDurationTime(durationTime);
     movie.setPrice(price);
-    movieDao.update(movie);
+    movieService.update(movie);
     return true;
   }
 }

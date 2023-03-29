@@ -1,6 +1,5 @@
 package com.leo.controllers;
 
-import com.leo.dtos.ResponseDto;
 import com.leo.views.admin.ManagerPaneView;
 
 import java.awt.Color;
@@ -8,7 +7,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
+import java.io.IOException;
 
 /**
  *
@@ -35,11 +34,11 @@ public abstract class ManagerController {
     }
   }
 
-  public abstract void actionAdd() throws SQLException;
+  public abstract void actionAdd() throws IOException;
 
   public abstract void actionSearch();
 
-  public abstract ResponseDto actionDelete();
+  public abstract void actionDelete();
 
   public abstract void actionEdit();
 
@@ -74,7 +73,7 @@ public abstract class ManagerController {
     view.getBtnAdd().addActionListener(evt -> {
       try {
         actionAdd();
-      } catch (SQLException e) {
+      } catch (IOException e) {
         throw new RuntimeException(e);
       }
     });

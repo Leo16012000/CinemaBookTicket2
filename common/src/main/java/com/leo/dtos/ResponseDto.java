@@ -1,5 +1,7 @@
 package com.leo.dtos;
 
+import java.time.OffsetDateTime;
+
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.AllArgsConstructor;
@@ -22,4 +24,5 @@ public class ResponseDto<T> {
   private String serviceName;
   private String id;
   private String status;
+  private OffsetDateTime timestamp;
 }

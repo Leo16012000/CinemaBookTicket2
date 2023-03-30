@@ -6,11 +6,16 @@ import com.leo.utils.ErrorPopup;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class ShowtimePopupView extends JFrame implements PopupView {
+  private Logger logger = LogManager.getLogger(ShowtimePopupView.class);
   private JButton btnCancel, btnOK;
   private JLabel jLabel1, jLabel2, jLabel3, jLabel4, jLabel5;
   private JPanel jPanel1, jPanel2, jPanel3;
@@ -185,7 +190,7 @@ public class ShowtimePopupView extends JFrame implements PopupView {
     cboAuditoriumNumber.addItemListener(new ItemListener() {
       public void itemStateChanged(ItemEvent e) {
         Auditorium c = (Auditorium) e.getItem();
-        System.out.println("You selected auditorium id: " + c.getId());
+        logger.info("You selected auditorium id: " + c.getId());
       }
 
     });

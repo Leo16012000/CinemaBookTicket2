@@ -10,6 +10,9 @@ import com.leo.service.impl.UserService;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.YES_OPTION;
 
@@ -18,6 +21,7 @@ import java.util.List;
 public class UserManagerController extends ManagerController {
   UserPopupController popupController = new UserPopupController();
   private IUserService userService = UserService.getInstance();
+  private Logger logger = LogManager.getLogger(UserManagerController.class);
 
   public UserManagerController() {
     super();
@@ -71,7 +75,7 @@ public class UserManagerController extends ManagerController {
   public void updateData() {
     try {
       List<User> users = userService.getAll();
-      System.out.println(users);
+      logger.info(users);
       view.setTableData(users);
     } catch (Exception e) {
       view.showError(e);

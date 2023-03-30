@@ -2,6 +2,9 @@ package com.leo.controllers.admin;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.MoviePopupController;
 import com.leo.models.Movie;
@@ -16,6 +19,7 @@ import java.util.List;
 
 public class MovieManagerController extends ManagerController {
   private IMovieService movieService = MovieService.getInstance();
+  private Logger logger = LogManager.getLogger(MovieManagerController.class);
   private MoviePopupController popupController;
 
   public MovieManagerController() {
@@ -67,7 +71,7 @@ public class MovieManagerController extends ManagerController {
   public void updateData() {
     try {
       List<Movie> movies = movieService.getAll();
-      System.out.println(movies);
+      logger.info(movies);
       view.setTableData(movies);
     } catch (Exception e) {
       view.showError(e);

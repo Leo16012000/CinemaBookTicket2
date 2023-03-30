@@ -1,6 +1,7 @@
 package com.leo.utils;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -34,11 +35,9 @@ public class LoadConfig {
     return properties;
   }
 
-  private void readConfig() {
+  private void readConfig() throws FileNotFoundException, IOException {
     try (InputStream inputStream = new FileInputStream(configPath)) {
       properties.load(inputStream);
-    } catch (IOException e) {
-      e.printStackTrace();
     }
   }
 }

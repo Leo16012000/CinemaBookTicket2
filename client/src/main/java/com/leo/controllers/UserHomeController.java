@@ -16,6 +16,10 @@ import com.leo.views.MainFrame;
 import com.leo.views.MoviePanel;
 
 import javax.swing.*;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -30,6 +34,7 @@ public class UserHomeController {
   private MoviePanel moviePanel;
   private JTable movieTable;
   private JPanel contentPane;
+  private Logger logger = LogManager.getLogger(UserHomeController.class);
   JPanel[] cards = { headerPanel };
 
   public UserHomeController() throws IOException {
@@ -51,12 +56,12 @@ public class UserHomeController {
       SessionManager.getInstance().clear();// Đăng xuất
       view.dispose();
       new LoginController(new LoginView());
-      System.out.println("click logout");
+      logger.info("click logout");
     });
     headerPanel.getBtnLogin().addActionListener(evt -> {
       view.dispose();
       new LoginController(new LoginView());
-      System.out.println("click login");
+      logger.info("click login");
     });
     // Add a MouseListener to the JTable
     movieTable.addMouseListener(new MyMouseListener());
@@ -70,7 +75,7 @@ public class UserHomeController {
           contentPane.add(moviePanel);
           moviePanel.setLayout(null);
           SwingUtilities.updateComponentTreeUI(contentPane);
-          System.out.println("trigger search " + moviePanel.getTextField().getText());
+          logger.info("trigger search " + moviePanel.getTextField().getText());
         } catch (Exception e1) {
           ErrorPopup.show(e1);
         }
@@ -96,7 +101,7 @@ public class UserHomeController {
         int rowIndex = movieTable.rowAtPoint(e.getPoint());
 
         // Do something with the clicked row
-        System.out.println("Clicked row: " + movieTable.getValueAt(rowIndex, 0));
+        logger.info("Clicked row: " + movieTable.getValueAt(rowIndex, 0));
         int movieId = Integer.valueOf((String) movieTable.getValueAt(rowIndex, 0));
         String movieName = (String) movieTable.getValueAt(rowIndex, 0);
         try {

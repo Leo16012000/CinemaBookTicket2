@@ -19,6 +19,7 @@ import com.leo.models.User;
 import com.leo.utils.ObjectMappers;
 
 import java.sql.SQLException;
+import java.time.OffsetDateTime;
 
 public class ServiceRegistry {
   private static ServiceRegistry instance;
@@ -215,10 +216,14 @@ public class ServiceRegistry {
         responseDto = showtimeManagerController.get(requestDto.getPayload());
         break;
       }
-      default:
-        throw new IllegalArgumentException("Invalid service name: " + reqDto.getServiceName());
+      default: {
+        responseDto = new ResponseDto<>();
+        responseDto.setStatus("FAILURE");
+        responseDto.setMessage("Invalid service name: " + reqDto.getServiceName());
+      }
     }
     responseDto.setServiceName(serviceName);
+    responseDto.setTimestamp(OffsetDateTime.now());
     return responseDto;
   }
 

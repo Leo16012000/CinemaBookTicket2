@@ -6,6 +6,9 @@ import java.sql.SQLException;
 
 import com.leo.utils.LoadConfig;
 
+/**
+ * @deprecated Use {@link TransactionManager}
+ */
 public class Database {
 
   private static final LoadConfig cfg = LoadConfig.getInstance();

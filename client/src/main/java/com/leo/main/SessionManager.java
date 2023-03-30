@@ -1,8 +1,8 @@
 package com.leo.main;
 
-import com.leo.component.ServiceHandler;
 import com.leo.models.User;
 
+import com.leo.utils.ServiceHandler;
 import lombok.Getter;
 import lombok.Setter;
 

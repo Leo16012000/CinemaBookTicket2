@@ -2,13 +2,13 @@ package com.leo.controllers.popup;
 
 import javax.swing.JFrame;
 
+import com.leo.utils.UserPermission;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.leo.models.User;
 import com.leo.service.IUserService;
 import com.leo.service.impl.UserService;
-import com.leo.utils.UserPermission;
 import com.leo.views.popup.UserPopupView;
 
 public class UserPopupController {

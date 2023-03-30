@@ -49,7 +49,7 @@
     </RollingFile>
   </Appenders>
   <Loggers>
-    <Root level="info" additivity="false">
+    <Root level="debug" additivity="false">
       <AppenderRef ref="fileLogger" />
       <AppenderRef ref="Console" />
       <AppenderRef ref="ErrorFileAppender" />

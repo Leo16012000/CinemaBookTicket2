@@ -1,7 +1,7 @@
 package com.leo.views;
 
-import com.leo.utils.ErrorPopup;
 import com.leo.views.admin.MenuItem;
+import com.leo.utils.ErrorPopup;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

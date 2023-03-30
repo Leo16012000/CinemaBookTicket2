@@ -3,12 +3,12 @@ package com.leo.service.impl;
 import java.io.IOException;
 import java.util.List;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.leo.component.ServiceHandler;
 import com.leo.dtos.ResponseDto;
 import com.leo.dtos.SearchDto;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.leo.models.Movie;
 import com.leo.service.IMovieService;
+import com.leo.utils.ServiceHandler;
 import com.leo.utils.Sockets;
 
 public class MovieService implements IMovieService {

@@ -1,5 +1,6 @@
 package com.leo.controllers.popup;
 
+import com.leo.utils.TimeHandle;
 import com.leo.models.Auditorium;
 import com.leo.models.Movie;
 import com.leo.models.Showtime;
@@ -9,7 +10,6 @@ import com.leo.service.IShowtimeService;
 import com.leo.service.impl.AuditoriumService;
 import com.leo.service.impl.MovieService;
 import com.leo.service.impl.ShowtimeService;
-import com.leo.utils.TimeHandle;
 import com.leo.views.popup.ShowtimePopupView;
 
 import javax.swing.*;

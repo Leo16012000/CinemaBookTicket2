@@ -1,22 +1,22 @@
 package com.leo.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leo.controllers.admin.AuditoriumManagerController;
 import com.leo.controllers.admin.MovieManagerController;
 import com.leo.controllers.admin.ShowtimeManagerController;
 import com.leo.controllers.admin.UserManagerController;
+import com.leo.models.Movie;
+import com.leo.models.Showtime;
+import com.leo.utils.ObjectMappers;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leo.dtos.ListDto;
 import com.leo.dtos.LoginDto;
 import com.leo.dtos.RequestDto;
 import com.leo.dtos.ResponseDto;
 import com.leo.dtos.SearchDto;
 import com.leo.models.Auditorium;
-import com.leo.models.Movie;
-import com.leo.models.Showtime;
 import com.leo.models.User;
-import com.leo.utils.ObjectMappers;
 
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
@@ -39,6 +39,10 @@ public class ServiceRegistry {
     String serviceName = reqDto.getServiceName();
     ResponseDto<?> responseDto;
     switch (serviceName) {
+      case "PING": {
+        responseDto = new ResponseDto<>("", "PONG", "PING", null, "SUCCESS", null);
+        break;
+      }
       case "CREATE_AUDITORIUM": {
         RequestDto<Auditorium> requestDto = xmlMapper.readValue(request, new TypeReference<RequestDto<Auditorium>>() {
         });

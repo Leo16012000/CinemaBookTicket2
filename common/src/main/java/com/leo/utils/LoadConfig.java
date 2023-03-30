@@ -20,7 +20,7 @@ public class LoadConfig {
     if (instance == null) {
       synchronized (LoadConfig.class) {
         if (instance == null) {
-          instance = new LoadConfig("./src/main/resources/config.properties");
+          instance = new LoadConfig("common/src/main/resources/config.properties");
         }
       }
     }

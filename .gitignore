@@ -9,3 +9,4 @@ logs/app.log
 client/client.iml
 server/server.iml
 */logs/*
+*.log

@@ -1,8 +1,8 @@
 package com.leo.controllers.admin;
 
+import com.leo.utils.UserPermission;
 import com.leo.controllers.ManagerController;
 import com.leo.controllers.popup.UserPopupController;
-import com.leo.utils.UserPermission;
 import com.leo.views.popup.UserPopupView;
 import com.leo.models.User;
 import com.leo.service.IUserService;

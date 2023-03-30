@@ -1,7 +1,7 @@
 package com.leo.dao;
 
-import com.leo.models.Reservation;
 import com.leo.utils.PrepareStatements;
+import com.leo.models.Reservation;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -82,6 +82,18 @@ public class ReservationDao extends Dao<Reservation> {
               PrepareStatements.setPreparedStatementParams(
                   conn.prepareStatement("DELETE FROM `reservations` WHERE `id` = ?"), id)
                   .executeUpdate();
+            });
+  }
+
+  @Override
+  public void deleteByIds(List<Integer> ids) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              for (Integer id : ids) {
+                deleteById(id);
+              }
             });
   }
 

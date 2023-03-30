@@ -1,11 +1,11 @@
 package com.leo.views;
 
+import com.leo.service.impl.MovieService;
+import com.leo.service.impl.ShowtimeService;
 import com.leo.models.Movie;
 import com.leo.models.Showtime;
 import com.leo.service.IMovieService;
 import com.leo.service.IShowtimeService;
-import com.leo.service.impl.MovieService;
-import com.leo.service.impl.ShowtimeService;
 import com.leo.utils.ErrorPopup;
 
 import javax.swing.JFrame;

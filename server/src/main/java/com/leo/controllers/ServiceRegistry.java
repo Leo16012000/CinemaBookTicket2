@@ -1,22 +1,25 @@
 package com.leo.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leo.controllers.admin.AuditoriumManagerController;
 import com.leo.controllers.admin.MovieManagerController;
 import com.leo.controllers.admin.ShowtimeManagerController;
 import com.leo.controllers.admin.UserManagerController;
-import com.leo.models.Movie;
-import com.leo.models.Showtime;
-import com.leo.utils.ObjectMappers;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leo.controllers.user.SeatReservationService;
 import com.leo.dtos.ListDto;
 import com.leo.dtos.LoginDto;
 import com.leo.dtos.RequestDto;
 import com.leo.dtos.ResponseDto;
 import com.leo.dtos.SearchDto;
+import com.leo.dtos.SeatAuditoriumRequestDto;
 import com.leo.models.Auditorium;
+import com.leo.models.Movie;
+import com.leo.models.SeatSelection;
+import com.leo.models.Showtime;
 import com.leo.models.User;
+import com.leo.utils.ObjectMappers;
 
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
@@ -30,6 +33,7 @@ public class ServiceRegistry {
   private MovieManagerController movieManagerController = new MovieManagerController();
   private UserManagerController userManagerController = new UserManagerController();
   private ShowtimeManagerController showtimeManagerController = new ShowtimeManagerController();
+  private SeatReservationService seatAuditoriumService = SeatReservationService.getInstance();
   private Logger logger = LogManager.getLogger(ServiceRegistry.class);
   private ObjectMapper xmlMapper = ObjectMappers.getInstance();
 
@@ -222,6 +226,45 @@ public class ServiceRegistry {
         RequestDto<Integer> requestDto = xmlMapper.readValue(request, new TypeReference<RequestDto<Integer>>() {
         });
         responseDto = showtimeManagerController.get(requestDto.getPayload());
+        break;
+      }
+      case "GET_SHOWTIMES_BY_MOVIE_ID": {
+        RequestDto<Integer> requestDto = xmlMapper.readValue(request, new TypeReference<RequestDto<Integer>>() {
+        });
+        responseDto = showtimeManagerController.getShowtimesByMovieId(requestDto.getPayload());
+        break;
+      }
+
+      // -----------------------------USER FLOW---------------------------------------
+      // ----------------------------RESERVE SEAT-------------------------------------
+      case "UNHOLD_SEAT": {
+        RequestDto<SeatSelection> requestDto = xmlMapper.readValue(request,
+            new TypeReference<RequestDto<SeatSelection>>() {
+            });
+        responseDto = seatAuditoriumService.unhold(requestDto.getPayload());
+        break;
+      }
+      case "HOLD_SEAT": {
+        RequestDto<SeatSelection> requestDto = xmlMapper.readValue(request,
+            new TypeReference<RequestDto<SeatSelection>>() {
+            });
+        responseDto = seatAuditoriumService.hold(requestDto.getPayload());
+        break;
+      }
+      case "BOOK_SEATS": {
+        RequestDto<SeatAuditoriumRequestDto> requestDto = xmlMapper.readValue(request,
+            new TypeReference<RequestDto<SeatAuditoriumRequestDto>>() {
+            });
+        responseDto = seatAuditoriumService.bookSeats(requestDto.getPayload().getShowtimeId(),
+            requestDto.getPayload().getUserId());
+        break;
+      }
+      case "GET_AUDITORIUM_SEATS": {
+        RequestDto<SeatAuditoriumRequestDto> requestDto = xmlMapper.readValue(request,
+            new TypeReference<RequestDto<SeatAuditoriumRequestDto>>() {
+            });
+        responseDto = seatAuditoriumService.getSeatAuditorium(requestDto.getPayload().getShowtimeId(),
+            requestDto.getPayload().getUserId());
         break;
       }
       default: {

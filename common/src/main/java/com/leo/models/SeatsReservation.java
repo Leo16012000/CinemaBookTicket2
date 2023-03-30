@@ -28,10 +28,11 @@ public class SeatsReservation {
     o.setUserId(rs.getInt("user_id"));
     o.setShowtimeId(rs.getInt("showtime_id"));
     o.setExpiredAt(rs.getTimestamp("expired_at"));
+    o.setStatus(SeatsReservationStatus.valueOf(rs.getString("status")));
     return o;
   }
 
   public enum SeatsReservationStatus {
-    PENDING, BOOKING, AVAILABLE
+    PENDING, BOOKING
   }
 }

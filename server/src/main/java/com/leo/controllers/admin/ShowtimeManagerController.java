@@ -120,4 +120,23 @@ public class ShowtimeManagerController {
       return responseDto;
     }
   }
+
+  public ResponseDto<ListDto<Showtime>> getShowtimesByMovieId(Integer movieId) {
+    ResponseDto<ListDto<Showtime>> responseDto = new ResponseDto<>();
+    try {
+      ListDto<Showtime> listDto = new ListDto<>();
+      List<Showtime> showtimes = showtimeDao.getShowtimesByMovieId(movieId);
+      listDto.setList(showtimes);
+      listDto.setTotalCount(listDto.getList().size());
+      responseDto.setPayload(listDto);
+      responseDto.setStatus("SUCCESS");
+      responseDto.setMessage("Get list showtimes successfully");
+      responseDto.setPayload(listDto);
+      return responseDto;
+    } catch (Exception e) {
+      responseDto.setMessage(e.getMessage());
+      responseDto.setStatus("FAILURE");
+      return responseDto;
+    }
+  }
 }

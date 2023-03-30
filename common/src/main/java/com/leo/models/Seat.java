@@ -12,17 +12,16 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Seat {
-  private int id, auditoriumId, reservationId, seatColumn, seatRow;
+  private int id, auditoriumId, seatColumn, seatRow;
   private Timestamp createdAt;
 
   public static Seat getFromResultSet(ResultSet rs) throws SQLException {
     Seat o = new Seat();
     o.setId(rs.getInt("id"));
     o.setAuditoriumId(rs.getInt("auditorium_id"));
-    o.setReservationId(rs.getInt("reservation_id"));
     o.setSeatColumn(rs.getInt("seat_column"));
     o.setSeatRow(rs.getInt("seat_row"));
-    o.setCreatedAt(rs.getTimestamp("createdAt"));
+    o.setCreatedAt(rs.getTimestamp("created_at"));
     return o;
   }
 
@@ -65,13 +64,4 @@ public class Seat {
   public void setSeatColumn(int seatColumn) {
     this.seatColumn = seatColumn;
   }
-
-  public int getReservationId() {
-    return reservationId;
-  }
-
-  public void setReservationId(int reservationId) {
-    this.reservationId = reservationId;
-  }
-
 }

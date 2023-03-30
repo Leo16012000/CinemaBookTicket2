@@ -19,4 +19,5 @@ public interface IShowtimeService {
 
   void deleteByIds(List<Integer> selectedIds) throws IOException;
 
+  List<Showtime> getMovieShowtimes(int movieId) throws IOException;
 }

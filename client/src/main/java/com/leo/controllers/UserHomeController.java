@@ -6,7 +6,6 @@
 package com.leo.controllers;
 
 import com.leo.main.SessionManager;
-import com.leo.models.Movie;
 import com.leo.service.IMovieService;
 import com.leo.service.impl.MovieService;
 import com.leo.utils.ErrorPopup;
@@ -25,7 +24,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.List;
 
 public class UserHomeController {
   private IMovieService movieService = MovieService.getInstance();
@@ -69,13 +67,14 @@ public class UserHomeController {
       public void actionPerformed(ActionEvent e) {
         try {
           contentPane.remove(moviePanel);
-          List<Movie> movies = movieService.searchByKey("title", moviePanel.getTextField().getText());
-          moviePanel.updatePanel(movies, contentPane);
+          // List<Movie> movies = movieService.searchByKey("title",
+          // moviePanel.getTextField().getText());
+          // moviePanel.updatePanel(movies, contentPane);
           moviePanel.setBounds(194, 32, 432, 379);
           contentPane.add(moviePanel);
           moviePanel.setLayout(null);
           SwingUtilities.updateComponentTreeUI(contentPane);
-          logger.debug("trigger search " + moviePanel.getTextField().getText());
+          // logger.debug("trigger search " + moviePanel.getTextField().getText());
         } catch (Exception e1) {
           ErrorPopup.show(e1);
         }

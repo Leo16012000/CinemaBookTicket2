@@ -48,7 +48,7 @@ create table if not exists seats_reservation(
 	user_id int not null,
 	showtime_id int not null,
 	seat_id int not null,
-	status ENUM ('PENDING', 'BOOKING', 'AVAILABLE')
+	status ENUM ('PENDING', 'BOOKING') NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	expired_at TIMESTAMP NOT NULL,
 	foreign key(seat_id) references seats(id),

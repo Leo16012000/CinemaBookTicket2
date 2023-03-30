@@ -131,4 +131,12 @@ public class ShowtimeDao extends Dao<Showtime> {
     }
     return instance;
   }
+
+  public List<Showtime> getShowtimesByMovieId(Integer movieId) throws SQLException {
+    return transactionManager
+        .getTransaction()
+        .queryList(
+            conn -> conn.prepareStatement("SELECT * FROM `showtimes` st WHERE st.movie_id = ?", movieId).executeQuery(),
+            this::getFromResultSet);
+  }
 }

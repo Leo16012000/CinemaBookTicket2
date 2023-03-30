@@ -3,12 +3,12 @@ package com.leo.service.impl;
 import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.leo.utils.ServiceHandler;
 import com.leo.dtos.ResponseDto;
 import com.leo.dtos.SearchDto;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.leo.models.Showtime;
 import com.leo.service.IShowtimeService;
-import com.leo.utils.ServiceHandler;
 import com.leo.utils.Sockets;
 
 public class ShowtimeService implements IShowtimeService {
@@ -20,7 +20,6 @@ public class ShowtimeService implements IShowtimeService {
     return serviceHandler
         .sendRequest(Sockets.getSocket(), "GET_SHOWTIME_BY_ID", showtimeId, new TypeReference<ResponseDto<Showtime>>() {
         }).getPayload();
-
   }
 
   @Override
@@ -58,7 +57,6 @@ public class ShowtimeService implements IShowtimeService {
     serviceHandler.sendRequest(Sockets.getSocket(), "DELETE_SHOWTIME_BY_IDS", selectedIds,
         new TypeReference<ResponseDto<Void>>() {
         });
-
   }
 
   public static IShowtimeService getInstance() {
@@ -70,5 +68,14 @@ public class ShowtimeService implements IShowtimeService {
       }
     }
     return instance;
+  }
+
+  @Override
+  public List<Showtime> getMovieShowtimes(int movieId) throws IOException {
+    return serviceHandler
+        .sendRequest(Sockets.getSocket(), "GET_SHOWTIMES_BY_MOVIE_ID", movieId,
+            new TypeReference<ResponseDto<List<Showtime>>>() {
+            })
+        .getPayload();
   }
 }

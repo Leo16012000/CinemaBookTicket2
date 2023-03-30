@@ -1,6 +1,6 @@
 package com.leo.views;
 
-import com.leo.views.UserFramePanels.TicketsPanel;
+// import com.leo.views.UserFramePanels.TicketsPanel;
 
 import java.awt.CardLayout;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class UserFrame extends JFrame {
   private JPanel mainPanel;
   private MoviesPanel filmsPanel;
-  private TicketsPanel ticketsPanel;
+  // private TicketsPanel ticketsPanel;
   private int auditoriumId, showtimeId;
   private CardLayout cl = new CardLayout();
 

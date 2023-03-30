@@ -1,38 +1,45 @@
 package com.leo.views;
 
-import com.leo.models.Movie;
+import com.leo.controllers.LoginController;
+import com.leo.main.SessionManager;
 
 import java.awt.EventQueue;
 import java.io.IOException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.swing.JTable;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import com.leo.models.Showtime;
 import com.leo.service.IMovieService;
 import com.leo.service.IShowtimeService;
 import com.leo.service.impl.MovieService;
 import com.leo.service.impl.ShowtimeService;
-import com.leo.utils.ErrorPopup;
+
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class MainFrame extends JFrame {
+  private static final Logger logger = LogManager.getLogger(MainFrame.class);
 
   private JTextField textField;
   private JTable movieTable;
   private JTable reservationTable;
-  private JPanel contentPane;
   private IMovieService movieService = MovieService.getInstance();
   private IShowtimeService showtimeService = ShowtimeService.getInstance();
 
-  public JPanel getContentPane() {
-    return contentPane;
-  }
 
   private HeaderPanel headerPanel;
 
@@ -41,15 +48,23 @@ public class MainFrame extends JFrame {
 
   /**
    * Launch the application.
+   * 
+   * @throws UnsupportedLookAndFeelException
+   * @throws IllegalAccessException
+   * @throws InstantiationException
+   * @throws ClassNotFoundException
    */
-  public static void main(String[] args) {
+  public static void main(String[] args)
+      throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+    UIManager.setLookAndFeel("com.formdev.flatlaf.FlatIntelliJLaf");
     EventQueue.invokeLater(new Runnable() {
       public void run() {
         try {
           MainFrame frame = new MainFrame();
+          frame.pack();
           frame.setVisible(true);
         } catch (Exception e) {
-          ErrorPopup.show(e);
+          logger.error(e.getMessage());
         }
       }
     });
@@ -61,133 +76,54 @@ public class MainFrame extends JFrame {
    * @throws IOException
    */
   public MainFrame() throws IOException {
-    headerPanel = new HeaderPanel();
+    super();
+
+    setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setBounds(100, 100, 1280, 1024);
-    contentPane = new JPanel();
-    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-    setContentPane(contentPane);
-    contentPane.setLayout(null);
-
+    headerPanel = new HeaderPanel();
     headerPanel.setBounds(1100, -16, 133, 120);
-    contentPane.add(headerPanel);
-    headerPanel.setLayout(null);
+    add(headerPanel);
 
-    // JButton btnLogin = new JButton("Login");
-    // btnLogin.setBounds(45, 25, 40, 25);
-    // AccountPanel.add(btnLogin);
-    //
-    // JLabel lblName = new JLabel("Name");
-    // lblName.setBounds(0, 30, 70, 15);
-    // AccountPanel.add(lblName);
-
-    // JPanel ReservationPanel = new JPanel();
-    // ReservationPanel.setBounds(24, 32, 686, 445);
-    // contentPane.add(ReservationPanel);
-    // ReservationPanel.setLayout(null);
-    //
-    // ReservationTable = new JTable();
-    // ReservationTable.setBounds(155, 54, 375, 64);
-    // ReservationTable.setModel(new DefaultTableModel(
-    // new Object[][] {
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // },
-    // new String[] {
-    // "New column", "New column", "New column", "New column", "New column"
-    // }
-    // ));
-    // ReservationPanel.add(ReservationTable);
-    //
-
-    //
     displayMoviePanel();
-    //
-    // JPanel SeatPanel = new JPanel();
-    // SeatPanel.setBounds(157, 32, 442, 445);
-    // contentPane.add(SeatPanel);
-    // SeatPanel.setLayout(null);
-    //
-    // JButton btnNewButton_1 = new JButton("Screen");
-    // btnNewButton_1.setBounds(38, 27, 351, 32);
-    // SeatPanel.add(btnNewButton_1);
-    //
-    // JButton btnBack = new JButton("Back");
-    // btnBack.setBounds(12, 0, 117, 25);
-    // contentPane.add(btnBack);
+
+    registerEvent();
+  }
+
+  private void registerEvent() {
+    headerPanel.getBtnLogin().addActionListener(e -> {
+      backToLogin();
+    });
+    headerPanel.getBtnLogout().addActionListener(e -> {
+      SessionManager.getInstance().clear();
+      backToLogin();
+    });
+    headerPanel.getBtnBack().addActionListener(e -> {
+      backToLogin();
+    });
+  }
+
+  private void backToLogin() {
+    dispose();
+    new LoginController(new LoginView());
   }
 
   public void displayMoviePanel() throws IOException {
-    List<Movie> movies = movieService.getAll();
-    moviePanel = new MoviePanel(movies, contentPane);
-    moviePanel.setBounds(194, 32, 432, 379);
-    contentPane.add(moviePanel);
-    moviePanel.setLayout(null);
-    // // Add the table to a JScrollPane
-    // JScrollPane scrollPane = new JScrollPane(moviePanel.getMovieTable());
-    //
-    // // Add the JScrollPane to the JFrame
-    // contentPane.add(scrollPane);
-    //
-    // MovieTable = new JTable();
-    // MovieTable.setBounds(30, 212, 375, 112);
-    // MovieTable.setModel(new DefaultTableModel(
-    // new Object[][] {
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null}, view.setVisible(true);
-
-    // },
-    // new String[] {
-    // "New column", "New column", "New column", "New column", "New column"
-    // }
-    // ));
-    // MoviePanel.add(MovieTable);
-    //
-    // textField = new JTextField();
-    // textField.setBounds(98, 125, 114, 19);
-    // MoviePanel.add(textField);
-    // textField.setColumns(10);
-    //
-    // JButton btnNewButton = new JButton("New button");
-    // btnNewButton.setBounds(217, 122, 117, 25);
-    // MoviePanel.add(btnNewButton);
+    moviePanel = new MoviePanel();
+    add(moviePanel);
   }
 
   public void displayShowtimePanel(String movieName, int movieId) throws IOException {
     List<Showtime> showtimes = showtimeService.searchByKey("movie_id", Integer.toString(movieId));
     showtimePanel = new ShowtimePanel(showtimes);
     showtimePanel.setBounds(114, 32, 553, 471);
-    // contentPane.remove(moviePanel);
-    contentPane.add(showtimePanel);
+    add(showtimePanel);
     showtimePanel.setLayout(null);
 
     JLabel lblMovieName = new JLabel(movieName);
     lblMovieName.setBounds(211, 28, 154, 15);
     showtimePanel.add(lblMovieName);
-  }
-
-  public void setPanel(JPanel panel) {
-    panel.setVisible(true);
-  }
-
-  public HeaderPanel getHeaderPanel() {
-    return headerPanel;
-  }
-
-  public void setHeaderPanel(HeaderPanel headerPanel) {
-    this.headerPanel = headerPanel;
-  }
-
-  public MoviePanel getMoviePanel() {
-    // TODO Auto-generated method stub
-    return moviePanel;
   }
 }

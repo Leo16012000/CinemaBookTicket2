@@ -1,109 +1,178 @@
 package com.leo.views;
 
-import com.leo.models.Movie;
-
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-public class MoviePanel extends JPanel {
-  private JTable movieTable = new JTable();
-  private JTextField textField = new JTextField();
-  private JButton btnSearch = new JButton("Search");
-  private DefaultTableModel model = new DefaultTableModel();
+import org.apache.commons.lang3.StringUtils;
 
-  public DefaultTableModel getModel() {
+import com.leo.controllers.MoviePanelController;
+import com.leo.models.Movie;
+import com.leo.models.MoviePanelModel;
+import com.leo.utils.ErrorPopup;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class MoviePanel extends JPanel implements IView<MoviePanelModel> {
+  private JTable movieTable;
+  private JTextField searchTextField;
+  private JButton btnSearch;
+  private MoviePanelModel model;
+  private JComboBox<String> searchKeywordComboBox;
+  private MoviePanelController controller;
+  private List<Movie> movies;
+  private TableButtonEditor bookingBtnEditor;
+  private MovieBookingFrame movieBookingFrame;
+
+  public MoviePanelModel getModel() {
     return model;
   }
 
-  /**
-   * Create the panel.
-   */
-  public MoviePanel(List<Movie> movies, JPanel contentPane) {
-    this.updatePanel(movies, contentPane);
+  public MoviePanel(MoviePanelController controller) {
+    super();
+    try {
+      this.controller = controller;
+      init();
+      initUI();
+      registerEvent();
+    } catch (Exception e) {
+      handleError(e);
+    }
   }
 
-  public void updatePanel(List<Movie> movies, JPanel contentPane) {
-    model = new DefaultTableModel();
+  public MoviePanel() {
+    this(new MoviePanelController());
+  }
+
+  public String getSearchTerm() {
+    return searchTextField.getText().trim();
+  }
+
+  @Override
+  public void registerEvent() {
+    btnSearch.addActionListener(this::doSearchMovie);
+    searchTextField.addActionListener(this::doSearchMovie);
+    bookingBtnEditor.addActionListener(e -> {
+      try {
+        JButton button = (JButton) e.getSource();
+        Integer row = (Integer) button.getClientProperty("row");
+        JTable table = (JTable) button.getClientProperty("table");
+        Integer movieId = Integer.valueOf((String) table.getValueAt(row, 0));
+
+        Optional.ofNullable(movieBookingFrame).ifPresent(it -> it.dispose());
+        this.movieBookingFrame = new MovieBookingFrame(SwingUtilities.getWindowAncestor(this), movieId);
+        movieBookingFrame.setLocationRelativeTo(this);
+        movieBookingFrame.setVisible(true);
+        movieBookingFrame.pack();
+      } catch (Exception ex) {
+        handleError(ex);
+      }
+    });
+  }
+
+  public void doSearchMovie(ActionEvent evt) {
+    try {
+      String keyword = ((String) searchKeywordComboBox.getSelectedItem()).trim();
+      String term = getSearchTerm();
+      this.movies = controller.searchMovie(keyword, term);
+      refreshUI();
+    } catch (IOException e) {
+      handleError(e);
+    }
+  }
+
+  @Override
+  public void init() throws IOException {
+    this.movies = controller.getAllMovies();
+  }
+
+  @Override
+  public void initUI() {
+    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    JPanel searchPanel = new JPanel();
+    searchTextField = new JTextField();
+    searchPanel.add(searchTextField);
+    searchTextField.setColumns(20);
+    this.searchKeywordComboBox = new JComboBox<>();
+    String[] searchKeywords = new String[] { "Title", "Country", "Duration time", "Ticket price" };
+    for (String keyword : searchKeywords) {
+      searchKeywordComboBox.addItem(keyword);
+    }
+    searchPanel.add(searchKeywordComboBox);
+    btnSearch = new JButton("Search");
+    searchPanel.add(btnSearch);
+    add(searchPanel);
+
+    model = new MoviePanelModel();
     // Add columns to the table
     model.addColumn("Id");
     model.addColumn("Title");
     model.addColumn("Country");
     model.addColumn("Duration time");
     model.addColumn("Ticket price");
-    // Add rows to the table
-    for (Movie obj : movies) {
-      String[] row = { Integer.toString(obj.getId()), obj.getTitle(), obj.getCountry(),
-          Integer.toString(obj.getDurationTime()) + "phut", Integer.toString(obj.getPrice()) + "VND" };
-      model.addRow(row);
-    }
-    // movieTable.setPreferredSize(new Dimension(1400, 600));
-    movieTable.setBounds(30, 212, 375, 112);
-    // movieTable.setModel(new DefaultTableModel(
-    // new Object[][] {
-    // {1, 2, 3, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // {null, null, null, null, null},
-    // },
-    // new String[] {
-    // "New column", "New column", "New column", "New column", "New column"
-    // }
-    // ));
-    movieTable.setModel(model);
-    movieTable.getColumnModel().getColumn(1).setPreferredWidth(360);
-    movieTable.getColumnModel().getColumn(2).setPreferredWidth(360);
-    movieTable.getColumnModel().getColumn(3).setPreferredWidth(360);
-    movieTable.getColumnModel().getColumn(4).setPreferredWidth(360);
-    movieTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    model.addColumn("Booking");
 
-    // // Set the custom cell editor for the "Gender" column
-    // String[] genders = {"Male", "Female", "Other"};
-    // JComboBox<String> genderComboBox = new JComboBox<>(genders);
-    // TableColumn genderColumn = movieTable.getColumnModel().getColumn(5);
-    // genderColumn.setCellEditor(new DefaultCellEditor(genderComboBox));
+    // Add rows to the table
+    for (Movie movie : movies) {
+      model.addRow(getRowData(movie));
+    }
+    movieTable = new JTable();
+    movieTable.setBounds(30, 212, 375, 112);
+    movieTable.setModel(model);
+    movieTable.getColumn("Booking").setCellRenderer(new TableButtonRenderer());
+    this.bookingBtnEditor = new TableButtonEditor(new JCheckBox());
+    movieTable.getColumn("Booking").setCellEditor(bookingBtnEditor);
 
     // Add the JTable to a JScrollPane
     // Add the JTable to a JScrollPane with horizontal scrolling
     JScrollPane scrollPane = new JScrollPane(movieTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
         JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-    contentPane.add(scrollPane);
-
-    // JScrollPane scrollPane = new JScrollPane(movieTable);
-    this.add(movieTable);
-    textField.setBounds(98, 125, 114, 19);
-    this.add(textField);
-    textField.setColumns(10);
-
-    getBtnSearch().setBounds(217, 122, 117, 25);
-    this.add(getBtnSearch());
+    add(scrollPane);
   }
 
-  public JButton getBtnSearch() {
-    return btnSearch;
+  @Override
+  public void refresh() throws Exception {
+    String term = getSearchTerm();
+    if (StringUtils.isBlank(term)) {
+      this.movies = controller.getAllMovies();
+    }
+    refreshUI();
   }
 
-  public void setBtnSearch(JButton btnSearch) {
-    this.btnSearch = btnSearch;
+  @Override
+  public void refreshUI() {
+    DefaultTableModel model = (DefaultTableModel) movieTable.getModel();
+    for (int i = model.getRowCount() - 1; i >= 0; i--) {
+      model.removeRow(i);
+    }
+    for (Movie movie : movies) {
+      model.addRow(getRowData(movie));
+    }
   }
 
-  public JTextField getTextField() {
-    return textField;
+  @Override
+  public void handleError(Exception e) {
+    ErrorPopup.show(e);
   }
 
-  public void setTextField(JTextField textField) {
-    this.textField = textField;
-  }
+  private String[] getRowData(Movie movie) {
+    return new String[] { Integer.toString(movie.getId()), movie.getTitle(), movie.getCountry(),
+        Integer.toString(movie.getDurationTime()) + "phut", Integer.toString(movie.getPrice()) + "VND", "Reserve" };
 
-  public JTable getMovieTable() {
-    return movieTable;
   }
 }

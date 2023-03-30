@@ -2,6 +2,7 @@ package com.leo.controllers;
 
 import com.leo.main.SessionManager;
 import com.leo.views.LoginView;
+import com.leo.views.MainFrame;
 import com.leo.models.User;
 import com.leo.service.IUserService;
 import com.leo.service.impl.UserService;
@@ -11,11 +12,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Optional;
 
 public class LoginController {
 
   private LoginView view;
   private IUserService userService = UserService.getInstance();
+  private MainFrame bookingMovieFrame;
 
   public LoginController(LoginView view) {
     this.view = view;
@@ -33,8 +36,12 @@ public class LoginController {
   }
 
   public void loginAsGuest() throws IOException {
-    UserHomeController controller = new UserHomeController();
-    // controller.getView().setPanel(new HomeView());
+    if (!Optional.ofNullable(bookingMovieFrame).map(it -> it.isVisible()).orElse(false)) {
+      view.dispose();
+      this.bookingMovieFrame = new MainFrame();
+      bookingMovieFrame.pack();
+      bookingMovieFrame.setVisible(true);
+    }
   }
 
   public void login() {
@@ -53,9 +60,12 @@ public class LoginController {
       SessionManager.getInstance().setSession(user);// Khởi tạo session
       switch (user.getPermission()) {
         case USER:
-          UserHomeController controller = new UserHomeController();
-          // controller.getView().setPanel(new MainPanel());
-          view.dispose();// Tắt form đăng nhập
+          MainFrame bookingMovieFrame;
+          bookingMovieFrame = new MainFrame();
+          bookingMovieFrame.pack();
+          bookingMovieFrame.setVisible(true);
+
+          view.dispose();
           break;
         case ADMIN:
           AdminDashboardController controller2 = new AdminDashboardController();

@@ -13,6 +13,7 @@ public class SeatSelection {
   private int seatColumn;
   private int seatId;
   private int showtimeId;
+  private Integer userId;
 
   public void setStatus(SeatSelectionStatus status) {
     this.status = status;

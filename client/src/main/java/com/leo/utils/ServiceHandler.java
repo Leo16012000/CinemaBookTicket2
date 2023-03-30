@@ -15,22 +15,17 @@ public class ServiceHandler {
 
   public <T, K> ResponseDto<K> sendRequest(Socket socket, String serviceName, T payload,
       TypeReference<ResponseDto<K>> typeReference) throws IOException {
-    String response = "";
     RequestDto<T> request = RequestDto.<T>builder()
         .payload(payload)
         .serviceName(serviceName)
         .authentication(authentication)
         .build();
 
-    try {
-      DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-      os.writeUTF(ObjectMappers.getInstance().writeValueAsString(request));
-      os.flush();
-      DataInputStream is = new DataInputStream(socket.getInputStream());
-      response = is.readUTF();
-    } catch (Exception e) {
-      return new ResponseDto("", "", "PING", null, "SUCCESS", null);
-    }
+    DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+    os.writeUTF(ObjectMappers.getInstance().writeValueAsString(request));
+    os.flush();
+    DataInputStream is = new DataInputStream(socket.getInputStream());
+    String response = is.readUTF();
     return ObjectMappers.getInstance().readValue(response, typeReference);
   }
 

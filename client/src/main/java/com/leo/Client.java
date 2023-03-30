@@ -12,13 +12,13 @@ public class Client {
   public static void main(String[] args) {
     try {
       javax.swing.UIManager.setLookAndFeel("com.formdev.flatlaf.FlatIntelliJLaf");
-      System.out.println("Khởi tạo look and feel thành công!");
+      logger.info("Khởi tạo look and feel thành công!");
       new LoginController(new LoginView());
       Sockets.getSocket();
-      System.out.println("Connected to server");
+      logger.info("Connected to server");
       // Runtime.getRuntime().addShutdownHook(new Thread());
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
     }
   }
 }

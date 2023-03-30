@@ -13,18 +13,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Server {
   private static LoadConfig config = LoadConfig.getInstance();
   private static ObjectMapper xmlMapper = ObjectMappers.getInstance();
+  private static ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
+  private static Logger logger = LogManager.getLogger(Server.class);
 
   public static void main(String[] args) throws IOException {
     // change the port as per your requirement
     try (ServerSocket serverSocket = new ServerSocket(Integer.valueOf(config.getProperty("server.port")))) {
-      System.out.println("Server started");
+      logger.info("Server started");
       while (true) {
         // Accept incoming connections
         Socket socket = serverSocket.accept();
-        System.out.println("Client connected " + socket.getLocalAddress() + " " + socket.getPort());
+        logger.info("Client connected " + socket.getLocalAddress() + " " + socket.getPort());
         Thread thread = new Thread(() -> {
           while (true) {
             try {
@@ -36,7 +41,6 @@ public class Server {
               String request = is.readUTF();
 
               // Process the XML data as needed
-              ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
               ResponseDto<?> responseDto = serviceRegistry.handleRequest(request);
               // Send the payload to the server
               String response = xmlMapper.writeValueAsString(responseDto);
@@ -44,7 +48,7 @@ public class Server {
               os.writeUTF(response);
               os.flush();
             } catch (IOException | SQLException e) {
-              e.printStackTrace();
+              logger.error(e);
             }
           }
         });

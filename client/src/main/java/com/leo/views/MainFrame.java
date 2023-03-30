@@ -17,6 +17,7 @@ import com.leo.service.IMovieService;
 import com.leo.service.IShowtimeService;
 import com.leo.service.impl.MovieService;
 import com.leo.service.impl.ShowtimeService;
+import com.leo.utils.ErrorPopup;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class MainFrame extends JFrame {
           MainFrame frame = new MainFrame();
           frame.setVisible(true);
         } catch (Exception e) {
-          e.printStackTrace();
+          ErrorPopup.show(e);
         }
       }
     });

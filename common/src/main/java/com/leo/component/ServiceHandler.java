@@ -5,12 +5,16 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.leo.dtos.RequestDto;
 import com.leo.dtos.ResponseDto;
 import com.leo.utils.ObjectMappers;
 
 public class ServiceHandler {
+  private Logger logger = LogManager.getLogger(ServiceHandler.class);
   private static ServiceHandler instance;
   private Object authentication;
 
@@ -28,8 +32,11 @@ public class ServiceHandler {
     os.flush();
 
     DataInputStream is = new DataInputStream(socket.getInputStream());
-    String response = is.readUTF();
-    return ObjectMappers.getInstance().readValue(response, typeReference);
+    ResponseDto<K> response = ObjectMappers.getInstance().readValue(is.readUTF(), typeReference);
+    if (!"SUCCESS".equals(response.getStatus())) {
+      logger.error(response.getTimestamp() + ": " + response.getMessage());
+    }
+    return response;
   }
 
   public void setAuthentication(Object authentication) {

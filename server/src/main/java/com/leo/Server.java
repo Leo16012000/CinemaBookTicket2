@@ -22,9 +22,9 @@ public class Server {
   private static Logger logger = LogManager.getLogger(Server.class);
 
   public static void main(String[] args) throws IOException {
+    LoadConfig config = LoadConfig.getInstance();
     // change the port as per your requirement
     try (ServerSocket serverSocket = new ServerSocket(Integer.valueOf(config.getProperty("server.port")))) {
-      LoadConfig config = LoadConfig.getInstance();
       logger.debug("Server started");
       while (true) {
         // Accept incoming connections

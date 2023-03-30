@@ -1,5 +1,6 @@
 package com.leo.controllers.popup;
 
+import com.leo.utils.TimeHandle;
 import com.leo.models.Auditorium;
 import com.leo.models.Movie;
 import com.leo.models.Showtime;
@@ -9,10 +10,12 @@ import com.leo.service.IShowtimeService;
 import com.leo.service.impl.AuditoriumService;
 import com.leo.service.impl.MovieService;
 import com.leo.service.impl.ShowtimeService;
-import com.leo.utils.TimeHandle;
 import com.leo.views.popup.ShowtimePopupView;
 
 import javax.swing.*;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -23,6 +26,7 @@ public class ShowtimePopupController {
   private IShowtimeService showtimeService = ShowtimeService.getInstance();
   private IMovieService movieService = MovieService.getInstance();
   private IAuditoriumService auditoriumService = AuditoriumService.getInstance();
+  private Logger logger = LogManager.getLogger(ShowtimePopupController.class);
 
   public void add(ShowtimePopupView view, SuccessCallback sc, ErrorCallback ec) throws IOException {
     if (previousView != null && previousView.isDisplayable()) {
@@ -60,7 +64,7 @@ public class ShowtimePopupController {
     saveTime = new Timestamp(date.getYear(), date.getMonth(), date.getDate(), timestamp.getHours(),
         timestamp.getMinutes(), 0, 0);
     showtime.setEndTime(saveTime);
-    System.out.println(view.getStartTimeSpinner().getValue().toString() + "|"
+    logger.debug(view.getStartTimeSpinner().getValue().toString() + "|"
         + view.getEndTimeSpinner().getValue().toString() + "|" + view.getjDate().getDate().toString());
     Movie m = (Movie) (view.getCboMovieName().getSelectedItem());
     showtime.setMovieId(m.getId());

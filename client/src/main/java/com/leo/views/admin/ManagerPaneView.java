@@ -13,6 +13,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.leo.models.Model;
 import com.leo.utils.ErrorPopup;
 
@@ -21,7 +25,7 @@ import com.leo.utils.ErrorPopup;
  * @author Dang Tuan Anh
  */
 public abstract class ManagerPaneView<T extends Model> extends JPanel {
-
+  private Logger logger = LogManager.getLogger(ManagerPaneView.class);
   DefaultTableModel tableModel = new DefaultTableModel();
   List<T> tableData = new ArrayList<>();
 
@@ -132,7 +136,7 @@ public abstract class ManagerPaneView<T extends Model> extends JPanel {
     try {
       for (T item : tableData) {
         tableModel.addRow(item.toRowTable());
-        System.out.println("item: " + item);
+        logger.debug("item: " + item);
       }
     } catch (Exception e) {
       showError(e);

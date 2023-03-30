@@ -2,6 +2,9 @@ package com.leo.controllers.popup;
 
 import javax.swing.JFrame;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.leo.models.Movie;
 import com.leo.service.IMovieService;
 import com.leo.service.impl.MovieService;
@@ -10,6 +13,7 @@ import com.leo.views.popup.MoviePopupView;
 public class MoviePopupController {
   JFrame previousView;
   private IMovieService movieService = MovieService.getInstance();
+  private Logger logger = LogManager.getLogger(MoviePopupController.class);
 
   public void add(MoviePopupView view, SuccessCallback sc, ErrorCallback ec) {
     if (previousView != null && previousView.isDisplayable()) {
@@ -38,7 +42,7 @@ public class MoviePopupController {
     movie.setCountry(view.getTxtCountry().getText());
     movie.setDurationTime(Integer.valueOf(view.getTxtDurationTime().getText()));
     movie.setPrice(Integer.valueOf(view.getTxtPrice().getText()));
-    System.out.println(movie);
+    logger.debug(movie);
     movieService.save(movie);
     return;
   }

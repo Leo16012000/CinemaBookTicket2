@@ -9,6 +9,9 @@ import com.leo.views.popup.ShowtimePopupView;
 
 import javax.swing.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -18,6 +21,7 @@ import static javax.swing.JOptionPane.YES_OPTION;
 public class ShowtimeManagerController extends ManagerController {
   private ShowtimePopupController popupController;
   private IShowtimeService showtimeService = ShowtimeService.getInstance();
+  private Logger logger = LogManager.getLogger(ShowtimeManagerController.class);
 
   public ShowtimeManagerController() {
     super();
@@ -67,7 +71,7 @@ public class ShowtimeManagerController extends ManagerController {
   public void updateData() {
     try {
       List<Showtime> showtimes = showtimeService.getAll();
-      System.out.println(showtimes);
+      logger.debug(showtimes);
       view.setTableData(showtimes);
     } catch (Exception e) {
       view.showError(e);

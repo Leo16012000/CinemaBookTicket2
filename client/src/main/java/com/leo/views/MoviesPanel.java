@@ -1,13 +1,12 @@
 package com.leo.views;
 
-import com.leo.models.Movie;
 import com.leo.service.IMovieService;
 import com.leo.service.impl.MovieService;
+import com.leo.models.Movie;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 

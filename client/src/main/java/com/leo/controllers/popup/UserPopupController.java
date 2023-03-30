@@ -2,15 +2,19 @@ package com.leo.controllers.popup;
 
 import javax.swing.JFrame;
 
+import com.leo.utils.UserPermission;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.leo.models.User;
 import com.leo.service.IUserService;
 import com.leo.service.impl.UserService;
-import com.leo.utils.UserPermission;
 import com.leo.views.popup.UserPopupView;
 
 public class UserPopupController {
   JFrame previousView;
   private IUserService userService = UserService.getInstance();
+  private Logger logger = LogManager.getLogger(UserPopupController.class);
 
   public void add(UserPopupView view, SuccessCallback sc, ErrorCallback ec) {
     if (previousView != null && previousView.isDisplayable()) {
@@ -41,7 +45,7 @@ public class UserPopupController {
         password = view.getTxtPassword().getText(),
         name = view.getTxtName().getText();
     UserPermission permission = UserPermission.getByName(view.getCboPermission().getSelectedItem().toString());
-    System.out.println(permission + " " + view.getCboPermission().getSelectedItem().toString());
+    logger.debug(permission + " " + view.getCboPermission().getSelectedItem().toString());
     if (username.isEmpty() || password.isEmpty()) {
       throw new Exception("Please complete all the fields");
     }

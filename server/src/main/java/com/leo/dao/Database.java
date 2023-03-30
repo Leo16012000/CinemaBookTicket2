@@ -1,19 +1,24 @@
 package com.leo.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import com.leo.utils.LoadConfig;
 
+/**
+ * @deprecated Use {@link TransactionManager}
+ */
 public class Database {
 
-  private static final LoadConfig cfg = LoadConfig.getInstance();
+  private LoadConfig cfg;
   private static Database instance = null;
   private Connection conn = null;
 
   private Database() {
     try {
+      this.cfg = LoadConfig.getInstance();
       String connectProperty = "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
       String host = cfg.getProperty("database.host"),
           port = cfg.getProperty("database.port"),
@@ -33,8 +38,11 @@ public class Database {
       System.out.println("Kết nối cơ sở dữ liệu thất bại:");
       System.out.println(e.toString());
       System.exit(0);
+    } catch (IOException e) {
+      System.out.println("Fail:");
+      System.out.println(e.toString());
+      System.exit(0);
     }
-
   }
 
   public Connection getConnection() {

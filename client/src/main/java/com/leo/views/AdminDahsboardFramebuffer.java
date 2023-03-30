@@ -1,16 +1,20 @@
 package com.leo.views;
 
+import com.leo.service.impl.MovieService;
+import com.leo.service.impl.ShowtimeService;
 import com.leo.models.Movie;
 import com.leo.models.Showtime;
 import com.leo.service.IMovieService;
 import com.leo.service.IShowtimeService;
-import com.leo.service.impl.MovieService;
-import com.leo.service.impl.ShowtimeService;
 import com.leo.utils.ErrorPopup;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.JTable;
@@ -30,6 +34,7 @@ public class AdminDahsboardFramebuffer extends JFrame {
   private JPanel contentPane;
   private IMovieService movieService = MovieService.getInstance();
   private IShowtimeService showtimeService = ShowtimeService.getInstance();
+  private Logger logger = LogManager.getLogger(AdminDahsboardFramebuffer.class);
 
   public JPanel getContentPane() {
     return contentPane;
@@ -127,7 +132,7 @@ public class AdminDahsboardFramebuffer extends JFrame {
           contentPane.add(moviePanel);
           moviePanel.setLayout(null);
           SwingUtilities.updateComponentTreeUI(contentPane);
-          System.out.println("trigger search " + moviePanel.getTextField().getText());
+          logger.debug("trigger search " + moviePanel.getTextField().getText());
         } catch (Exception e1) {
           ErrorPopup.show(e1);
         }

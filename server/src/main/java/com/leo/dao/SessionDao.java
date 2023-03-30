@@ -1,7 +1,7 @@
 package com.leo.dao;
 
-import com.leo.models.Session;
 import com.leo.utils.PrepareStatements;
+import com.leo.models.Session;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

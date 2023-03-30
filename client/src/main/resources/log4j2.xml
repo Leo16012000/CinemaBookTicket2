@@ -3,13 +3,34 @@
   <Properties>
     <Property name="LOG_PATTERN">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Property>
     <Property name="basePath">logs</Property>
+    <Property name="errorBasePath">errors</Property>
   </Properties>
   <Appenders>
     <!-- Console Appender -->
     <Console name="Console" target="SYSTEM_OUT" follow="true">
+      <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
       <PatternLayout pattern="${LOG_PATTERN}" />
     </Console>
     <RollingFile name="fileLogger" fileName="${basePath}/app.log" filePattern="${basePath}/app-%d{yyyy-MM-dd}.log">
+      <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY" />
+      <PatternLayout>
+        <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+        </pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+        <SizeBasedTriggeringPolicy size="10MB" />
+      </Policies>
+      <!-- Max 10 files will be created everyday -->
+      <DefaultRolloverStrategy max="10">
+        <Delete basePath="${basePathr}" maxDepth="10">
+          <!-- Delete all files older than 30 days -->
+          <IfLastModified age="30d" />
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+    <RollingFile name="ErrorFileAppender" fileName="${basePath}/${errorBasePath}/errors.log" filePattern="${basePath}/${errorBasePath}/app-%d{yyyy-MM-dd}.log">
+      <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY" />
       <PatternLayout>
         <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
         </pattern>
@@ -29,8 +50,9 @@
   </Appenders>
   <Loggers>
     <Root level="info" additivity="false">
-      <appender-ref ref="fileLogger" />
+      <AppenderRef ref="fileLogger" />
       <AppenderRef ref="Console" />
+      <AppenderRef ref="ErrorFileAppender" />
     </Root>
   </Loggers>
 </Configuration>

@@ -16,11 +16,11 @@ public class LoadConfig {
     readConfig();
   }
 
-  public static LoadConfig getInstance() throws FileNotFoundException, IOException {
+  public static LoadConfig getInstance() throws IOException {
     if (instance == null) {
       synchronized (LoadConfig.class) {
         if (instance == null) {
-          instance = new LoadConfig("common/src/main/resources/config.properties");
+          instance = new LoadConfig("client/src/main/resources/config.properties");
         }
       }
     }

@@ -11,6 +11,10 @@ import com.leo.views.LoginView;
 import com.leo.views.admin.*;
 
 import javax.swing.*;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,6 +26,7 @@ public class AdminDashboardController {
 
   private ManagerController showtimeManagerController;
   // movieManagerController = new MovieManagerController();
+  private Logger logger = LogManager.getLogger(AdminDashboardController.class);
 
   private JPanel headerPanel;
 
@@ -83,7 +88,7 @@ public class AdminDashboardController {
     view.getBtnLogout().addActionListener(new ActionListener() {
 
       public void actionPerformed(ActionEvent evt) {
-        System.out.println("logout click");
+        logger.debug("logout click");
         int confirm = JOptionPane.showConfirmDialog(view, "Do you want to log out?");
         if (confirm != JOptionPane.YES_OPTION) {
           return;
@@ -96,7 +101,7 @@ public class AdminDashboardController {
   }
 
   private void onMenuChange(MenuItem item) {
-    System.out.println("menu change" + item.getId());
+    logger.debug("menu change" + item.getId());
     switch (item.getId()) {
       case "USER":
         view.setPanel(userManagerView);

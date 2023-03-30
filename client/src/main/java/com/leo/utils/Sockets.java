@@ -1,18 +1,28 @@
 package com.leo.utils;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.leo.dtos.ResponseDto;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class Sockets {
     private static Socket socket;
-    private static LoadConfig loadConfig = LoadConfig.getInstance();
+    private static LoadConfig loadConfig;
+
+    static {
+        try {
+            loadConfig = LoadConfig.getInstance();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static final int RETRY_INTERVAL = 2000; // 5 seconds
     private static final Logger logger = LogManager.getLogger(Sockets.class);
     private static ServiceHandler serviceHandler = ServiceHandler.getInstance();
@@ -34,12 +44,17 @@ public class Sockets {
                                         });
                                         logger.info("Received: " + response.getPayload());
                                         if (response.getPayload().equals("PONG")) Thread.sleep(3000);
-                                        else{
+                                        else {
                                             JOptionPane.showInternalMessageDialog(null, "Server is disconnected, try again...");
                                             Thread.sleep(3000);
+//                                            if (socket.isClosed() == false) {
+//                                                socket.close();
+//                                            }
+//                                            socket = new Socket(LoadConfig.getProperty("server.host"), Integer.parseInt(LoadConfig.getProperty("server.port")));
                                         }
                                     }
-                                } catch (IOException | InterruptedException e) {
+//                                } catch (IOException | InterruptedException | ConnectException e) {
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             });

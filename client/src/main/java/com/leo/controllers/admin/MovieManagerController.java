@@ -71,7 +71,7 @@ public class MovieManagerController extends ManagerController {
   public void updateData() {
     try {
       List<Movie> movies = movieService.getAll();
-      logger.info(movies);
+      logger.debug(movies);
       view.setTableData(movies);
     } catch (Exception e) {
       view.showError(e);

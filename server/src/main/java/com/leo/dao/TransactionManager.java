@@ -3,17 +3,30 @@ package com.leo.dao;
 import com.leo.utils.LoadConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TransactionManager {
   private static ThreadLocal<Transaction> THREAD_LOCAL = new ThreadLocal<>();
   private static TransactionManager INSTANCE;
-  private static final LoadConfig cfg = LoadConfig.getInstance();
   private static HikariConfig hikariCfg = new HikariConfig();
   private static HikariDataSource hikariDs;
+  private LoadConfig cfg;
+  private Logger logger = LogManager.getLogger(TransactionManager.class);
 
   public TransactionManager() {
+    try {
+      this.cfg = LoadConfig.getInstance();
+    } catch (IOException e) {
+      logger.fatal(e);
+      System.exit(1);
+    }
     String connectProperty = "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     String host = cfg.getProperty("database.host"),
         port = cfg.getProperty("database.port"),

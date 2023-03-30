@@ -21,16 +21,20 @@ import com.leo.utils.ObjectMappers;
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class ServiceRegistry {
   private static ServiceRegistry instance;
   private AuditoriumManagerController auditoriumManagerController = new AuditoriumManagerController();
   private MovieManagerController movieManagerController = new MovieManagerController();
   private UserManagerController userManagerController = new UserManagerController();
   private ShowtimeManagerController showtimeManagerController = new ShowtimeManagerController();
-
+  private Logger logger = LogManager.getLogger(ServiceRegistry.class);
   private ObjectMapper xmlMapper = ObjectMappers.getInstance();
 
   public ResponseDto<?> handleRequest(String request) throws SQLException, JsonProcessingException {
+    logger.debug(request);
     RequestDto<?> reqDto = xmlMapper.readValue(request, RequestDto.class);
     String serviceName = reqDto.getServiceName();
     ResponseDto<?> responseDto;
@@ -220,10 +224,12 @@ public class ServiceRegistry {
         responseDto = new ResponseDto<>();
         responseDto.setStatus("FAILURE");
         responseDto.setMessage("Invalid service name: " + reqDto.getServiceName());
+        break;
       }
     }
     responseDto.setServiceName(serviceName);
     responseDto.setTimestamp(OffsetDateTime.now());
+    logger.debug(xmlMapper.writeValueAsString(responseDto));
     return responseDto;
   }
 

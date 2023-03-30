@@ -132,7 +132,7 @@ public class AdminDahsboardFramebuffer extends JFrame {
           contentPane.add(moviePanel);
           moviePanel.setLayout(null);
           SwingUtilities.updateComponentTreeUI(contentPane);
-          logger.info("trigger search " + moviePanel.getTextField().getText());
+          logger.debug("trigger search " + moviePanel.getTextField().getText());
         } catch (Exception e1) {
           ErrorPopup.show(e1);
         }

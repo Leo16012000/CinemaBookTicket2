@@ -8,9 +8,11 @@
   <Appenders>
     <!-- Console Appender -->
     <Console name="Console" target="SYSTEM_OUT" follow="true">
+      <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
       <PatternLayout pattern="${LOG_PATTERN}" />
     </Console>
     <RollingFile name="fileLogger" fileName="${basePath}/app.log" filePattern="${basePath}/app-%d{yyyy-MM-dd}.log">
+      <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY" />
       <PatternLayout>
         <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
         </pattern>

@@ -56,12 +56,12 @@ public class UserHomeController {
       SessionManager.getInstance().clear();// Đăng xuất
       view.dispose();
       new LoginController(new LoginView());
-      logger.info("click logout");
+      logger.debug("click logout");
     });
     headerPanel.getBtnLogin().addActionListener(evt -> {
       view.dispose();
       new LoginController(new LoginView());
-      logger.info("click login");
+      logger.debug("click login");
     });
     // Add a MouseListener to the JTable
     movieTable.addMouseListener(new MyMouseListener());
@@ -75,7 +75,7 @@ public class UserHomeController {
           contentPane.add(moviePanel);
           moviePanel.setLayout(null);
           SwingUtilities.updateComponentTreeUI(contentPane);
-          logger.info("trigger search " + moviePanel.getTextField().getText());
+          logger.debug("trigger search " + moviePanel.getTextField().getText());
         } catch (Exception e1) {
           ErrorPopup.show(e1);
         }
@@ -101,7 +101,7 @@ public class UserHomeController {
         int rowIndex = movieTable.rowAtPoint(e.getPoint());
 
         // Do something with the clicked row
-        logger.info("Clicked row: " + movieTable.getValueAt(rowIndex, 0));
+        logger.debug("Clicked row: " + movieTable.getValueAt(rowIndex, 0));
         int movieId = Integer.valueOf((String) movieTable.getValueAt(rowIndex, 0));
         String movieName = (String) movieTable.getValueAt(rowIndex, 0);
         try {

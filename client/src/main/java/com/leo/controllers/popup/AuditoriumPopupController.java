@@ -54,7 +54,7 @@ public class AuditoriumPopupController {
       auditorium.setAuditoriumNum(Integer.valueOf(view.getTxtNumber().getText()));
       auditorium.setSeatsRowNum(Integer.valueOf(view.getTxtRowsNum().getText()));
       auditorium.setSeatsColumnNum(Integer.valueOf(view.getTxtColumnsNum().getText()));
-      logger.info("Add auditorium: ", auditorium);
+      logger.debug("Add auditorium: ", auditorium);
       return serviceHandler.sendRequest(Sockets.getSocket(), "CREATE_AUDITORIUM", auditorium,
           new TypeReference<ResponseDto<Void>>() {
           });
@@ -99,7 +99,7 @@ public class AuditoriumPopupController {
     auditorium.setAuditoriumNum(number);
     auditorium.setSeatsRowNum(rowsNum);
     auditorium.setSeatsColumnNum(columnsNum);
-    logger.info("Edit auditorium: ", auditorium);
+    logger.debug("Edit auditorium: ", auditorium);
     serviceHandler.sendRequest(Sockets.getSocket(), "UPDATE_AUDITORIUM", auditorium,
         new TypeReference<ResponseDto<Void>>() {
         });

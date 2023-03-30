@@ -28,11 +28,15 @@ public class ServiceHandler {
         .build();
 
     DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-    os.writeUTF(ObjectMappers.getInstance().writeValueAsString(request));
+    String requestStr = ObjectMappers.getInstance().writeValueAsString(request);
+    logger.debug(requestStr);
+    os.writeUTF(requestStr);
     os.flush();
 
     DataInputStream is = new DataInputStream(socket.getInputStream());
-    ResponseDto<K> response = ObjectMappers.getInstance().readValue(is.readUTF(), typeReference);
+    String responseStr = is.readUTF();
+    logger.debug(responseStr);
+    ResponseDto<K> response = ObjectMappers.getInstance().readValue(responseStr, typeReference);
     if (!"SUCCESS".equals(response.getStatus())) {
       logger.error(response.getTimestamp() + ": " + response.getMessage());
     }

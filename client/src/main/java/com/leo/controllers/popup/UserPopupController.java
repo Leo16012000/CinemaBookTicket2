@@ -45,7 +45,7 @@ public class UserPopupController {
         password = view.getTxtPassword().getText(),
         name = view.getTxtName().getText();
     UserPermission permission = UserPermission.getByName(view.getCboPermission().getSelectedItem().toString());
-    logger.info(permission + " " + view.getCboPermission().getSelectedItem().toString());
+    logger.debug(permission + " " + view.getCboPermission().getSelectedItem().toString());
     if (username.isEmpty() || password.isEmpty()) {
       throw new Exception("Please complete all the fields");
     }

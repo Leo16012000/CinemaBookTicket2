@@ -64,7 +64,7 @@ public class ShowtimePopupController {
     saveTime = new Timestamp(date.getYear(), date.getMonth(), date.getDate(), timestamp.getHours(),
         timestamp.getMinutes(), 0, 0);
     showtime.setEndTime(saveTime);
-    logger.info(view.getStartTimeSpinner().getValue().toString() + "|"
+    logger.debug(view.getStartTimeSpinner().getValue().toString() + "|"
         + view.getEndTimeSpinner().getValue().toString() + "|" + view.getjDate().getDate().toString());
     Movie m = (Movie) (view.getCboMovieName().getSelectedItem());
     showtime.setMovieId(m.getId());

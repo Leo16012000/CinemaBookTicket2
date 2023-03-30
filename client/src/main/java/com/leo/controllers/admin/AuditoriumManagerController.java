@@ -67,7 +67,7 @@ public class AuditoriumManagerController extends ManagerController {
   public void updateData() {
     try {
       List<Auditorium> auditoriums = auditoriumService.getAll();
-      logger.info(auditoriums);
+      logger.debug(auditoriums);
       view.setTableData(auditoriums);
     } catch (Exception e) {
       view.showError(e);

@@ -34,6 +34,10 @@ public class ServiceRegistry {
     String serviceName = reqDto.getServiceName();
     ResponseDto<?> responseDto;
     switch (serviceName) {
+      case "PING": {
+        responseDto = new ResponseDto<>("", "PONG", "PING", null, "SUCCESS");
+        break;
+      }
       case "CREATE_AUDITORIUM": {
         RequestDto<Auditorium> requestDto = xmlMapper.readValue(request, new TypeReference<RequestDto<Auditorium>>() {
         });

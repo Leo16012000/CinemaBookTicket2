@@ -3,10 +3,10 @@ package com.leo.service.impl;
 import java.io.IOException;
 import java.util.List;
 
+import com.leo.utils.ServiceHandler;
 import org.apache.commons.math3.util.Pair;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.leo.component.ServiceHandler;
 import com.leo.dtos.ResponseDto;
 import com.leo.models.Seat;
 import com.leo.service.ISeatService;

@@ -1,10 +1,10 @@
 package com.leo.controllers.popup;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.leo.component.ServiceHandler;
 import com.leo.dtos.ResponseDto;
 import com.leo.models.Auditorium;
 import com.leo.utils.Convert;
+import com.leo.utils.ServiceHandler;
 import com.leo.utils.Sockets;
 import com.leo.views.popup.AuditoriumPopupView;
 

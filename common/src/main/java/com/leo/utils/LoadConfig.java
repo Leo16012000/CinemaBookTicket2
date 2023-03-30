@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class LoadConfig {
-  private String configPath;
+  private static String configPath;
   private static LoadConfig instance;
-  private Properties properties = new Properties();
+  private static Properties properties = new Properties();
 
   public LoadConfig(String configPath) {
     this.configPath = configPath;
@@ -19,14 +19,14 @@ public class LoadConfig {
     if (instance == null) {
       synchronized (LoadConfig.class) {
         if (instance == null) {
-          instance = new LoadConfig("server/src/main/resources/config.properties");
+          instance = new LoadConfig("client/src/main/resources/config.properties");
         }
       }
     }
     return instance;
   }
 
-  public String getProperty(String key) {
+  public static String getProperty(String key) {
     return properties.getProperty(key);
   }
 

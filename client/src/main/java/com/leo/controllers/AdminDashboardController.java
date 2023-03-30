@@ -88,7 +88,7 @@ public class AdminDashboardController {
     view.getBtnLogout().addActionListener(new ActionListener() {
 
       public void actionPerformed(ActionEvent evt) {
-        logger.info("logout click");
+        logger.debug("logout click");
         int confirm = JOptionPane.showConfirmDialog(view, "Do you want to log out?");
         if (confirm != JOptionPane.YES_OPTION) {
           return;
@@ -101,7 +101,7 @@ public class AdminDashboardController {
   }
 
   private void onMenuChange(MenuItem item) {
-    logger.info("menu change" + item.getId());
+    logger.debug("menu change" + item.getId());
     switch (item.getId()) {
       case "USER":
         view.setPanel(userManagerView);

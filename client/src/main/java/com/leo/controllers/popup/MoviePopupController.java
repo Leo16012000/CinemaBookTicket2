@@ -42,7 +42,7 @@ public class MoviePopupController {
     movie.setCountry(view.getTxtCountry().getText());
     movie.setDurationTime(Integer.valueOf(view.getTxtDurationTime().getText()));
     movie.setPrice(Integer.valueOf(view.getTxtPrice().getText()));
-    logger.info(movie);
+    logger.debug(movie);
     movieService.save(movie);
     return;
   }

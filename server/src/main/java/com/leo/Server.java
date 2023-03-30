@@ -17,7 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Server {
-  private static LoadConfig config = LoadConfig.getInstance();
   private static ObjectMapper xmlMapper = ObjectMappers.getInstance();
   private static ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
   private static Logger logger = LogManager.getLogger(Server.class);
@@ -25,11 +24,12 @@ public class Server {
   public static void main(String[] args) throws IOException {
     // change the port as per your requirement
     try (ServerSocket serverSocket = new ServerSocket(Integer.valueOf(config.getProperty("server.port")))) {
-      logger.info("Server started");
+      LoadConfig config = LoadConfig.getInstance();
+      logger.debug("Server started");
       while (true) {
         // Accept incoming connections
         Socket socket = serverSocket.accept();
-        logger.info("Client connected " + socket.getLocalAddress() + " " + socket.getPort());
+        logger.debug("Client connected " + socket.getLocalAddress() + " " + socket.getPort());
         Thread thread = new Thread(() -> {
           while (true) {
             try {

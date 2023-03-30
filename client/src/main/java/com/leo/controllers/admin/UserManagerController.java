@@ -75,7 +75,7 @@ public class UserManagerController extends ManagerController {
   public void updateData() {
     try {
       List<User> users = userService.getAll();
-      logger.info(users);
+      logger.debug(users);
       view.setTableData(users);
     } catch (Exception e) {
       view.showError(e);

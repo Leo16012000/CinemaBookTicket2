@@ -71,7 +71,7 @@ public class ShowtimeManagerController extends ManagerController {
   public void updateData() {
     try {
       List<Showtime> showtimes = showtimeService.getAll();
-      logger.info(showtimes);
+      logger.debug(showtimes);
       view.setTableData(showtimes);
     } catch (Exception e) {
       view.showError(e);

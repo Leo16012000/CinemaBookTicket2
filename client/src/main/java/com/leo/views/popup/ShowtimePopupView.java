@@ -190,7 +190,7 @@ public class ShowtimePopupView extends JFrame implements PopupView {
     cboAuditoriumNumber.addItemListener(new ItemListener() {
       public void itemStateChanged(ItemEvent e) {
         Auditorium c = (Auditorium) e.getItem();
-        logger.info("You selected auditorium id: " + c.getId());
+        logger.debug("You selected auditorium id: " + c.getId());
       }
 
     });

@@ -11,12 +11,12 @@ public class LoadConfig {
   private static LoadConfig instance;
   private Properties properties = new Properties();
 
-  public LoadConfig(String configPath) {
+  public LoadConfig(String configPath) throws FileNotFoundException, IOException {
     this.configPath = configPath;
     readConfig();
   }
 
-  public static LoadConfig getInstance() {
+  public static LoadConfig getInstance() throws FileNotFoundException, IOException {
     if (instance == null) {
       synchronized (LoadConfig.class) {
         if (instance == null) {

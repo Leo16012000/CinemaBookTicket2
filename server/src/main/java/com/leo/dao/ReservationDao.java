@@ -85,19 +85,19 @@ public class ReservationDao extends Dao<Reservation> {
             });
   }
 
-    @Override
-    public void deleteByIds(List<Integer> ids) throws SQLException {
-        transactionManager
-                .getTransaction()
-                .run(
-                        conn -> {
-                            for (Integer id : ids) {
-                                deleteById(id);
-                            }
-                        });
-    }
+  @Override
+  public void deleteByIds(List<Integer> ids) throws SQLException {
+    transactionManager
+        .getTransaction()
+        .run(
+            conn -> {
+              for (Integer id : ids) {
+                deleteById(id);
+              }
+            });
+  }
 
-    public List<Reservation> searchByKey(String key, String word) throws SQLException {
+  public List<Reservation> searchByKey(String key, String word) throws SQLException {
     return transactionManager
         .getTransaction()
         .queryList(

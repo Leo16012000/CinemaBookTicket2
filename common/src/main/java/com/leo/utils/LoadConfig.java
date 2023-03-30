@@ -7,9 +7,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class LoadConfig {
-  private static String configPath;
+  private String configPath;
   private static LoadConfig instance;
-  private static Properties properties = new Properties();
+  private Properties properties = new Properties();
 
   public LoadConfig(String configPath) throws FileNotFoundException, IOException {
     this.configPath = configPath;
@@ -27,7 +27,7 @@ public class LoadConfig {
     return instance;
   }
 
-  public static String getProperty(String key) {
+  public String getProperty(String key) {
     return properties.getProperty(key);
   }
 

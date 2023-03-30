@@ -15,7 +15,6 @@ public class Client {
       logger.info("Khởi tạo look and feel thành công!");
       new LoginController(new LoginView());
       Sockets.getSocket();
-
       logger.info("Connected to server");
       // Runtime.getRuntime().addShutdownHook(new Thread());
     } catch (Exception e) {

@@ -32,51 +32,54 @@ public class Sockets {
     if (pingThread != null) {
       return;
     }
-    synchronized(Sockets.class) {
+    synchronized (Sockets.class) {
       if (pingThread == null) {
-       pingThread = new Thread(() -> {
-        boolean isConnected = false;
-        int count = 0;
-        while (true) {
-          while (!isConnected) {
-            try {
-              socket = new Socket();
-              socket.connect(new InetSocketAddress(LoadConfigs.getInstance().getProperty("server.host"),
-              Integer.parseInt(LoadConfigs.getInstance().getProperty("server.port"))), 10000);
-              isConnected = true;
-              count = 0;
-            } catch (IOException e) {
-              count++;
-              logger.info("Failed to connect to server after: " + count + " times");
-              JOptionPane.showInternalMessageDialog(null, "Server is disconnected, try again...");
-            }
-          }
-          try {
-            while(true) {
-              logger.info("Sent: " + "PING");
-              ResponseDto<String> response = serviceHandler.sendRequest(socket, "PING", null,
-                  new TypeReference<ResponseDto<String>>() {
-                  });
-              logger.info("Received: " + response.getPayload());
-              Thread.sleep(RETRY_INTERVAL);
-            }
-          } catch (IOException e) {
-            if (!socket.isClosed()) {
+        pingThread = new Thread(() -> {
+          boolean isConnected = false;
+          int count = 0;
+          while (true) {
+            while (!isConnected) {
               try {
-                socket.close();
-              } catch (IOException e1) {
-                logger.error(e1);
-                throw new RuntimeException(e1);
+                socket = new Socket();
+                socket.connect(new InetSocketAddress(LoadConfigs.getInstance().getProperty("server.host"),
+                    Integer.parseInt(LoadConfigs.getInstance().getProperty("server.port"))), 10000);
+                isConnected = true;
+                count = 0;
+              } catch (IOException e) {
+                count++;
+                logger.info("Failed to connect to server after: " + count + " times");
+                JOptionPane.showMessageDialog(null, "Server is disconnected, try again...");
               }
             }
-            logger.error(e);
-            JOptionPane.showInternalMessageDialog(null, "Server is disconnected, try again...");
-          } catch (InterruptedException e) {
-            logger.error(e);
+            try {
+              while (true) {
+                logger.info("Sent: " + "PING");
+                ResponseDto<String> response = serviceHandler.sendRequest(socket, "PING", null,
+                    new TypeReference<ResponseDto<String>>() {
+                    });
+                logger.info("Received: " + response.getPayload());
+                Thread.sleep(RETRY_INTERVAL);
+              }
+            } catch (IOException e) {
+              if (!socket.isClosed()) {
+                try {
+                  socket.close();
+                  isConnected = false;
+                } catch (IOException e1) {
+                  logger.error(e1);
+                  throw new RuntimeException(e1);
+                }
+              }
+              isConnected = false;
+              logger.error(e);
+              JOptionPane.showMessageDialog(null, "Server is disconnected, try again...");
+            } catch (InterruptedException e) {
+              logger.error(e);
+            }
           }
-        }
-      });
-      pingThread.start();
-    }}
+        });
+        pingThread.start();
+      }
+    }
   }
 }

@@ -1,6 +1,7 @@
 package com.leo.dao;
 
 import com.leo.utils.LoadConfig;
+import com.leo.utils.LoadConfigs;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -21,7 +22,7 @@ public class TransactionManager {
 
   public TransactionManager() {
     try {
-      this.cfg = LoadConfig.getInstance();
+      this.cfg = LoadConfigs.getInstance();
     } catch (IOException e) {
       logger.fatal(e);
       System.exit(1);

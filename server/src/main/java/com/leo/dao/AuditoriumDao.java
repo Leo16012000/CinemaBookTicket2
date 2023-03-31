@@ -6,7 +6,9 @@ import com.leo.models.Auditorium;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AuditoriumDao extends Dao<Auditorium> {
   private static AuditoriumDao instance;
@@ -102,13 +104,18 @@ public class AuditoriumDao extends Dao<Auditorium> {
   }
 
   public List<Auditorium> searchByKey(String key, String word) throws SQLException {
+      Map<String, String> searchMap = new HashMap<String, String>();
+      searchMap.put("auditorium_num","%%");
+      searchMap.put("seats_row_num","%%");
+      searchMap.put("seats_column_num","%%");
+      searchMap.put(key,'%' + word + '%');
     return transactionManager
         .getTransaction()
         .queryList(
             conn -> PrepareStatements.setPreparedStatementParams(
-                conn.prepareStatement("SELECT * FROM `auditoriums` WHERE ? LIKE '%?%'"),
-                key,
-                word)
+                conn.prepareStatement("SELECT * FROM `auditoriums` WHERE auditorium_num LIKE ? and seats_row_num like ? and seats_column_num like ?"),
+                searchMap.get("auditorium_num"),
+                searchMap.get("seats_row_num"), searchMap.get("seats_column_num"))
                 .executeQuery(),
             Auditorium::getFromResultSet);
   }

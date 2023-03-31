@@ -1,5 +1,6 @@
 package com.leo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.leo.controllers.ServiceRegistry;
 import com.leo.dtos.ResponseDto;
 import com.leo.utils.LoadConfig;
@@ -12,6 +13,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +23,7 @@ public class Server {
   private static ObjectMapper xmlMapper = ObjectMappers.getInstance();
   private static ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
   private static Logger logger = LogManager.getLogger(Server.class);
+  private static final int TIMEOUT = 2000;
 
   public static void main(String[] args) throws IOException {
     LoadConfig config = LoadConfigs.getInstance();
@@ -30,6 +33,7 @@ public class Server {
       while (true) {
         // Accept incoming connections
         Socket socket = serverSocket.accept();
+        socket.setSoTimeout(TIMEOUT);
         logger.debug("Client connected " + socket.getLocalAddress() + " " + socket.getPort());
         Thread thread = new Thread(() -> {
           while (true) {
@@ -48,8 +52,17 @@ public class Server {
               DataOutputStream os = new DataOutputStream(socket.getOutputStream());
               os.writeUTF(response);
               os.flush();
-            } catch (IOException | SQLException e) {
-              logger.error(e);
+            } catch (SocketTimeoutException e) {
+              try {
+                socket.close();
+              } catch (IOException ex) {
+                throw new RuntimeException(ex);
+              }
+              logger.info("Closing iddle socket");
+            } catch (SQLException e) {
+              throw new RuntimeException(e);
+            } catch (IOException e) {
+              throw new RuntimeException(e);
             }
           }
         });

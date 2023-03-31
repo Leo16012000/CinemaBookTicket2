@@ -10,7 +10,7 @@ public class LoadConfigs {
     if (instance == null) {
       synchronized (LoadConfig.class) {
         try {
-          instance = new LoadConfig("server/src/main/resources/config.properties");
+          instance = new LoadConfig("client/src/main/resources/config.properties");
         } catch (FileNotFoundException e) {
           instance = new LoadConfig(System.getenv("CLIENT_CONFIG_PATH"));
         }

@@ -3,6 +3,7 @@ package com.leo;
 import com.leo.controllers.ServiceRegistry;
 import com.leo.dtos.ResponseDto;
 import com.leo.utils.LoadConfig;
+import com.leo.utils.LoadConfigs;
 import com.leo.utils.ObjectMappers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,7 +23,7 @@ public class Server {
   private static Logger logger = LogManager.getLogger(Server.class);
 
   public static void main(String[] args) throws IOException {
-    LoadConfig config = LoadConfig.getInstance();
+    LoadConfig config = LoadConfigs.getInstance();
     // change the port as per your requirement
     try (ServerSocket serverSocket = new ServerSocket(Integer.valueOf(config.getProperty("server.port")))) {
       logger.debug("Server started");

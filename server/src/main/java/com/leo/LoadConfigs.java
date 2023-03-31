@@ -1,4 +1,6 @@
-package com.leo.utils;
+package com.leo;
+
+import com.leo.utils.LoadConfig;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,9 +12,9 @@ public class LoadConfigs {
     if (instance == null) {
       synchronized (LoadConfig.class) {
         try {
-          instance = new LoadConfig("client/src/main/resources/config.properties");
+          instance = new LoadConfig("server/src/main/resources/config.properties");
         } catch (FileNotFoundException e) {
-          instance = new LoadConfig(System.getenv("CLIENT_CONFIG_PATH"));
+          instance = new LoadConfig(System.getenv("SERVER_CONFIG_PATH"));
         }
       }
     }
